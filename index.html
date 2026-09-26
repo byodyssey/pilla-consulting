@@ -1,539 +1,1182 @@
 <!DOCTYPE html>
-<html lang="uz" class="scroll-smooth">
+<html lang="uz" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pilla Consulting - Create New World</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons (barcha ikonkalarning to'g'ri ishlashi uchun) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            400: '#facc15',
-                            500: '#eab308',
-                            600: '#ca8a04',
-                            700: '#a16207',
-                        }
-                    }
-                }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilla Consulting | International Education Agency</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+            },
+            space: {
+              900: '#030712',
+              950: '#02040a',
             }
+          }
         }
-    </script>
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080c14; color: #f1f5f9; overflow-x: hidden; }
-        
-        #galaxyCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
+      }
+    }
+  </script>
 
-        .glass-card {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(234, 179, 8, 0.2);
-        }
-        
-        .glass-nav {
-            background: rgba(8, 12, 20, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(234, 179, 8, 0.15);
-        }
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #02040a;
+      color: #f3f4f6;
+      overflow-x: hidden;
+    }
 
-        .gold-button {
-            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
-            color: #080c14;
-        }
+    /* Fixed Canvas for Galaxy background */
+    #galaxy-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-        .gold-button:hover {
-            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-        }
+    /* Glassmorphism Styles - NO WHITE BACKGROUNDS */
+    .glass-card {
+      background: rgba(10, 16, 30, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(234, 179, 8, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 10px; }
-    </style>
+    .glass-card:hover {
+      border-color: rgba(234, 179, 8, 0.45);
+      box-shadow: 0 10px 40px 0 rgba(234, 179, 8, 0.15);
+    }
+
+    .glass-nav {
+      background: rgba(5, 8, 18, 0.85) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      border-bottom: 1px solid rgba(234, 179, 8, 0.25);
+    }
+
+    .glass-input {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(234, 179, 8, 0.25);
+      color: #ffffff;
+    }
+
+    .glass-input:focus {
+      border-color: #facc15;
+      outline: none;
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
+    }
+
+    /* Text Gradient */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fff3a8 0%, #facc15 50%, #ca8a04 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #02040a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(234, 179, 8, 0.3);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(234, 179, 8, 0.6);
+    }
+  </style>
 </head>
-<body class="relative min-h-screen flex flex-col custom-scrollbar">
+<body class="relative min-h-screen text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
 
-    <!-- GALAKTIKA BACKGROUND -->
-    <canvas id="galaxyCanvas"></canvas>
+  <!-- 3D/2D Galaxy Canvas Background -->
+  <canvas id="galaxy-canvas"></canvas>
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-40 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
-            <a href="#" class="flex items-center gap-2">
-                <div id="siteLogoContainer" class="h-10 sm:h-12 w-auto flex items-center justify-center">
-                    <span class="text-base sm:text-2xl font-black gold-gradient-text tracking-wider">PILLA CONSULTING</span>
-                </div>
-            </a>
+  <div class="relative z-10 flex flex-col min-h-screen">
 
-            <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-300">
-                <a href="#admissions" data-i18n="nav_admissions" class="hover:text-amber-400 transition">Admission Letters</a>
-                <a href="#contact" data-i18n="nav_contact" class="hover:text-amber-400 transition">Bog'lanish</a>
-            </nav>
-
-            <div class="flex items-center gap-2 sm:gap-4">
-                <div class="relative">
-                    <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-amber-500/40 text-amber-400 text-xs font-bold py-1.5 px-2 rounded-xl focus:outline-none cursor-pointer">
-                        <option value="uz">🇺🇿 UZ</option>
-                        <option value="ru">🇷🇺 RU</option>
-                        <option value="kk">🇰🇿 KZ</option>
-                        <option value="ky">🇰🇬 KG</option>
-                        <option value="zh">🇨🇳 CN</option>
-                    </select>
-                </div>
-
-                <a href="#contact" class="gold-button font-bold text-xs sm:text-sm px-3 sm:px-5 py-2 rounded-xl shadow-lg transition flex items-center gap-1.5 whitespace-nowrap">
-                    <i class="fa-solid fa-phone text-xs"></i>
-                    <span data-i18n="btn_get_consult">Konsultatsiya</span>
-                </a>
+    <!-- Navigation Header -->
+    <header class="glass-nav sticky top-0 z-50 transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          
+          <!-- Logo -->
+          <a href="#" class="flex items-center gap-3 group">
+            <div id="logo-container" class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center p-1.5 shadow-lg shadow-amber-500/10 group-hover:border-amber-400 transition-all">
+              <i class="fa-solid fa-graduation-cap text-2xl text-amber-400"></i>
             </div>
+            <div>
+              <span id="brand-title" class="text-xl font-extrabold tracking-wider gold-gradient-text block">PILLA</span>
+              <span class="text-[10px] uppercase tracking-widest text-slate-400 block -mt-1 font-semibold">Consulting</span>
+            </div>
+          </a>
+
+          <!-- Desktop Navigation Menu -->
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <a href="#admissions-section" class="text-slate-300 hover:text-amber-400 transition-colors" data-i18n="nav_admissions">Admissions</a>
+            <a href="#universities" class="text-slate-300 hover:text-amber-400 transition-colors" data-i18n="nav_universities">Universities</a>
+            <a href="#services" class="text-slate-300 hover:text-amber-400 transition-colors" data-i18n="nav_services">Services</a>
+            <a href="#faq" class="text-slate-300 hover:text-amber-400 transition-colors" data-i18n="nav_faq">FAQ</a>
+            <a href="#contact" class="text-slate-300 hover:text-amber-400 transition-colors" data-i18n="nav_contact">Contact</a>
+          </nav>
+
+          <!-- Right Action Items -->
+          <div class="flex items-center gap-4">
+            <!-- Language Switcher -->
+            <select id="lang-select" class="glass-input px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer border border-amber-500/30 bg-slate-950">
+              <option value="uz">UZ 🇺🇿</option>
+              <option value="ru">RU 🇷🇺</option>
+              <option value="kz">KZ 🇰🇿</option>
+              <option value="kg">KG 🇰🇬</option>
+              <option value="cn">CN 🇨🇳</option>
+            </select>
+
+            <!-- Admin Toggle Button -->
+            <button id="admin-login-btn" onclick="openAdminModal()" class="glass-card px-3.5 py-1.5 rounded-lg text-xs font-medium text-amber-400 border border-amber-500/40 hover:bg-amber-500/10 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-user-shield"></i>
+              <span class="hidden sm:inline" data-i18n="admin_btn">Admin</span>
+            </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-amber-400 p-2 text-xl focus:outline-none">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-amber-500/20 px-4 pt-3 pb-6 space-y-3">
+        <a href="#admissions-section" class="block text-slate-200 hover:text-amber-400 py-1" data-i18n="nav_admissions">Admissions</a>
+        <a href="#universities" class="block text-slate-200 hover:text-amber-400 py-1" data-i18n="nav_universities">Universities</a>
+        <a href="#services" class="block text-slate-200 hover:text-amber-400 py-1" data-i18n="nav_services">Services</a>
+        <a href="#faq" class="block text-slate-200 hover:text-amber-400 py-1" data-i18n="nav_faq">FAQ</a>
+        <a href="#contact" class="block text-slate-200 hover:text-amber-400 py-1" data-i18n="nav_contact">Contact</a>
+      </div>
     </header>
 
-    <!-- MAIN APP WRAPPER -->
-    <main id="mainApp" class="flex-grow">
-        
-        <!-- HERO SECTION -->
-        <section class="relative py-8 sm:py-16 lg:py-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                    <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card border-amber-500/30 text-amber-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider">
-                            <i class="fa-solid fa-crown text-amber-400"></i> <span data-i18n="hero_badge">Rasmiy Vakillik va Kafolatlangan Ta'lim</span>
-                        </div>
-                        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight">
-                            <span data-i18n="hero_title_1">Xitoyning</span> <span class="gold-gradient-text" data-i18n="hero_title_2">32 ta Nufuzli Universiteti</span> <span data-i18n="hero_title_3">Bilan Rasmiy Shartnoma</span>
-                        </h1>
-                        <p class="text-xs sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0" data-i18n="hero_desc">
-                            Pilla Consulting — Xitoy OTMlarining O'zbekistondagi ishonchli vakili. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatingizni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.
-                        </p>
-                        <div class="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start pt-2">
-                            <a href="#contact" class="w-full sm:w-auto text-center gold-button font-extrabold px-6 py-3 rounded-xl shadow-lg transition text-xs sm:text-sm" data-i18n="btn_free_consult">
-                                Begaraz Konsultatsiya
-                            </a>
-                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800 text-white font-bold px-6 py-3 rounded-xl transition border border-amber-500/30 text-xs sm:text-sm" data-i18n="btn_view_admissions">
-                                Qabul Xatlarini Ko'rish
-                            </a>
-                        </div>
-                    </div>
+    <!-- Main Content Body -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+      
+      <!-- Hero Section -->
+      <section class="grid lg:grid-cols-12 gap-12 items-center pt-6">
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-star text-amber-400"></i> <span data-i18n="hero_badge">Cheksiz Imkoniyatlar Eshigi</span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+            <span class="block" data-i18n="hero_title_1">Chet elda ta'lim olish</span>
+            <span class="gold-gradient-text block mt-1" data-i18n="hero_title_2">Xavfsiz va Kafolatlangan!</span>
+          </h1>
+          <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed" data-i18n="hero_desc">
+            Xitoy, Janubiy Koreya, Yevropa hamda AQSHning nufuzli universitetlarida 100% gacha grantlar asosida tahsil oling. Biz sizning kelajagingiz uchun mas'ulmiz.
+          </p>
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#lead-form" class="px-7 py-3.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 shadow-lg shadow-amber-500/20 hover:scale-105 transition-all">
+              <span data-i18n="btn_apply">Konsultatsiya Olish</span> <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+            <a href="#admissions-section" class="glass-card px-7 py-3.5 rounded-xl font-bold text-amber-300 border border-amber-500/40 hover:bg-amber-500/10 transition-all">
+              <span data-i18n="btn_admissions">Qabul Xatlarini Ko'rish</span>
+            </a>
+          </div>
+        </div>
 
-                    <div class="lg:col-span-5">
-                        <div class="glass-card rounded-3xl p-5 sm:p-7 shadow-2xl relative border-amber-500/40">
-                            <h3 class="text-lg sm:text-xl font-bold text-white mb-1" data-i18n="form_title">Tezkor Ariza</h3>
-                            <p class="text-slate-400 text-xs mb-4" data-i18n="form_subtitle">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
+        <!-- Quick Application Glass Card Form -->
+        <div id="lead-form" class="lg:col-span-5">
+          <div class="glass-card p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+            <h3 class="text-2xl font-bold text-white mb-2" data-i18n="form_title">Bepul Konsultatsiya</h3>
+            <p class="text-xs text-slate-400 mb-6" data-i18n="form_subtitle">Ma'lumotlaringizni qoldiring, mutaxassisimiz tez orada bog'lanadi</p>
+            
+            <form id="public-lead-form" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5" data-i18n="form_name">Ism-familiyangiz</label>
+                <input type="text" id="lead-name" required placeholder="Ali Valiyev" class="w-full glass-input px-4 py-3 rounded-xl text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5" data-i18n="form_phone">Telefon raqamingiz</label>
+                <input type="tel" id="lead-phone" required placeholder="+998 90 123 45 67" class="w-full glass-input px-4 py-3 rounded-xl text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5" data-i18n="form_country">Qaysi davlat qiziqtirmoqda?</label>
+                <select id="lead-country" class="w-full glass-input px-4 py-3 rounded-xl text-sm bg-slate-900">
+                  <option value="China">China (Xitoy)</option>
+                  <option value="South Korea">South Korea (Janubiy Koreya)</option>
+                  <option value="Europe">Europe (Yevropa)</option>
+                  <option value="USA">USA (AQSH)</option>
+                </select>
+              </div>
+              <button type="submit" class="w-full py-3.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md shadow-amber-500/20">
+                <span data-i18n="btn_submit">Yuborish</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
 
-                            <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3.5">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="label_fullname">Ism va Familiyangiz</label>
-                                    <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="label_phone">Telefon Raqamingiz</label>
-                                    <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="label_message">Qiziqtirgan Yo'nalish / Izoh</label>
-                                    <textarea id="leadMessage" rows="2" placeholder="..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400"></textarea>
-                                </div>
-                                <button type="submit" class="w-full gold-button font-black py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm">
-                                    <span data-i18n="btn_submit">Arizani Yuborish</span>
-                                    <i class="fa-solid fa-paper-plane text-xs"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+      <!-- Admissions Showcase Section -->
+      <section id="admissions-section" class="space-y-8">
+        <div class="text-center space-y-3">
+          <h2 class="text-3xl sm:text-4xl font-extrabold gold-gradient-text" data-i18n="admissions_title">Talabalarimizning Qabul Xatlari (Admissions)</h2>
+          <p class="text-slate-400 text-sm max-w-xl mx-auto" data-i18n="admissions_desc">Kompaniyamiz ko'magida nufuzli OTMlarga o'qishga kirgan talabalarimiz va ularning grant viza hujjatlari.</p>
+        </div>
+
+        <div id="admissions-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamic Admission Items Rendered Here -->
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="services" class="space-y-8">
+        <div class="text-center space-y-3">
+          <h2 class="text-3xl sm:text-4xl font-extrabold gold-gradient-text" data-i18n="services_title">Xizmatlarimiz</h2>
+          <p class="text-slate-400 text-sm max-w-xl mx-auto" data-i18n="services_desc">Biz talabalarga ariza topshirishdan tortib manzilga yetib borishgacha to'liq hamrohlik qilamiz.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-6 rounded-2xl space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl">
+              <i class="fa-solid fa-file-signature"></i>
             </div>
-        </section>
+            <h3 class="text-xl font-bold text-amber-200" data-i18n="service_1_title">Hujjatlarni Tayyorlash</h3>
+            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="service_1_desc">Universitetlar talablariga mos ravishda motivatsion xatlar, rezyume va barcha tarjima hujjatlarini professional tayyorlaymiz.</p>
+          </div>
 
-        <!-- ADMISSION LETTERS SECTION (TIKLANIB, DIZAYNI MUKAMMAL SOHAGA KELTIRILDI) -->
-        <section id="admissions" class="py-12 sm:py-16 border-t border-slate-800/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Natijalarimiz</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-white mb-2"><span data-i18n="adm_title">Talabalarimizning</span> <span class="gold-gradient-text">Admission Letter</span>'lari</h2>
-                    <p class="text-slate-400 text-xs sm:text-sm" data-i18n="adm_desc">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
-                </div>
-                <div id="admissionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    <!-- Javascript orqali yuklanadi -->
-                </div>
+          <div class="glass-card p-6 rounded-2xl space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl">
+              <i class="fa-solid fa-award"></i>
             </div>
-        </section>
+            <h3 class="text-xl font-bold text-amber-200" data-i18n="service_2_title">100% Grantlar</h3>
+            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="service_2_desc">Davlat va universitet grant dasturlariga ariza topshirib, o'qish va yotoqxona xarajatlaridan ozod bo'lishingizga yordam beramiz.</p>
+          </div>
 
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="py-12 sm:py-20 bg-gradient-to-b from-transparent via-slate-950 to-slate-950">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block" data-i18n="contact_badge">Kechikmang, O'rinlar Cheklangan</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-white" data-i18n="contact_title">Biz Bilan Darhol Bog'laning</h2>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1" data-i18n="contact_desc">Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga tayyor.</p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-5">
-                    <a id="contactPhoneCard" href="tel:+998901234567" class="glass-card rounded-2xl p-4 sm:p-5 hover:border-amber-400 transition flex flex-col items-center text-center">
-                        <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-base mb-2.5"><i class="fa-solid fa-phone-volume"></i></div>
-                        <h3 class="text-xs sm:text-sm font-bold text-white mb-0.5" data-i18n="c_phone">Telefon Orqali</h3>
-                        <p class="text-[10px] text-slate-400 mb-2.5" data-i18n="c_phone_sub">To'g'ridan-to'g'ri konsultant</p>
-                        <span id="displayPhone" class="text-xs font-extrabold text-amber-400 font-mono mt-auto">+998 90 123 45 67</span>
-                    </a>
-
-                    <a id="contactTelegramAccount" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-4 sm:p-5 hover:border-sky-400 transition flex flex-col items-center text-center">
-                        <div class="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-base mb-2.5"><i class="fa-solid fa-paper-plane"></i></div>
-                        <h3 class="text-xs sm:text-sm font-bold text-white mb-0.5" data-i18n="c_tg_acc">Telegram Akaunt</h3>
-                        <p class="text-[10px] text-slate-400 mb-2.5" data-i18n="c_tg_acc_sub">Shaxsiy chatda yozing</p>
-                        <span class="text-xs font-bold text-sky-400 mt-auto flex items-center gap-1"><span data-i18n="btn_write">Yozish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                    </a>
-
-                    <a id="contactTelegramChannel" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-4 sm:p-5 hover:border-amber-400 transition flex flex-col items-center text-center">
-                        <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-base mb-2.5"><i class="fa-solid fa-bullhorn"></i></div>
-                        <h3 class="text-xs sm:text-sm font-bold text-white mb-0.5" data-i18n="c_tg_chan">Telegram Kanal</h3>
-                        <p class="text-[10px] text-slate-400 mb-2.5" data-i18n="c_tg_chan_sub">Yangiliklarni kuzating</p>
-                        <span class="text-xs font-bold text-amber-400 mt-auto flex items-center gap-1"><span data-i18n="btn_join">A'zo bo'lish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                    </a>
-
-                    <a id="contactInstagram" href="https://instagram.com/is.odyssey" target="_blank" class="glass-card rounded-2xl p-4 sm:p-5 hover:border-pink-500 transition flex flex-col items-center text-center">
-                        <div class="w-11 h-11 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-500 text-base mb-2.5"><i class="fa-brands fa-instagram"></i></div>
-                        <h3 class="text-xs sm:text-sm font-bold text-white mb-0.5">Instagram</h3>
-                        <p class="text-[10px] text-slate-400 mb-2.5" data-i18n="c_insta_sub">Foto va videolar</p>
-                        <span class="text-xs font-bold text-pink-400 mt-auto flex items-center gap-1"><span data-i18n="btn_follow">Kuzatish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                    </a>
-
-                    <a id="contactWhatsapp" href="https://wa.me/998901234567" target="_blank" class="glass-card rounded-2xl p-4 sm:p-5 hover:border-emerald-400 transition flex flex-col items-center text-center">
-                        <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-base mb-2.5"><i class="fa-brands fa-whatsapp"></i></div>
-                        <h3 class="text-xs sm:text-sm font-bold text-white mb-0.5">WhatsApp</h3>
-                        <p class="text-[10px] text-slate-400 mb-2.5" data-i18n="c_wa_sub">Tezkor aloqa</p>
-                        <span class="text-xs font-bold text-emerald-400 mt-auto flex items-center gap-1"><span data-i18n="btn_chat">Chatlashish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                    </a>
-                </div>
+          <div class="glass-card p-6 rounded-2xl space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl">
+              <i class="fa-solid fa-passport"></i>
             </div>
-        </section>
+            <h3 class="text-xl font-bold text-amber-200" data-i18n="service_3_title">Viza va Kuzatuv</h3>
+            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="service_3_desc">Elchixona suhbatiga tayyorgarlik, viza hujjatlarini rasmiylashtirish hamda boshqa davlatga kuzatib qo'yish xizmatlari.</p>
+          </div>
+        </div>
+      </section>
 
+      <!-- Interactive Contact Cards Section -->
+      <section id="contact" class="space-y-8">
+        <div class="text-center space-y-3">
+          <h2 class="text-3xl sm:text-4xl font-extrabold gold-gradient-text" data-i18n="contact_title">Biz Bilan Bog'laning</h2>
+          <p class="text-slate-400 text-sm max-w-xl mx-auto" data-i18n="contact_desc">Savollaringiz bormi? Har qanday qulay usulda bizga murojaat qiling.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <!-- Phone Card -->
+          <a id="card-phone-link" href="tel:+998901234567" class="glass-card p-5 rounded-2xl text-center space-y-3 group block">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg group-hover:bg-amber-500 group-hover:text-black transition-all">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block font-medium" data-i18n="cnt_phone">Telefon</span>
+              <span id="card-phone-val" class="text-sm font-semibold text-amber-200 group-hover:text-amber-400 block truncate">+998 90 123 45 67</span>
+            </div>
+          </a>
+
+          <!-- Telegram Account Card -->
+          <a id="card-tgacc-link" href="https://t.me/pilla_consulting" target="_blank" class="glass-card p-5 rounded-2xl text-center space-y-3 group block">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg group-hover:bg-blue-500 group-hover:text-white transition-all">
+              <i class="fa-paper-plane"></i>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block font-medium" data-i18n="cnt_tgacc">Telegram Admin</span>
+              <span id="card-tgacc-val" class="text-sm font-semibold text-amber-200 group-hover:text-amber-400 block truncate">@pilla_admin</span>
+            </div>
+          </a>
+
+          <!-- Telegram Channel Card -->
+          <a id="card-tgchan-link" href="https://t.me/pilla_channel" target="_blank" class="glass-card p-5 rounded-2xl text-center space-y-3 group block">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg group-hover:bg-cyan-500 group-hover:text-white transition-all">
+              <i class="fa-bullhorn"></i>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block font-medium" data-i18n="cnt_tgchan">Telegram Kanal</span>
+              <span id="card-tgchan-val" class="text-sm font-semibold text-amber-200 group-hover:text-amber-400 block truncate">@pilla_consulting</span>
+            </div>
+          </a>
+
+          <!-- Instagram Card -->
+          <a id="card-insta-link" href="https://instagram.com/pilla_consulting" target="_blank" class="glass-card p-5 rounded-2xl text-center space-y-3 group block">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 text-lg group-hover:bg-pink-500 group-hover:text-white transition-all">
+              <i class="fa-brands fa-instagram"></i>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block font-medium" data-i18n="cnt_insta">Instagram</span>
+              <span id="card-insta-val" class="text-sm font-semibold text-amber-200 group-hover:text-amber-400 block truncate">@pilla_consulting</span>
+            </div>
+          </a>
+
+          <!-- WhatsApp Card -->
+          <a id="card-wa-link" href="https://wa.me/998901234567" target="_blank" class="glass-card p-5 rounded-2xl text-center space-y-3 group block">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block font-medium" data-i18n="cnt_wa">WhatsApp</span>
+              <span id="card-wa-val" class="text-sm font-semibold text-amber-200 group-hover:text-amber-400 block truncate">+998 90 123 45 67</span>
+            </div>
+          </a>
+        </div>
+      </section>
     </main>
 
-    <!-- LIGHTBOX MODAL FOR ADMISSION LETTER IMAGE -->
-    <div id="imageModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
-        <div class="relative max-w-3xl w-full max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
-            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-sm hover:text-amber-400 font-bold">
-                <i class="fa-solid fa-xmark text-base"></i> Yopish
-            </button>
-            <img id="modalImage" src="" alt="Admission Letter" class="max-w-full max-h-[75vh] rounded-2xl object-contain shadow-2xl border border-amber-500/30">
-            <h4 id="modalCaption" class="text-white font-bold text-xs sm:text-base mt-3 text-center"></h4>
+    <!-- Footer -->
+    <footer class="glass-nav border-t border-amber-500/20 py-8 mt-12 text-xs text-slate-400">
+      <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+        <p>&copy; 2026 Pilla Consulting. Barcha huquqlar himoyalangan.</p>
+        <div class="flex justify-center gap-6">
+          <a href="#admin-login" onclick="openAdminModal()" class="hover:text-amber-400 transition-colors">Admin Login</a>
+          <a href="#privacy" class="hover:text-amber-400 transition-colors">Maxfiylik Siyosati</a>
         </div>
-    </div>
-
-    <!-- SECRET ADMIN PANEL -->
-    <div id="adminPanel" class="hidden min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-8 z-50 relative">
-        <div class="max-w-7xl mx-auto space-y-6">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-                <h1 class="text-base sm:text-xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center
-                </h1>
-                <button onclick="closeAdmin()" class="bg-slate-800 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-700 transition">Saytga Qaytish</button>
-            </div>
-
-            <div class="grid lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-5 space-y-5">
-                    <div class="glass-card rounded-2xl p-4 sm:p-5 space-y-3">
-                        <h3 class="text-xs sm:text-sm font-bold text-amber-400"><i class="fa-solid fa-lock text-xs mr-1"></i> Telegram Bot Sozlamalari</h3>
-                        <div>
-                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Telegram Bot Token</label>
-                            <input type="password" id="settingBotToken" placeholder="123456789:ABCdefGhI..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-amber-400 font-mono">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Telegram Chat ID</label>
-                            <input type="text" id="settingChatId" placeholder="123456789" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-amber-400 font-mono">
-                        </div>
-                    </div>
-
-                    <div class="glass-card rounded-2xl p-4 sm:p-5 space-y-3">
-                        <h3 class="text-xs sm:text-sm font-bold text-amber-400">Havola va Telefon Sozlamalari</h3>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Telefon Raqami</label>
-                            <input type="text" id="settingPhone" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                        </div>
-                        <div class="space-y-2">
-                            <input type="url" id="settingTelegramAccount" placeholder="Telegram Akaunt Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="url" id="settingTelegramChannel" placeholder="Telegram Kanal Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="url" id="settingInstagram" placeholder="Instagram Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="url" id="settingWhatsapp" placeholder="WhatsApp Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                        </div>
-                        <button onclick="saveSettings()" class="w-full gold-button font-bold py-2.5 rounded-xl text-xs">Sozlamalarni Saqlash</button>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-7">
-                    <div class="glass-card rounded-2xl p-4 sm:p-5">
-                        <h3 class="text-xs sm:text-sm font-bold text-white mb-3">Kelib Tushgan Arizalar</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs text-slate-300">
-                                <thead class="bg-slate-900 text-slate-400 font-bold">
-                                    <tr>
-                                        <th class="p-2">Sana</th>
-                                        <th class="p-2">Ism</th>
-                                        <th class="p-2">Telefon</th>
-                                        <th class="p-2">Izoh</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="leadsTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer id="mainFooter" class="border-t border-slate-800/80 bg-slate-950 py-6">
-        <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:text-left items-center">
-            <p class="text-xs text-slate-500">&copy; 2026 Pilla Consulting. Barcha huquqlar himoyalangan. <a href="#admin-login" class="text-slate-700 hover:text-slate-500 ml-2">Admin</a></p>
-            <div class="flex justify-center gap-5 text-base text-slate-400 mt-3 sm:mt-0">
-                <a id="footTelegramAccount" href="https://t.me/is_odyssey" target="_blank" class="hover:text-amber-400"><i class="fa-solid fa-paper-plane"></i></a>
-                <a id="footTelegramChannel" href="https://t.me/is_odyssey" target="_blank" class="hover:text-amber-400"><i class="fa-solid fa-bullhorn"></i></a>
-                <a id="footInstagram" href="https://instagram.com/is.odyssey" target="_blank" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
-                <a id="footWhatsapp" href="https://wa.me/998901234567" target="_blank" class="hover:text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-        </div>
+      </div>
     </footer>
+  </div>
 
-    <!-- SCRIPT & LOGIC -->
-    <script>
-        const DEFAULT_SETTINGS = {
-            botToken: "",
-            chatId: "",
-            phone: "+998 90 123 45 67",
-            telegramAccount: "https://t.me/is_odyssey",
-            telegramChannel: "https://t.me/is_odyssey",
-            instagram: "https://instagram.com/is.odyssey",
-            whatsapp: "https://wa.me/998901234567"
-        };
+  <!-- Image Lightbox Modal for Admission Letters -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-3xl font-bold p-2 z-50">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="max-w-4xl max-h-[90vh] flex flex-col items-center">
+      <img id="lightbox-img" src="" alt="Admission Preview" class="max-w-full max-h-[80vh] rounded-2xl object-contain border border-amber-500/30 shadow-2xl">
+      <div id="lightbox-caption" class="text-amber-300 font-semibold text-lg mt-4 text-center"></div>
+    </div>
+  </div>
 
-        const sampleAdmissions = [
-            { university: "Zhejiang University", student: "A. Rustamov", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop" },
-            { university: "Tsinghua University", student: "M. Karimov", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop" },
-            { university: "Peking University", student: "S. Saidova", image: "https://images.unsplash.com/photo-1562774053-701939374585?w=600&auto=format&fit=crop" }
-        ];
+  <!-- Admin Login Modal -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-md p-8 rounded-3xl border border-amber-500/40 space-y-6 relative">
+      <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-        const i18nData = {
-            uz: {
-                nav_admissions: "Admission Letters", nav_contact: "Bog'lanish", btn_get_consult: "Konsultatsiya",
-                hero_badge: "Rasmiy Vakillik va Kafolatlangan Ta'lim", hero_title_1: "Xitoyning", hero_title_2: "32 ta Nufuzli Universiteti", hero_title_3: "Bilan Rasmiy Shartnoma",
-                hero_desc: "Pilla Consulting — Xitoy OTMlarining O'zbekistondagi ishonchli vakili. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatingizni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.",
-                btn_free_consult: "Begaraz Konsultatsiya", btn_view_admissions: "Qabul Xatlarini Ko'rish", form_title: "Tezkor Ariza", form_subtitle: "So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.",
-                label_fullname: "Ism va Familiyangiz", label_phone: "Telefon Raqamingiz", label_message: "Qiziqtirgan Yo'nalish / Izoh", btn_submit: "Arizani Yuborish",
-                adm_title: "Talabalarimizning", adm_desc: "Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.",
-                contact_badge: "Kechikmang, O'rinlar Cheklangan", contact_title: "Biz Bilan Darhol Bog'laning", contact_desc: "Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga tayyor.",
-                c_phone: "Telefon Orqali", c_phone_sub: "To'g'ridan-to'g'ri konsultant", c_tg_acc: "Telegram Akaunt", c_tg_acc_sub: "Shaxsiy chatda yozing",
-                c_tg_chan: "Telegram Kanal", c_tg_chan_sub: "Yangiliklarni kuzating", c_insta_sub: "Foto va videolar", c_wa_sub: "Tezkor aloqa",
-                btn_write: "Yozish", btn_join: "A'zo bo'lish", btn_follow: "Kuzatish", btn_chat: "Chatlashish"
-            }
-        };
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white">Admin Panel Tizimiga Kirish</h3>
+        <p class="text-xs text-slate-400">Pilla Consulting boshqaruv paneli</p>
+      </div>
 
-        let currentSettings = JSON.parse(localStorage.getItem('pilla_settings')) || DEFAULT_SETTINGS;
-        let leads = JSON.parse(localStorage.getItem('pilla_leads')) || [];
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Login</label>
+          <input type="text" id="admin-user" required placeholder="odyssey" class="w-full glass-input px-4 py-3 rounded-xl text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Parol</label>
+          <input type="password" id="admin-pass" required placeholder="••••••••" class="w-full glass-input px-4 py-3 rounded-xl text-sm">
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:scale-[1.02] transition-all">
+          Kirish
+        </button>
+      </form>
+    </div>
+  </div>
 
-        document.addEventListener("DOMContentLoaded", () => {
-            initGalaxyAnimation();
-            applySettings();
-            renderAdmissions();
-            renderLeads();
-            checkAdminHash();
-            window.addEventListener("hashchange", checkAdminHash);
-        });
+  <!-- Full Screen Comprehensive Admin Dashboard -->
+  <div id="admin-dashboard" class="fixed inset-0 z-50 hidden bg-[#02040a] text-slate-100 overflow-y-auto">
+    
+    <!-- Galaxy background inside Dashboard -->
+    <div class="p-4 sm:p-8 max-w-7xl mx-auto space-y-8">
+      
+      <!-- Top Admin Header Bar -->
+      <div class="glass-card p-6 rounded-3xl flex flex-wrap justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+            <i class="fa-solid fa-sliders text-xl"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-black gold-gradient-text">Pilla Consulting CMS</h1>
+            <p class="text-xs text-slate-400">Tizim Boshqaruvi va Mijozlar Baza Analitikasi</p>
+          </div>
+        </div>
+        <button onclick="logoutAdmin()" class="px-5 py-2.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 hover:bg-red-500/30 text-xs font-bold transition-all flex items-center gap-2">
+          <i class="fa-solid fa-right-from-bracket"></i> Chaqish (Logout)
+        </button>
+      </div>
 
-        function changeLanguage(lang) {
-            const dict = i18nData[lang] || i18nData['uz'];
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(dict[key]) el.innerText = dict[key];
-            });
-        }
+      <!-- Admin Tabs Navigation -->
+      <div class="flex flex-wrap gap-2 border-b border-amber-500/20 pb-4">
+        <button onclick="switchAdminTab('settings')" id="tab-btn-settings" class="admin-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold border transition-all bg-amber-500 text-black border-amber-400">
+          <i class="fa-solid fa-gear mr-1.5"></i> Sozlamalar & Aloqa
+        </button>
+        <button onclick="switchAdminTab('leads')" id="tab-btn-leads" class="admin-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold border border-amber-500/30 bg-slate-900/60 text-slate-300 hover:text-amber-400 transition-all">
+          <i class="fa-solid fa-inbox mr-1.5"></i> Murojaatlar (Leads) <span id="badge-leads-count" class="ml-1 bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full text-[10px]">0</span>
+        </button>
+        <button onclick="switchAdminTab('admissions')" id="tab-btn-admissions" class="admin-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold border border-amber-500/30 bg-slate-900/60 text-slate-300 hover:text-amber-400 transition-all">
+          <i class="fa-solid fa-certificate mr-1.5"></i> Qabul Xatlari (Admissions)
+        </button>
+        <button onclick="switchAdminTab('clients')" id="tab-btn-clients" class="admin-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold border border-amber-500/30 bg-slate-900/60 text-slate-300 hover:text-amber-400 transition-all">
+          <i class="fa-solid fa-users mr-1.5"></i> Mijozlar (CRM Pipeline)
+        </button>
+      </div>
 
-        function initGalaxyAnimation() {
-            const canvas = document.getElementById('galaxyCanvas');
-            const ctx = canvas.getContext('2d');
-            function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-            resize(); window.addEventListener('resize', resize);
+      <!-- Tab 1: Settings & Branding & Contacts -->
+      <div id="tab-content-settings" class="admin-tab-content space-y-6">
+        <form onsubmit="saveSystemSettings(event)" class="glass-card p-8 rounded-3xl space-y-6">
+          <h3 class="text-xl font-bold text-amber-300 flex items-center gap-2">
+            <i class="fa-solid fa-globe"></i> Brending va Barcha Bog'lanish Linklari
+          </h3>
 
-            const stars = Array.from({ length: 70 }, () => ({
-                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5 + 0.5, alpha: Math.random(), speed: Math.random() * 0.008 + 0.002
-            }));
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Logo Rasm URL yoki Base64</label>
+              <input type="text" id="adm-logo-url" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="https://... yoki logo URL">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Telefon Raqami</label>
+              <input type="text" id="adm-phone" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="+998901234567">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Telegram Admin Akkount URL</label>
+              <input type="text" id="adm-tgacc" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="https://t.me/pilla_admin">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Telegram Kanal URL</label>
+              <input type="text" id="adm-tgchan" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="https://t.me/pilla_channel">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Instagram URL</label>
+              <input type="text" id="adm-insta" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="https://instagram.com/pilla_consulting">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">WhatsApp URL</label>
+              <input type="text" id="adm-wa" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="https://wa.me/998901234567">
+            </div>
+          </div>
 
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                stars.forEach(s => {
-                    s.alpha += s.speed;
-                    if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
-                    ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(234, 179, 8, ${Math.abs(s.alpha) * 0.7})`; ctx.fill();
-                });
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
+          <hr class="border-amber-500/20">
 
-        function renderAdmissions() {
-            const container = document.getElementById('admissionsGrid');
-            if(!container) return;
-            container.innerHTML = sampleAdmissions.map(item => `
-                <div onclick="openImageModal('${item.image}', '${item.university} - ${item.student}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group hover:border-amber-400 transition">
-                    <div class="h-52 overflow-hidden relative">
-                        <img src="${item.image}" alt="${item.university}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-transparent transition"></div>
-                        <div class="absolute bottom-2 right-2 bg-slate-950/80 px-2 py-1 rounded text-[10px] text-amber-400 font-bold"><i class="fa-solid fa-expand mr-1"></i> Kattalashtirish</div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-white text-sm sm:text-base">${item.university}</h4>
-                        <p class="text-xs text-amber-400 font-semibold mt-0.5">${item.student}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
+          <h3 class="text-xl font-bold text-amber-300 flex items-center gap-2">
+            <i class="fa-solid fa-robot"></i> Telegram Bot Integratsiyasi
+          </h3>
 
-        function openImageModal(src, caption) {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('modalCaption').innerText = caption;
-            document.getElementById('imageModal').classList.remove('hidden');
-        }
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Telegram Bot Token</label>
+              <input type="text" id="adm-bot-token" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="123456789:ABCdefGHIjklMNOpqrsTUVwxyz">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Chat ID (Guruh yoki Shaxsiy)</label>
+              <input type="text" id="adm-chat-id" class="w-full glass-input px-4 py-3 rounded-xl text-sm" placeholder="-100123456789">
+            </div>
+          </div>
 
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-        }
+          <div class="flex justify-end pt-4">
+            <button type="submit" class="px-8 py-3.5 rounded-xl font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:scale-105 transition-all">
+              Barcha Sozlamalarni Saqlash
+            </button>
+          </div>
+        </form>
+      </div>
 
-        function handleLeadSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('leadName').value.trim();
-            const phone = document.getElementById('leadPhone').value.trim();
-            const message = document.getElementById('leadMessage').value.trim();
+      <!-- Tab 2: Leads Inquiries Manager -->
+      <div id="tab-content-leads" class="admin-tab-content space-y-6 hidden">
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-xl font-bold text-amber-300">Kelib Tushgan Murojaatlar</h3>
+            <button onclick="clearAllLeads()" class="px-4 py-2 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-bold hover:bg-red-500/30">
+              Barchasini O'chirish
+            </button>
+          </div>
 
-            const newLead = { id: Date.now(), name, phone, message, date: new Date().toLocaleString() };
-            leads.unshift(newLead);
-            localStorage.setItem('pilla_leads', JSON.stringify(leads));
-            renderLeads();
-
-            const botToken = currentSettings.botToken;
-            const chatId = currentSettings.chatId;
-
-            if(botToken && chatId) {
-                const text = `📥 *PILLA CONSULTING - YANGI ARIZA!*\n\n👤 *Ism:* ${name}\n📞 *Tel:* ${phone}\n💬 *Izoh:* ${message || 'Kiritilmagan'}\n📅 *Sana:* ${newLead.date}`;
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'Markdown' })
-                }).then(() => alert("Arizangiz muvaffaqiyatli yuborildi!"))
-                  .catch(() => alert("Arizangiz qabul qilindi!"));
-            } else {
-                alert("Arizangiz qabul qilindi!");
-            }
-
-            document.getElementById('leadForm').reset();
-        }
-
-        function applySettings() {
-            const s = currentSettings;
-            if(s.phone) {
-                document.getElementById('displayPhone').innerText = s.phone;
-                document.getElementById('contactPhoneCard').href = `tel:${s.phone.replace(/\s+/g, '')}`;
-            }
-            if(s.telegramAccount) {
-                document.getElementById('contactTelegramAccount').href = s.telegramAccount;
-                document.getElementById('footTelegramAccount').href = s.telegramAccount;
-            }
-            if(s.telegramChannel) {
-                document.getElementById('contactTelegramChannel').href = s.telegramChannel;
-                document.getElementById('footTelegramChannel').href = s.telegramChannel;
-            }
-            if(s.instagram) {
-                document.getElementById('contactInstagram').href = s.instagram;
-                document.getElementById('footInstagram').href = s.instagram;
-            }
-            if(s.whatsapp) {
-                document.getElementById('contactWhatsapp').href = s.whatsapp;
-                document.getElementById('footWhatsapp').href = s.whatsapp;
-            }
-
-            // Fill Admin Inputs
-            document.getElementById('settingBotToken').value = s.botToken || '';
-            document.getElementById('settingChatId').value = s.chatId || '';
-            document.getElementById('settingPhone').value = s.phone || '';
-            document.getElementById('settingTelegramAccount').value = s.telegramAccount || '';
-            document.getElementById('settingTelegramChannel').value = s.telegramChannel || '';
-            document.getElementById('settingInstagram').value = s.instagram || '';
-            document.getElementById('settingWhatsapp').value = s.whatsapp || '';
-        }
-
-        function saveSettings() {
-            currentSettings.botToken = document.getElementById('settingBotToken').value.trim();
-            currentSettings.chatId = document.getElementById('settingChatId').value.trim();
-            currentSettings.phone = document.getElementById('settingPhone').value.trim();
-            currentSettings.telegramAccount = document.getElementById('settingTelegramAccount').value.trim();
-            currentSettings.telegramChannel = document.getElementById('settingTelegramChannel').value.trim();
-            currentSettings.instagram = document.getElementById('settingInstagram').value.trim();
-            currentSettings.whatsapp = document.getElementById('settingWhatsapp').value.trim();
-
-            localStorage.setItem('pilla_settings', JSON.stringify(currentSettings));
-            applySettings();
-            alert("Sozlamalar saqlandi!");
-        }
-
-        function renderLeads() {
-            const tbody = document.getElementById('leadsTableBody');
-            if(!tbody) return;
-            tbody.innerHTML = leads.map(l => `
-                <tr class="border-b border-slate-800">
-                    <td class="p-2 text-slate-500">${l.date}</td>
-                    <td class="p-2 font-semibold text-white">${l.name}</td>
-                    <td class="p-2 text-amber-400">${l.phone}</td>
-                    <td class="p-2 text-slate-400">${l.message || '-'}</td>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-900/80 text-amber-300 uppercase tracking-wider">
+                <tr>
+                  <th class="p-3">Sana</th>
+                  <th class="p-3">Ism</th>
+                  <th class="p-3">Telefon</th>
+                  <th class="p-3">Davlat</th>
+                  <th class="p-3">Holat</th>
+                  <th class="p-3 text-right">Amallar</th>
                 </tr>
-            `).join('');
-        }
+              </thead>
+              <tbody id="adm-leads-table-body" class="divide-y divide-amber-500/10 text-slate-300">
+                <!-- Dynamic Leads -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-        function checkAdminHash() {
-            if(window.location.hash === '#admin-login') {
-                promptAdminAuth();
-            }
-        }
+      <!-- Tab 3: Admissions CMS -->
+      <div id="tab-content-admissions" class="admin-tab-content space-y-6 hidden">
+        <!-- Add Admission Form -->
+        <form onsubmit="saveAdmissionLetter(event)" class="glass-card p-8 rounded-3xl space-y-6">
+          <h3 class="text-xl font-bold text-amber-300">Yangi Qabul Xatini Qo'shish</h3>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Universitet Nomi</label>
+              <input type="text" id="adm-univ-name" required placeholder="Peking University" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Talaba Ismi</label>
+              <input type="text" id="adm-student-name" required placeholder="Javohir S." class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Yo'nalish (Major)</label>
+              <input type="text" id="adm-major" required placeholder="Computer Science" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Grant Holati</label>
+              <input type="text" id="adm-grant" required placeholder="100% Full Scholarship" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Rasm URL yoki Fayl</label>
+            <div class="flex gap-2">
+              <input type="text" id="adm-img-url" required placeholder="https://... yoki rasm yuklang" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+              <input type="file" id="adm-img-file" accept="image/*" onchange="convertFileToBase64(this, 'adm-img-url')" class="hidden">
+              <button type="button" onclick="document.getElementById('adm-img-file').click()" class="px-4 py-2 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs rounded-xl font-semibold whitespace-nowrap">
+                Fayl Tanlash
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="px-6 py-3 rounded-xl font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500">
+            Qabul Xatini Saqlash
+          </button>
+        </form>
 
-        function promptAdminAuth() {
-            const login = prompt("Admin Login:");
-            const pass = prompt("Admin Parol:");
-            if (login === "odyssey" && pass === "Enmei1415!@#") {
-                document.getElementById('mainApp').classList.add('hidden');
-                document.getElementById('mainFooter').classList.add('hidden');
-                document.getElementById('adminPanel').classList.remove('hidden');
-            } else {
-                alert("Login yoki parol xato!");
-                window.location.hash = '';
-            }
-        }
+        <!-- Current Admissions Grid in Admin -->
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <h3 class="text-xl font-bold text-amber-300">Mavjud Qabul Xatlari Ro'yxati</h3>
+          <div id="adm-admissions-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamic items -->
+          </div>
+        </div>
+      </div>
 
-        function closeAdmin() {
-            document.getElementById('adminPanel').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-            document.getElementById('mainFooter').classList.remove('hidden');
-            window.location.hash = '';
+      <!-- Tab 4: Client Pipeline CRM -->
+      <div id="tab-content-clients" class="admin-tab-content space-y-6 hidden">
+        <!-- Add Client Form -->
+        <form onsubmit="saveClientRecord(event)" class="glass-card p-8 rounded-3xl space-y-6">
+          <h3 class="text-xl font-bold text-amber-300">Yangi Talaba/Mijoz Yozish (CRM)</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Mijoz Ism-Familiyasi</label>
+              <input type="text" id="crm-client-name" required placeholder="Sardor Bekov" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Telefon Raqami</label>
+              <input type="text" id="crm-client-phone" required placeholder="+998 93 987 65 43" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Tanlangan Davlat</label>
+              <input type="text" id="crm-client-country" required placeholder="China / Korea" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Bosqich (Status)</label>
+              <select id="crm-client-status" class="w-full glass-input px-3 py-2.5 rounded-xl text-xs bg-slate-900">
+                <option value="Arizada">1. Arizada (Applied)</option>
+                <option value="Jarayonda">2. Hujjatlar Jarayonda</option>
+                <option value="Qabul qilindi">3. Qabul Qilindi (Admitted)</option>
+                <option value="Viza oldi">4. Viza Oldi (Approved)</option>
+                <option value="Rad etildi">5. Rad Etildi (Rejected)</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Qo'shimcha Izohlar (Notes)</label>
+              <input type="text" id="crm-client-notes" placeholder="Topshirilgan OTMlar, IELTS balli va hk." class="w-full glass-input px-3 py-2.5 rounded-xl text-xs">
+            </div>
+          </div>
+          <button type="submit" class="px-6 py-3 rounded-xl font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500">
+            Mijozni Saqlash
+          </button>
+        </form>
+
+        <!-- Clients CRM Table -->
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-xl font-bold text-amber-300">Talabalar Pipeline Ro'yxati</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-900/80 text-amber-300 uppercase">
+                <tr>
+                  <th class="p-3">Mijoz Ismi</th>
+                  <th class="p-3">Telefon</th>
+                  <th class="p-3">Davlat</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Izoh</th>
+                  <th class="p-3 text-right">Amal</th>
+                </tr>
+              </thead>
+              <tbody id="adm-clients-table-body" class="divide-y divide-amber-500/10 text-slate-300">
+                <!-- Dynamic Clients -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Logic & Canvas Simulation -->
+  <script>
+    // Default system state
+    let state = {
+      settings: {
+        logoUrl: '',
+        phone: '+998 90 123 45 67',
+        tgacc: 'https://t.me/pilla_admin',
+        tgchan: 'https://t.me/pilla_consulting',
+        insta: 'https://instagram.com/pilla_consulting',
+        wa: 'https://wa.me/998901234567',
+        botToken: '',
+        chatId: ''
+      },
+      leads: [
+        { id: '1', date: '2026-09-26', name: 'Jasurbek Kamolov', phone: '+998 91 234 56 78', country: 'China', status: 'Yangi' },
+        { id: '2', date: '2026-09-25', name: 'Madina Rahimova', phone: '+998 90 987 65 43', country: 'South Korea', status: 'Bog'lanildi' }
+      ],
+      admissions: [
+        { id: '1', univ: 'Tsinghua University', student: 'Bekzod Aliyev', major: 'Software Engineering', grant: '100% Full Chinese Gov Grant', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800' },
+        { id: '2', univ: 'Seoul National University', student: 'Diyora Umarova', major: 'International Business', grant: 'GKS Scholarship', img: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=800' }
+      ],
+      clients: [
+        { id: '1', name: 'Sardor Bekov', phone: '+998 93 111 22 33', country: 'China', status: 'Jarayonda', notes: 'IELTS 6.5, CSC Grant kutilyapti' }
+      ]
+    };
+
+    // Load from local memory fallback
+    function loadStorageState() {
+      const saved = localStorage.getItem('pilla_app_data');
+      if (saved) {
+        try {
+          state = JSON.parse(saved);
+        } catch(e){}
+      }
+    }
+
+    function saveStorageState() {
+      localStorage.setItem('pilla_app_data', JSON.stringify(state));
+      renderUI();
+    }
+
+    // Translations i18n Dictionary
+    const i18n = {
+      uz: {
+        nav_admissions: "Qabul Xatlari",
+        nav_universities: "Universitetlar",
+        nav_services: "Xizmatlar",
+        nav_faq: "FAQ",
+        nav_contact: "Bog'lanish",
+        admin_btn: "Admin Panel",
+        hero_badge: "Cheksiz Imkoniyatlar Eshigi",
+        hero_title_1: "Chet elda ta'lim olish",
+        hero_title_2: "Xavfsiz va Kafolatlangan!",
+        hero_desc: "Xitoy, Janubiy Koreya, Yevropa hamda AQSHning nufuzli universitetlarida 100% gacha grantlar asosida tahsil oling.",
+        btn_apply: "Konsultatsiya Olish",
+        btn_admissions: "Qabul Xatlarini Ko'rish",
+        form_title: "Bepul Konsultatsiya",
+        form_subtitle: "Ma'lumotlaringizni qoldiring, mutaxassisimiz tez orada bog'lanadi",
+        form_name: "Ism-familiyangiz",
+        form_phone: "Telefon raqamingiz",
+        form_country: "Qaysi davlat qiziqtirmoqda?",
+        btn_submit: "Yuborish",
+        admissions_title: "Talabalarimizning Qabul Xatlari (Admissions)",
+        admissions_desc: "Kompaniyamiz ko'magida nufuzli OTMlarga o'qishga kirgan talabalarimiz va ularning viza hujjatlari.",
+        services_title: "Xizmatlarimiz",
+        services_desc: "Biz talabalarga ariza topshirishdan tortib manzilga yetib borishgacha to'liq hamrohlik qilamiz.",
+        service_1_title: "Hujjatlarni Tayyorlash",
+        service_1_desc: "Universitetlar talablariga mos ravishda motivatsion xatlar va tarjima hujjatlarini tayyorlaymiz.",
+        service_2_title: "100% Grantlar",
+        service_2_desc: "Davlat va universitet grant dasturlariga ariza topshirib, o'qish xarajatlaridan ozod bo'ling.",
+        service_3_title: "Viza va Kuzatuv",
+        service_3_desc: "Elchixona suhbatiga tayyorgarlik va boshqa davlatga kuzatib qo'yish xizmatlari.",
+        contact_title: "Biz Bilan Bog'laning",
+        contact_desc: "Savollaringiz bormi? Har qanday qulay usulda bizga murojaat qiling.",
+        cnt_phone: "Telefon",
+        cnt_tgacc: "Telegram Admin",
+        cnt_tgchan: "Telegram Kanal",
+        cnt_insta: "Instagram",
+        cnt_wa: "WhatsApp"
+      },
+      ru: {
+        nav_admissions: "Зачисления",
+        nav_universities: "Университеты",
+        nav_services: "Услуги",
+        nav_faq: "FAQ",
+        nav_contact: "Контакты",
+        admin_btn: "Админ Панель",
+        hero_badge: "Дверь к Бесконечным Возможностям",
+        hero_title_1: "Обучение за рубежом",
+        hero_title_2: "Безопасно и Гарантировано!",
+        hero_desc: "Учитесь со 100% грантами в престижных университетах Китая, Южной Кореи, Европы и США.",
+        btn_apply: "Получить Консультацию",
+        btn_admissions: "Посмотреть Зачисления",
+        form_title: "Бесплатная Консультация",
+        form_subtitle: "Оставьте данные, и наш специалист свяжется с вами",
+        form_name: "Ваше Имя и Фамилия",
+        form_phone: "Номер Телефона",
+        form_country: "Какая страна вас интересует?",
+        btn_submit: "Отправить",
+        admissions_title: "Письма о Зачислении Студентов",
+        admissions_desc: "Приглашения и гранты наших студентов, поступивших с нашей помощью.",
+        services_title: "Наши Услуги",
+        services_desc: "Полное сопровождение от подачи документов до прибытия на учебу.",
+        service_1_title: "Подготовка Документов",
+        service_1_desc: "Составляем мотивационные письма и переводы под требования ВУЗов.",
+        service_2_title: "100% Гранты",
+        service_2_desc: "Подача на государственные и университетские стипендиальные программы.",
+        service_3_title: "Виза и Сопровождение",
+        service_3_desc: "Подготовка к посольству, оформление виз и встреча в аэропорту.",
+        contact_title: "Свяжитесь с Нами",
+        contact_desc: "Есть вопросы? Напишите нам любым удобным способом.",
+        cnt_phone: "Телефон",
+        cnt_tgacc: "Telegram Админ",
+        cnt_tgchan: "Telegram Канал",
+        cnt_insta: "Instagram",
+        cnt_wa: "WhatsApp"
+      }
+    };
+
+    let currentLang = 'uz';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const dict = i18n[lang] || i18n['uz'];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+    }
+
+    document.getElementById('lang-select').addEventListener('change', (e) => {
+      setLanguage(e.target.value);
+    });
+
+    // Multi-Layer Galaxy & Stars Canvas System
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let stars = [];
+    let nebulae = [];
+
+    function initCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+
+      stars = [];
+      for (let i = 0; i < 350; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 1.8 + 0.2,
+          alpha: Math.random(),
+          speed: Math.random() * 0.015 + 0.005,
+          color: Math.random() > 0.3 ? '#facc15' : '#ffffff'
+        });
+      }
+
+      nebulae = [
+        { x: width * 0.2, y: height * 0.3, radius: 300, color: 'rgba(234, 179, 8, 0.07)' },
+        { x: width * 0.8, y: height * 0.7, radius: 400, color: 'rgba(59, 130, 246, 0.06)' },
+        { x: width * 0.5, y: height * 0.5, radius: 350, color: 'rgba(168, 85, 247, 0.05)' }
+      ];
+    }
+
+    function animateGalaxy() {
+      ctx.fillStyle = '#02040a';
+      ctx.fillRect(0, 0, width, height);
+
+      // Render Nebula clouds
+      nebulae.forEach(n => {
+        const grad = ctx.createRadialGradient(n.x, n.y, 10, n.x, n.y, n.radius);
+        grad.addColorStop(0, n.color);
+        grad.addColorStop(1, 'rgba(2, 4, 10, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Render Moving Stars
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = Math.abs(s.alpha);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      requestAnimationFrame(animateGalaxy);
+    }
+
+    window.addEventListener('resize', initCanvas);
+
+    function renderUI() {
+      // 1. Settings / Contacts update
+      const s = state.settings;
+      if (s.phone) {
+        document.getElementById('card-phone-val').textContent = s.phone;
+        document.getElementById('card-phone-link').href = `tel:${s.phone.replace(/\s+/g, '')}`;
+      }
+      if (s.tgacc) {
+        document.getElementById('card-tgacc-val').textContent = '@' + s.tgacc.split('/').pop();
+        document.getElementById('card-tgacc-link').href = s.tgacc;
+      }
+      if (s.tgchan) {
+        document.getElementById('card-tgchan-val').textContent = '@' + s.tgchan.split('/').pop();
+        document.getElementById('card-tgchan-link').href = s.tgchan;
+      }
+      if (s.insta) {
+        document.getElementById('card-insta-val').textContent = '@' + s.insta.split('/').pop();
+        document.getElementById('card-insta-link').href = s.insta;
+      }
+      if (s.wa) {
+        document.getElementById('card-wa-val').textContent = s.phone;
+        document.getElementById('card-wa-link').href = s.wa;
+      }
+
+      // Brand Logo
+      if (s.logoUrl) {
+        document.getElementById('logo-container').innerHTML = `<img src="${s.logoUrl}" class="w-full h-full object-contain rounded-lg">`;
+      }
+
+      // 2. Admissions Gallery
+      const grid = document.getElementById('admissions-grid');
+      const admList = document.getElementById('adm-admissions-list');
+      grid.innerHTML = '';
+      if (admList) admList.innerHTML = '';
+
+      state.admissions.forEach(item => {
+        // Public Gallery Card
+        const card = document.createElement('div');
+        card.className = 'glass-card rounded-2xl overflow-hidden group border border-amber-500/20 hover:border-amber-400 transition-all cursor-pointer';
+        card.onclick = () => openLightbox(item.img, `${item.student} - ${item.univ}`);
+        card.innerHTML = `
+          <div class="h-48 overflow-hidden relative">
+            <img src="${item.img}" alt="${item.univ}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            <span class="absolute top-3 right-3 bg-amber-500 text-slate-950 font-bold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md">
+              ${item.grant}
+            </span>
+          </div>
+          <div class="p-5 space-y-2">
+            <h4 class="font-bold text-lg text-amber-200 group-hover:text-amber-400 transition-colors">${item.univ}</h4>
+            <div class="flex justify-between items-center text-xs text-slate-300">
+              <span><i class="fa-solid fa-user text-amber-400 mr-1"></i> ${item.student}</span>
+              <span class="text-slate-400"><i class="fa-solid fa-book-bookmark text-amber-400 mr-1"></i> ${item.major}</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+
+        // Admin Admissions Item
+        if (admList) {
+          const admCard = document.createElement('div');
+          admCard.className = 'p-4 rounded-xl glass-card flex items-center justify-between gap-4';
+          admCard.innerHTML = `
+            <div class="flex items-center gap-3 overflow-hidden">
+              <img src="${item.img}" class="w-12 h-12 rounded-lg object-cover border border-amber-500/30">
+              <div class="truncate">
+                <p class="text-xs font-bold text-amber-200 truncate">${item.univ}</p>
+                <p class="text-[10px] text-slate-400">${item.student} | ${item.grant}</p>
+              </div>
+            </div>
+            <button onclick="deleteAdmission('${item.id}')" class="text-red-400 hover:text-red-300 p-2 text-sm">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          `;
+          admList.appendChild(admCard);
         }
-    </script>
+      });
+
+      // 3. Leads Table
+      const leadsBody = document.getElementById('adm-leads-table-body');
+      if (leadsBody) {
+        leadsBody.innerHTML = '';
+        state.leads.forEach(l => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-amber-500/5 transition-colors';
+          row.innerHTML = `
+            <td class="p-3 text-slate-400">${l.date}</td>
+            <td class="p-3 font-semibold text-white">${l.name}</td>
+            <td class="p-3 text-amber-300">${l.phone}</td>
+            <td class="p-3">${l.country}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-300">${l.status}</span></td>
+            <td class="p-3 text-right">
+              <button onclick="deleteLead('${l.id}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          `;
+          leadsBody.appendChild(row);
+        });
+        document.getElementById('badge-leads-count').textContent = state.leads.length;
+      }
+
+      // 4. Clients CRM Table
+      const clientsBody = document.getElementById('adm-clients-table-body');
+      if (clientsBody) {
+        clientsBody.innerHTML = '';
+        state.clients.forEach(c => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-amber-500/5 transition-colors';
+          row.innerHTML = `
+            <td class="p-3 font-semibold text-white">${c.name}</td>
+            <td class="p-3 text-amber-300">${c.phone}</td>
+            <td class="p-3">${c.country}</td>
+            <td class="p-3">
+              <select onchange="updateClientStatus('${c.id}', this.value)" class="bg-slate-950 border border-amber-500/30 text-amber-300 rounded px-2 py-1 text-[11px]">
+                <option value="Arizada" ${c.status==='Arizada'?'selected':''}>Arizada</option>
+                <option value="Jarayonda" ${c.status==='Jarayonda'?'selected':''}>Jarayonda</option>
+                <option value="Qabul qilindi" ${c.status==='Qabul qilindi'?'selected':''}>Qabul qilindi</option>
+                <option value="Viza oldi" ${c.status==='Viza oldi'?'selected':''}>Viza oldi</option>
+                <option value="Rad etildi" ${c.status==='Rad etildi'?'selected':''}>Rad etildi</option>
+              </select>
+            </td>
+            <td class="p-3 text-slate-400 truncate max-w-xs">${c.notes || '-'}</td>
+            <td class="p-3 text-right">
+              <button onclick="deleteClient('${c.id}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          `;
+          clientsBody.appendChild(row);
+        });
+      }
+    }
+
+    async function handleLeadSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('lead-name').value;
+      const phone = document.getElementById('lead-phone').value;
+      const country = document.getElementById('lead-country').value;
+
+      const newLead = {
+        id: Date.now().toString(),
+        date: new Date().toISOString().split('T')[0],
+        name,
+        phone,
+        country,
+        status: 'Yangi'
+      };
+
+      state.leads.unshift(newLead);
+      saveStorageState();
+
+      // Dispatch Telegram Notification if configured
+      if (state.settings.botToken && state.settings.chatId) {
+        const text = `🚀 *Yangi Murojaat! (Pilla Consulting)*\n\n👤 *Ism:* ${name}\n📞 *Tel:* ${phone}\n🌍 *Davlat:* ${country}`;
+        try {
+          fetch(`https://api.telegram.org/bot${state.settings.botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: state.settings.chatId,
+              text: text,
+              parse_mode: 'Markdown'
+            })
+          });
+        } catch(err){}
+      }
+
+      alert("Arizangiz muvaffaqiyatli yuborildi! Bosh konsul tez orada siz bilan bog'lanadi.");
+      document.getElementById('public-lead-form').reset();
+    }
+
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('admin-user').value;
+      const p = document.getElementById('admin-pass').value;
+
+      if (u === 'odyssey' && p === 'Enmei1415!@#') {
+        closeAdminModal();
+        document.getElementById('admin-dashboard').classList.remove('hidden');
+        populateAdminInputs();
+        renderUI();
+      } else {
+        alert("Login yoki parol xato!");
+      }
+    }
+
+    function logoutAdmin() {
+      document.getElementById('admin-dashboard').classList.add('hidden');
+    }
+
+    function switchAdminTab(tabName) {
+      document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-black', 'border-amber-400');
+        btn.classList.add('bg-slate-900/60', 'text-slate-300', 'border-amber-500/30');
+      });
+
+      document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+      activeBtn.classList.remove('bg-slate-900/60', 'text-slate-300', 'border-amber-500/30');
+      activeBtn.classList.add('bg-amber-500', 'text-black', 'border-amber-400');
+    }
+
+    function populateAdminInputs() {
+      const s = state.settings;
+      document.getElementById('adm-logo-url').value = s.logoUrl || '';
+      document.getElementById('adm-phone').value = s.phone || '';
+      document.getElementById('adm-tgacc').value = s.tgacc || '';
+      document.getElementById('adm-tgchan').value = s.tgchan || '';
+      document.getElementById('adm-insta').value = s.insta || '';
+      document.getElementById('adm-wa').value = s.wa || '';
+      document.getElementById('adm-bot-token').value = s.botToken || '';
+      document.getElementById('adm-chat-id').value = s.chatId || '';
+    }
+
+    function saveSystemSettings(e) {
+      e.preventDefault();
+      state.settings = {
+        logoUrl: document.getElementById('adm-logo-url').value,
+        phone: document.getElementById('adm-phone').value,
+        tgacc: document.getElementById('adm-tgacc').value,
+        tgchan: document.getElementById('adm-tgchan').value,
+        insta: document.getElementById('adm-insta').value,
+        wa: document.getElementById('adm-wa').value,
+        botToken: document.getElementById('adm-bot-token').value,
+        chatId: document.getElementById('adm-chat-id').value
+      };
+      saveStorageState();
+      alert("Tizim va aloqa sozlamalari yangilandi!");
+    }
+
+    function convertFileToBase64(fileInput, targetInputId) {
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById(targetInputId).value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function saveAdmissionLetter(e) {
+      e.preventDefault();
+      const newAdm = {
+        id: Date.now().toString(),
+        univ: document.getElementById('adm-univ-name').value,
+        student: document.getElementById('adm-student-name').value,
+        major: document.getElementById('adm-major').value,
+        grant: document.getElementById('adm-grant').value,
+        img: document.getElementById('adm-img-url').value
+      };
+      state.admissions.unshift(newAdm);
+      saveStorageState();
+      e.target.reset();
+      alert("Qabul xati muvaffaqiyatli saqlandi!");
+    }
+
+    function deleteAdmission(id) {
+      state.admissions = state.admissions.filter(a => a.id !== id);
+      saveStorageState();
+    }
+
+    function saveClientRecord(e) {
+      e.preventDefault();
+      const newClient = {
+        id: Date.now().toString(),
+        name: document.getElementById('crm-client-name').value,
+        phone: document.getElementById('crm-client-phone').value,
+        country: document.getElementById('crm-client-country').value,
+        status: document.getElementById('crm-client-status').value,
+        notes: document.getElementById('crm-client-notes').value
+      };
+      state.clients.unshift(newClient);
+      saveStorageState();
+      e.target.reset();
+      alert("Mijoz CRM ga saqlandi!");
+    }
+
+    function updateClientStatus(id, newStatus) {
+      const c = state.clients.find(x => x.id === id);
+      if (c) {
+        c.status = newStatus;
+        saveStorageState();
+      }
+    }
+
+    function deleteClient(id) {
+      state.clients = state.clients.filter(c => c.id !== id);
+      saveStorageState();
+    }
+
+    function deleteLead(id) {
+      state.leads = state.leads.filter(l => l.id !== id);
+      saveStorageState();
+    }
+
+    function clearAllLeads() {
+      if (confirm("Barcha murojaatlarni o'chirmoqchimisiz?")) {
+        state.leads = [];
+        saveStorageState();
+      }
+    }
+
+    function openLightbox(imgSrc, caption) {
+      document.getElementById('lightbox-img').src = imgSrc;
+      document.getElementById('lightbox-caption').textContent = caption;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
+    }
+
+    // Mobile Menu Toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Check hash for direct admin login link
+    window.addEventListener('load', () => {
+      initCanvas();
+      animateGalaxy();
+      loadStorageState();
+      renderUI();
+
+      if (window.location.hash === '#admin-login') {
+        openAdminModal();
+      }
+    });
+  </script>
 </body>
 </html>
