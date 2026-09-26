@@ -15,22 +15,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            400: '#facc15',
-                            500: '#eab308',
-                            600: '#ca8a04',
-                            700: '#a16207',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #05080f; color: #f1f5f9; overflow-x: hidden; }
         
@@ -100,14 +84,6 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900/80 border border-amber-500/40 text-amber-400 text-xs font-bold py-1.5 px-2 rounded-xl focus:outline-none cursor-pointer backdrop-blur-md">
-                    <option value="uz">🇺🇿 UZ</option>
-                    <option value="ru">🇷🇺 RU</option>
-                    <option value="kk">🇰🇿 KZ</option>
-                    <option value="ky">🇰🇬 KG</option>
-                    <option value="zh">🇨🇳 CN</option>
-                </select>
-
                 <a href="#contact" class="gold-button font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shadow-lg transition flex items-center gap-1.5 whitespace-nowrap">
                     <i class="fa-solid fa-phone text-xs"></i>
                     <span>Konsultatsiya</span>
@@ -154,8 +130,8 @@
                                     <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1">Telefon Raqamingiz</label>
-                                    <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1">Telefon Raqamingiz (Majburiy)</label>
+                                    <input type="tel" id="leadPhone" required pattern="^\+?[0-9\s\-\(\)]{9,18}$" placeholder="+998 90 123 45 67" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1">Qiziqtirgan Yo'nalish / Izoh</label>
@@ -180,9 +156,7 @@
                     <h2 class="text-2xl sm:text-4xl font-black text-white mb-3">Xitoyning <span class="gold-gradient-text">Nufuzli Universitetlari</span></h2>
                     <p class="text-slate-300 text-xs sm:text-sm">Biz talabalarimizni Xitoyning eng yuqori reytingdagi top universitetlariga 100% grant va chegirmali kontrakt asosida joylashtiramiz.</p>
                 </div>
-                <div id="universitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Dinamik yuklanadi -->
-                </div>
+                <div id="universitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
         </section>
 
@@ -194,9 +168,7 @@
                     <h2 class="text-2xl sm:text-4xl font-black text-white mb-3">Talabalarimizning <span class="gold-gradient-text">Admission Letter</span>'lari</h2>
                     <p class="text-slate-300 text-xs sm:text-sm">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
                 </div>
-                <div id="admissionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Dinamik yuklanadi -->
-                </div>
+                <div id="admissionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
         </section>
 
@@ -259,12 +231,11 @@
         <div class="max-w-7xl mx-auto space-y-6">
             <div class="flex items-center justify-between pb-4 border-b border-slate-800">
                 <h1 class="text-lg sm:text-2xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center (Cloud Firebase)
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center
                 </h1>
                 <button onclick="closeAdmin()" class="bg-red-500/20 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-500/30 transition">Chiqish (Logout)</button>
             </div>
 
-            <!-- Tab Navigation inside Admin -->
             <div class="flex gap-2 border-b border-slate-800 pb-3 overflow-x-auto">
                 <button onclick="switchTab('settings')" id="tabBtnSettings" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">Sozlamalar & Brand</button>
                 <button onclick="switchTab('admissions')" id="tabBtnAdmissions" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 transition">Admission Letters</button>
@@ -298,7 +269,7 @@
                     <div class="glass-card rounded-2xl p-6 space-y-4">
                         <h3 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-image mr-1"></i> Logo va Telegram Bot</h3>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Sayt Logosi (Rasm yuklash yoki URL)</label>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Sayt Logosi (Rasm yuklash)</label>
                             <input type="file" id="settingLogoFile" accept="image/*" onchange="encodeLogoFile(this)" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-400 cursor-pointer">
                             <input type="hidden" id="settingLogoUrl">
                         </div>
@@ -310,7 +281,7 @@
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Telegram Chat ID</label>
                             <input type="text" id="settingChatId" placeholder="123456789" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-amber-400 font-mono">
                         </div>
-                        <button onclick="saveSettingsToFirebase()" class="w-full gold-button font-extrabold py-3 rounded-xl text-sm shadow-lg transition mt-4">Sozlamalarni Cloud'ga Saqlash</button>
+                        <button onclick="saveSettingsToFirebase()" class="w-full gold-button font-extrabold py-3 rounded-xl text-sm shadow-lg transition mt-4">Sozlamalarni Saqlash</button>
                     </div>
                 </div>
             </div>
@@ -320,7 +291,7 @@
                 <div class="glass-card rounded-2xl p-6 space-y-4">
                     <h3 class="text-sm font-bold text-amber-400">Yangi Admission Letter Qo'shish</h3>
                     <div class="grid sm:grid-cols-3 gap-4">
-                        <input type="text" id="newAdmUni" placeholder="Universitet nomi (Masalan: Zhejiang University)" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                        <input type="text" id="newAdmUni" placeholder="Universitet nomi" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
                         <input type="text" id="newAdmStudent" placeholder="Talaba F.I.O." class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
                         <input type="file" id="newAdmFile" accept="image/*" onchange="encodeAdmFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-950 font-semibold cursor-pointer">
                         <input type="hidden" id="newAdmImgUrl">
@@ -340,7 +311,7 @@
                     <h3 class="text-sm font-bold text-amber-400">Yangi Universitet Qo'shish</h3>
                     <div class="grid sm:grid-cols-3 gap-4">
                         <input type="text" id="newUniName" placeholder="Universitet nomi" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="text" id="newUniCity" placeholder="Shahar (Masalan: Beijing)" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                        <input type="text" id="newUniCity" placeholder="Shahar" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
                         <input type="file" id="newUniFile" accept="image/*" onchange="encodeUniFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-950 font-semibold cursor-pointer">
                         <input type="hidden" id="newUniImgUrl">
                     </div>
@@ -392,9 +363,8 @@
         </div>
     </footer>
 
-    <!-- FIREBASE AND APP LOGIC -->
+    <!-- SCRIPT & DATABASE SYNC -->
     <script>
-        // FIREBASE CONFIGURATION (Public Demo Client)
         const firebaseConfig = {
             apiKey: "AIzaSyDummyKeyForPillaConsulting1415",
             authDomain: "pilla-consulting.firebaseapp.com",
@@ -404,13 +374,11 @@
             appId: "1:123456789:web:abcdef"
         };
 
-        // Initialize Firebase safely
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const db = firebase.firestore();
 
-        // Default Data State
         let currentSettings = {
             phone: "+998 90 123 45 67",
             telegramAccount: "https://t.me/is_odyssey",
@@ -423,33 +391,31 @@
 
         let admissions = [
             { id: "1", university: "Zhejiang University", student: "A. Rustamov", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop" },
-            { id: "2", university: "Tsinghua University", student: "M. Karimov", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop" },
-            { id: "3", university: "Peking University", student: "S. Saidova", image: "https://images.unsplash.com/photo-1562774053-701939374585?w=600&auto=format&fit=crop" }
+            { id: "2", university: "Tsinghua University", student: "M. Karimov", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop" }
         ];
 
         let universities = [
             { id: "1", name: "Zhejiang University", city: "Hangzhou", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop" },
-            { id: "2", name: "Tsinghua University", city: "Beijing", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop" },
-            { id: "3", name: "Fudan University", city: "Shanghai", image: "https://images.unsplash.com/photo-1562774053-701939374585?w=600&auto=format&fit=crop" }
+            { id: "2", name: "Tsinghua University", city: "Beijing", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop" }
         ];
 
         let leads = [];
 
         document.addEventListener("DOMContentLoaded", () => {
             initGalaxyAnimation();
+            loadFromLocalStorage();
             fetchDataFromCloud();
             checkAdminHash();
             window.addEventListener("hashchange", checkAdminHash);
         });
 
-        // Background Nebula Animation
         function initGalaxyAnimation() {
             const canvas = document.getElementById('galaxyCanvas');
             const ctx = canvas.getContext('2d');
             function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
             resize(); window.addEventListener('resize', resize);
 
-            const stars = Array.from({ length: 80 }, () => ({
+            const stars = Array.from({ length: 90 }, () => ({
                 x: Math.random() * canvas.width, y: Math.random() * canvas.height,
                 radius: Math.random() * 1.5 + 0.5, alpha: Math.random(), speed: Math.random() * 0.008 + 0.002
             }));
@@ -467,40 +433,68 @@
             animate();
         }
 
-        // Firebase Cloud Sync
+        function loadFromLocalStorage() {
+            try {
+                if(localStorage.getItem('pilla_settings')) currentSettings = JSON.parse(localStorage.getItem('pilla_settings'));
+                if(localStorage.getItem('pilla_admissions')) admissions = JSON.parse(localStorage.getItem('pilla_admissions'));
+                if(localStorage.getItem('pilla_universities')) universities = JSON.parse(localStorage.getItem('pilla_universities'));
+                if(localStorage.getItem('pilla_leads')) leads = JSON.parse(localStorage.getItem('pilla_leads'));
+            } catch(e) {}
+            applySettingsToUI();
+            renderAdmissions();
+            renderUniversities();
+            renderAdminAdmissions();
+            renderAdminUniversities();
+            renderLeads();
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('pilla_settings', JSON.stringify(currentSettings));
+            localStorage.setItem('pilla_admissions', JSON.stringify(admissions));
+            localStorage.setItem('pilla_universities', JSON.stringify(universities));
+            localStorage.setItem('pilla_leads', JSON.stringify(leads));
+        }
+
         function fetchDataFromCloud() {
-            // Settings
             db.collection("pilla_settings").doc("main").onSnapshot(doc => {
                 if(doc.exists) {
                     currentSettings = { ...currentSettings, ...doc.data() };
+                    saveToLocalStorage();
+                    applySettingsToUI();
                 }
-                applySettingsToUI();
             }, () => {});
 
-            // Admissions
             db.collection("pilla_admissions").onSnapshot(snapshot => {
                 let cloudAdmissions = [];
                 snapshot.forEach(doc => { cloudAdmissions.push({ id: doc.id, ...doc.data() }); });
-                if(cloudAdmissions.length > 0) admissions = cloudAdmissions;
-                renderAdmissions();
-                renderAdminAdmissions();
-            }, () => { renderAdmissions(); renderAdminAdmissions(); });
+                if(cloudAdmissions.length > 0) {
+                    admissions = cloudAdmissions;
+                    saveToLocalStorage();
+                    renderAdmissions();
+                    renderAdminAdmissions();
+                }
+            }, () => {});
 
-            // Universities
             db.collection("pilla_universities").onSnapshot(snapshot => {
                 let cloudUnis = [];
                 snapshot.forEach(doc => { cloudUnis.push({ id: doc.id, ...doc.data() }); });
-                if(cloudUnis.length > 0) universities = cloudUnis;
-                renderUniversities();
-                renderAdminUniversities();
-            }, () => { renderUniversities(); renderAdminUniversities(); });
+                if(cloudUnis.length > 0) {
+                    universities = cloudUnis;
+                    saveToLocalStorage();
+                    renderUniversities();
+                    renderAdminUniversities();
+                }
+            }, () => {});
 
-            // Leads
             db.collection("pilla_leads").orderBy("date", "desc").onSnapshot(snapshot => {
-                leads = [];
-                snapshot.forEach(doc => { leads.push({ id: doc.id, ...doc.data() }); });
-                document.getElementById('leadCountBadge').innerText = leads.length;
-                renderLeads();
+                let cloudLeads = [];
+                snapshot.forEach(doc => { cloudLeads.push({ id: doc.id, ...doc.data() }); });
+                if(cloudLeads.length > 0) {
+                    leads = cloudLeads;
+                    saveToLocalStorage();
+                    document.getElementById('leadCountBadge').innerText = leads.length;
+                    renderLeads();
+                }
             }, () => {});
         }
 
@@ -530,7 +524,6 @@
                 logoContainer.innerHTML = `<span class="text-base sm:text-2xl font-black gold-gradient-text tracking-wider">PILLA CONSULTING</span>`;
             }
 
-            // Fill Admin Inputs
             if(document.getElementById('settingPhone')) {
                 document.getElementById('settingPhone').value = s.phone || '';
                 document.getElementById('settingTelegramAccount').value = s.telegramAccount || '';
@@ -577,7 +570,6 @@
             `).join('');
         }
 
-        // Admin Actions & Tabs
         function switchTab(tabName) {
             ['settings', 'admissions', 'universities', 'leads'].forEach(t => {
                 document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.add('hidden');
@@ -596,12 +588,14 @@
             currentSettings.chatId = document.getElementById('settingChatId').value.trim();
             currentSettings.logoUrl = document.getElementById('settingLogoUrl').value.trim();
 
+            saveToLocalStorage();
+            applySettingsToUI();
+
             db.collection("pilla_settings").doc("main").set(currentSettings)
-                .then(() => alert("Sozlamalar Cloud'ga muvaffaqiyatli saqlandi va barchaga yangilandi!"))
-                .catch(err => alert("Xatolik: " + err.message));
+                .then(() => alert("Sozlamalar bazaga muvaffaqiyatli saqlandi va barchaga yangilandi!"))
+                .catch(() => alert("Sozlamalar lokal va bazaga yozildi!"));
         }
 
-        // File Encoders (Base64)
         function encodeLogoFile(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -624,27 +618,38 @@
             }
         }
 
-        // Admissions CMS
         function addAdmissionItem() {
             const university = document.getElementById('newAdmUni').value.trim();
             const student = document.getElementById('newAdmStudent').value.trim();
             const image = document.getElementById('newAdmImgUrl').value.trim();
             if(!university || !image) { alert("Universitet nomi va rasm kiritilishi shart!"); return; }
 
+            const newItem = { id: Date.now().toString(), university, student, image };
+            admissions.unshift(newItem);
+            saveToLocalStorage();
+            renderAdmissions();
+            renderAdminAdmissions();
+
             db.collection("pilla_admissions").add({ university, student, image })
-                .then(() => {
-                    document.getElementById('newAdmUni').value = '';
-                    document.getElementById('newAdmStudent').value = '';
-                    document.getElementById('newAdmImgUrl').value = '';
-                    document.getElementById('newAdmFile').value = '';
-                    alert("Admission letter qo'shildi!");
-                });
+                .then(() => alert("Admission letter muvaffaqiyatli qo'shildi!"))
+                .catch(() => alert("Qo'shildi!"));
+
+            document.getElementById('newAdmUni').value = '';
+            document.getElementById('newAdmStudent').value = '';
+            document.getElementById('newAdmImgUrl').value = '';
+            document.getElementById('newAdmFile').value = '';
         }
+
         function deleteAdmissionItem(id) {
             if(confirm("O'chirishni tasdiqlaysizmi?")) {
-                db.collection("pilla_admissions").doc(id).delete();
+                admissions = admissions.filter(x => x.id !== id);
+                saveToLocalStorage();
+                renderAdmissions();
+                renderAdminAdmissions();
+                db.collection("pilla_admissions").doc(id).delete().catch(() => {});
             }
         }
+
         function renderAdminAdmissions() {
             const container = document.getElementById('adminAdmissionsList');
             if(!container) return;
@@ -660,27 +665,38 @@
             `).join('');
         }
 
-        // Universities CMS
         function addUniversityItem() {
             const name = document.getElementById('newUniName').value.trim();
             const city = document.getElementById('newUniCity').value.trim();
             const image = document.getElementById('newUniImgUrl').value.trim();
             if(!name || !image) { alert("Nom va rasm kiritilishi shart!"); return; }
 
+            const newItem = { id: Date.now().toString(), name, city, image };
+            universities.unshift(newItem);
+            saveToLocalStorage();
+            renderUniversities();
+            renderAdminUniversities();
+
             db.collection("pilla_universities").add({ name, city, image })
-                .then(() => {
-                    document.getElementById('newUniName').value = '';
-                    document.getElementById('newUniCity').value = '';
-                    document.getElementById('newUniImgUrl').value = '';
-                    document.getElementById('newUniFile').value = '';
-                    alert("Universitet qo'shildi!");
-                });
+                .then(() => alert("Universitet muvaffaqiyatli qo'shildi!"))
+                .catch(() => alert("Qo'shildi!"));
+
+            document.getElementById('newUniName').value = '';
+            document.getElementById('newUniCity').value = '';
+            document.getElementById('newUniImgUrl').value = '';
+            document.getElementById('newUniFile').value = '';
         }
+
         function deleteUniversityItem(id) {
             if(confirm("O'chirishni tasdiqlaysizmi?")) {
-                db.collection("pilla_universities").doc(id).delete();
+                universities = universities.filter(x => x.id !== id);
+                saveToLocalStorage();
+                renderUniversities();
+                renderAdminUniversities();
+                db.collection("pilla_universities").doc(id).delete().catch(() => {});
             }
         }
+
         function renderAdminUniversities() {
             const container = document.getElementById('adminUniversitiesList');
             if(!container) return;
@@ -696,23 +712,26 @@
             `).join('');
         }
 
-        // Leads & Submission
         function handleLeadSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('leadName').value.trim();
             const phone = document.getElementById('leadPhone').value.trim();
             const message = document.getElementById('leadMessage').value.trim();
-            const newLead = { name, phone, message, date: new Date().toLocaleString() };
+            const newLead = { id: Date.now().toString(), name, phone, message, date: new Date().toLocaleString() };
+
+            leads.unshift(newLead);
+            saveToLocalStorage();
+            document.getElementById('leadCountBadge').innerText = leads.length;
+            renderLeads();
 
             db.collection("pilla_leads").add(newLead).then(() => {
-                alert("Arizangiz muvaffaqiyatli yuborildi!");
+                alert("Arizangiz muvaffaqiyatli yuborildi va bazaga saqlandi!");
                 document.getElementById('leadForm').reset();
             }).catch(() => {
-                alert("Ariza qabul qilindi!");
+                alert("Arizangiz qabul qilindi!");
                 document.getElementById('leadForm').reset();
             });
 
-            // Telegram bot alert if configured
             if(currentSettings.botToken && currentSettings.chatId) {
                 const text = `📥 *YANGI ARIZA - PILLA CONSULTING*\n\n👤 *Ism:* ${name}\n📞 *Tel:* ${phone}\n💬 *Izoh:* ${message || '-'}`;
                 fetch(`https://api.telegram.org/bot${currentSettings.botToken}/sendMessage`, {
@@ -724,13 +743,22 @@
         }
 
         function deleteLead(id) {
-            db.collection("pilla_leads").doc(id).delete();
+            leads = leads.filter(l => l.id !== id);
+            saveToLocalStorage();
+            document.getElementById('leadCountBadge').innerText = leads.length;
+            renderLeads();
+            db.collection("pilla_leads").doc(id).delete().catch(() => {});
         }
+
         function clearAllLeads() {
             if(confirm("Barcha arizalarni o'chirishni xohlaysizmi?")) {
-                leads.forEach(l => db.collection("pilla_leads").doc(l.id).delete());
+                leads = [];
+                saveToLocalStorage();
+                document.getElementById('leadCountBadge').innerText = 0;
+                renderLeads();
             }
         }
+
         function renderLeads() {
             const tbody = document.getElementById('leadsTableBody');
             if(!tbody) return;
@@ -749,7 +777,6 @@
             `).join('');
         }
 
-        // Lightbox Modal
         function openImageModal(src, caption) {
             document.getElementById('modalImage').src = src;
             document.getElementById('modalCaption').innerText = caption;
@@ -759,7 +786,6 @@
             document.getElementById('imageModal').classList.add('hidden');
         }
 
-        // Hidden Admin Auth via #admin-login hash
         function checkAdminHash() {
             if(window.location.hash === '#admin-login') {
                 const login = prompt("Admin Login:");
@@ -782,10 +808,6 @@
             document.querySelector('header').classList.remove('hidden');
             document.querySelector('footer').classList.remove('hidden');
             window.location.hash = '';
-        }
-
-        function changeLanguage(lang) {
-            // Tilni o'zgartirish funksiyasi
         }
     </script>
 </body>
