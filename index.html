@@ -1,277 +1,321 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilla Consulting - Xitoy Oliy Ta'limi va Grantlar</title>
+    <title>Pilla Consulting - Xitoy Ta'lim va Grant Dasturlari</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
-        .modal-blur { backdrop-filter: blur(8px); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f1f5f9; }
+        
+        /* Galaxy Background Canvas */
+        #galaxyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-nav {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+<body class="relative min-h-screen flex flex-col custom-scrollbar overflow-x-hidden">
+
+    <!-- GALAKTIKA ANIMATSIYASI (CANVAS) -->
+    <canvas id="galaxyCanvas"></canvas>
 
     <!-- HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-40 glass border-b border-slate-200/80 shadow-sm">
+    <header class="sticky top-0 z-40 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div id="siteLogoContainer" class="w-12 h-12 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-emerald-600/30 overflow-hidden">
-                    P
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3.5 group">
+                <div id="siteLogoContainer" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-0.5 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition transform">
+                    <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-black text-2xl text-emerald-400 overflow-hidden">
+                        P
+                    </div>
                 </div>
                 <div>
-                    <span id="siteBrandName" class="text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-emerald-600 transition">PILLA</span>
-                    <span class="block text-xs font-semibold text-emerald-600 tracking-widest uppercase">Consulting</span>
+                    <span class="text-2xl font-black tracking-tight text-white group-hover:text-emerald-400 transition">PILLA</span>
+                    <span class="block text-[10px] font-bold text-emerald-400 tracking-[0.25em] uppercase">Consulting</span>
                 </div>
             </a>
 
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600">
-                <a href="#about" class="hover:text-emerald-600 transition">Biz haqimizda</a>
-                <a href="#universities" class="hover:text-emerald-600 transition">Universitetlar</a>
-                <a href="#admissions" class="hover:text-emerald-600 transition">Admission Letters</a>
-                <a href="#contact" class="hover:text-emerald-600 transition">Bog'lanish</a>
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+                <a href="#about" class="hover:text-emerald-400 transition">Afzalliklar</a>
+                <a href="#universities" class="hover:text-emerald-400 transition">Universitetlar</a>
+                <a href="#admissions" class="hover:text-emerald-400 transition">Admission Letters</a>
+                <a href="#contact" class="hover:text-emerald-400 transition">Bog'lanish</a>
             </nav>
 
-            <!-- Social Links & Action -->
-            <div class="flex items-center gap-4">
-                <div class="hidden lg:flex items-center gap-3 text-slate-500 border-r border-slate-200 pr-4">
-                    <a id="navTelegram" href="https://t.me/" target="_blank" class="hover:text-sky-500 transition text-lg"><i class="fa-brands fa-telegram"></i></a>
-                    <a id="navInstagram" href="https://instagram.com/" target="_blank" class="hover:text-pink-600 transition text-lg"><i class="fa-brands fa-instagram"></i></a>
-                    <a id="navWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-500 transition text-lg"><i class="fa-brands fa-whatsapp"></i></a>
+            <!-- Social Links & Call Button -->
+            <div class="flex items-center gap-5">
+                <div class="hidden lg:flex items-center gap-3.5 border-r border-slate-800 pr-5 text-slate-400">
+                    <a id="navTelegram" href="https://t.me/" target="_blank" class="hover:text-emerald-400 transition text-lg"><i class="fa-brands fa-telegram"></i></a>
+                    <a id="navInstagram" href="https://instagram.com/" target="_blank" class="hover:text-emerald-400 transition text-lg"><i class="fa-brands fa-instagram"></i></a>
+                    <a id="navWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-400 transition text-lg"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
-                <a href="#contact" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-600/20 transition transform active:scale-95">
-                    Konsultatsiya olish
+                <a href="#contact" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-lg shadow-emerald-500/25 transition transform active:scale-95">
+                    Konsultatsiya Olish
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- MAIN APP WRAPPER -->
     <main id="mainApp" class="flex-grow">
+        
         <!-- HERO SECTION -->
-        <section class="relative py-20 lg:py-28 overflow-hidden bg-gradient-to-b from-slate-100 via-slate-50 to-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <section class="relative py-20 lg:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-12 gap-12 items-center">
-                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 text-emerald-800 text-sm font-semibold border border-emerald-200">
-                            <i class="fa-solid fa-shield-halved text-emerald-600"></i> Rasmiy Vakillik va Kafolatli Ta'lim
+                    
+                    <!-- Left Hero Content -->
+                    <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-wide uppercase">
+                            <i class="fa-solid fa-certificate text-emerald-400"></i> Rasmiy Vakillik va Kafolatlangan Ta'lim
                         </div>
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
-                            Xitoyning <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">32 ta Nufuzli Universiteti</span> Bilan Rasmiy Shartnoma
+                        <h1 class="text-4xl sm:text-6xl font-extrabold text-white leading-tight tracking-tight">
+                            Xitoyning <span class="gradient-text">32 ta Nufuzli Universiteti</span> Bilan Rasmiy Shartnoma
                         </h1>
-                        <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
-                            Pilla Consulting — Xitoy OTMlarining O'zbekistondagi doimiy va ishonchli hamkori. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatlarni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.
+                        <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl">
+                            Pilla Consulting — Xitoy OTMlarining O'zbekistondagi ishonchli vakili. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatingizni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.
                         </p>
-                        <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
-                            <a href="#contact" class="w-full sm:w-auto text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-emerald-600/25 transition">
-                                Ariza Qoldirish
+                        <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-2">
+                            <a href="#contact" class="w-full sm:w-auto text-center bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-emerald-500/20 transition">
+                                Begaraz Konsultatsiya
                             </a>
-                            <a href="#admissions" class="w-full sm:w-auto text-center bg-white hover:bg-slate-100 text-slate-800 font-bold px-8 py-4 rounded-xl border border-slate-300 transition">
+                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition">
                                 Qabul Xatlarini Ko'rish
                             </a>
                         </div>
                     </div>
-                    
-                    <!-- Form Box -->
+
+                    <!-- Right Application Form -->
                     <div class="lg:col-span-5" id="contact">
-                        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
-                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Begaraz Konsultatsiya</h3>
-                            <p class="text-slate-500 text-sm mb-6">Ma'lumotlaringizni qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
-                            
+                        <div class="glass-card rounded-3xl p-8 shadow-2xl relative border-emerald-500/20">
+                            <div class="absolute -top-3 -right-3 bg-emerald-500 text-slate-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                                Bepul
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Konsultatsiya Olish</h3>
+                            <p class="text-slate-400 text-xs mb-6">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
+
                             <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Ism va Familiyangiz</label>
-                                    <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition">
+                                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Ism va Familiyangiz</label>
+                                    <input type="text" id="leadName" required placeholder="Masalan: Ali Valiyev" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-400 transition">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Telefon Raqamingiz</label>
-                                    <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition">
+                                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Telefon Raqamingiz</label>
+                                    <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-400 transition">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Qiziqtirgan Yo'nalish / Izoh</label>
-                                    <textarea id="leadMessage" rows="3" placeholder="Qaysi mutaxassislik bo'yicha o'qishni xohlaysiz?" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"></textarea>
+                                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Qiziqtirgan Yo'nalish / Izoh</label>
+                                    <textarea id="leadMessage" rows="3" placeholder="Qaysi mutaxassislik bo'yicha o'qishni xohlaysiz?" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-400 transition"></textarea>
                                 </div>
-                                <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2">
+                                <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black py-4 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2">
                                     <span>Arizani Yuborish</span>
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
         <!-- STATS SECTION -->
-        <section class="py-12 bg-emerald-900 text-white">
+        <section class="py-12 border-y border-slate-800/80 bg-slate-950/60">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     <div>
-                        <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1">32+</div>
-                        <div class="text-xs sm:text-sm text-emerald-100 font-medium">Shartnomali Universitetlar</div>
+                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">32+</div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Shartnomali OTMlar</div>
                     </div>
                     <div>
-                        <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1">100%</div>
-                        <div class="text-xs sm:text-sm text-emerald-100 font-medium">Viza Olish Ko'rsatkichi</div>
+                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">100%</div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Viza Kafolati</div>
                     </div>
                     <div>
-                        <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1">500+</div>
-                        <div class="text-xs sm:text-sm text-emerald-100 font-medium">Muvaffaqiyatli Talabalar</div>
+                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">500+</div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Muvaffaqiyatli Talabalar</div>
                     </div>
                     <div>
-                        <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1">100%</div>
-                        <div class="text-xs sm:text-sm text-emerald-100 font-medium">Grant Kafolati</div>
+                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">100%</div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Grant Yutug'i</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ADMISSION LETTERS GALLERY -->
-        <section id="admissions" class="py-20 bg-white">
+        <!-- ADMISSIONS GALLERY SECTION -->
+        <section id="admissions" class="py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mb-4">Talabalarimizning Admission Letter'lari</h2>
-                    <p class="text-slate-600">Biz orqali Xitoy va dunyo OTMlariga qabul qilingan ba'zi talabalarimizning rasmiy qabul xatlari.</p>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">Talabalarimizning Admission Letter'lari</h2>
+                    <p class="text-slate-400 text-sm sm:text-base">Biz orqali Xitoy va dunyo OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlari galereyasi.</p>
                 </div>
 
                 <div id="admissionsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Dynamic Items loaded via JS -->
+                    <!-- Dynamic Admission Cards -->
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- SECRET ADMIN PANEL SECTION (HIDDEN BY DEFAULT) -->
-    <div id="adminPanel" class="hidden min-h-screen bg-slate-900 text-slate-100 p-4 sm:p-8">
+    <!-- SECRET ADMIN PANEL (HIDDEN DEFAULT) -->
+    <div id="adminPanel" class="hidden min-h-screen bg-slate-950 text-slate-100 p-6 sm:p-10 z-50 relative">
         <div class="max-w-7xl mx-auto space-y-8">
-            <!-- Admin Top Bar -->
-            <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+            
+            <!-- Top Bar -->
+            <div class="flex items-center justify-between pb-6 border-b border-slate-800">
                 <div>
-                    <h1 class="text-2xl font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-user-shield text-emerald-500"></i> Pilla Admin Dashboard
+                    <h1 class="text-2xl font-black text-white flex items-center gap-3">
+                        <i class="fa-solid fa-user-shield text-emerald-400"></i> Pilla Control Center
                     </h1>
-                    <p class="text-xs text-slate-400">Boshqaruv paneli va mijozlar bazasi</p>
+                    <p class="text-xs text-slate-400 mt-1">Boshqaruv paneli va mijozlar bazasi</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button onclick="closeAdmin()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold transition">
-                        <i class="fa-solid fa-globe mr-1"></i> Saytga Qaytish
+                    <button onclick="closeAdmin()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl text-xs font-bold transition">
+                        <i class="fa-solid fa-globe mr-2"></i> Saytga Qaytish
                     </button>
-                    <button onclick="logoutAdmin()" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">
+                    <button onclick="closeAdmin()" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">
                         Chiqish
                     </button>
                 </div>
             </div>
 
-            <!-- Admin Grid -->
+            <!-- Grid Layout -->
             <div class="grid lg:grid-cols-12 gap-8">
-                <!-- Left: Settings & Add CMS -->
+                
+                <!-- Left Column: Branding & CMS -->
                 <div class="lg:col-span-5 space-y-6">
                     
-                    <!-- Site Branding & Social Media Settings -->
-                    <div class="bg-slate-800/90 rounded-2xl p-6 border border-slate-700/80 shadow-xl space-y-4">
-                        <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
-                            <i class="fa-solid fa-sliders"></i> Sayt Sozlamalari & Logo
+                    <!-- Settings Card -->
+                    <div class="glass-card rounded-2xl p-6 space-y-4">
+                        <h3 class="text-base font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders"></i> Logo & Sozlamalar
                         </h3>
                         
-                        <!-- Logo Upload -->
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Logo Rasm Fayli Yuklash</label>
-                            <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer">
+                            <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-500 file:text-slate-950 hover:file:bg-emerald-400 cursor-pointer">
                         </div>
 
-                        <!-- Phone Number -->
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Konsultant Telefon Raqami</label>
-                            <input type="text" id="settingPhone" placeholder="+998 90 123 45 67" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            <input type="text" id="settingPhone" placeholder="+998 90 123 45 67" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-400">
                         </div>
 
-                        <!-- Social Media Links -->
                         <div class="space-y-2 pt-2">
-                            <label class="block text-xs font-bold text-slate-400 uppercase">Ijtimoiy Tarmoqlar Linklari</label>
-                            <input type="url" id="settingTelegram" placeholder="Telegram URL (https://t.me/username)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
-                            <input type="url" id="settingInstagram" placeholder="Instagram URL (https://instagram.com/pilla)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
-                            <input type="url" id="settingWhatsapp" placeholder="WhatsApp URL (https://wa.me/998901234567)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                            <label class="block text-xs font-bold text-slate-400 uppercase">Ijtimoiy Tarmoqlar</label>
+                            <input type="url" id="settingTelegram" placeholder="Telegram Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="url" id="settingInstagram" placeholder="Instagram Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="url" id="settingWhatsapp" placeholder="WhatsApp Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
 
-                        <button onclick="saveSettings()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl transition">
+                        <button onclick="saveSettings()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">
                             Sozlamalarni Saqlash
                         </button>
                     </div>
 
                     <!-- Add Admission Letter -->
-                    <div class="bg-slate-800/90 rounded-2xl p-6 border border-slate-700/80 shadow-xl space-y-4">
-                        <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
-                            <i class="fa-solid fa-file-circle-plus"></i> Yangi Admission Letter Qo'shish
+                    <div class="glass-card rounded-2xl p-6 space-y-4">
+                        <h3 class="text-base font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle"></i> Admission Letter Qo'shish
                         </h3>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Talaba Ismi</label>
-                            <input type="text" id="admStudent" placeholder="Sardor Bekmurodov" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                            <input type="text" id="admStudent" placeholder="Sardor Bekmurodov" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Universitet Nomi</label>
-                            <input type="text" id="admUni" placeholder="Zhejiang University" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                            <input type="text" id="admUni" placeholder="Zhejiang University" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Grant / Yo'nalish</label>
-                            <input type="text" id="admGrant" placeholder="Full CSC Scholarship (Computer Science)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                            <input type="text" id="admGrant" placeholder="Full CSC Scholarship" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
-                        <button onclick="addAdmission()" class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-2.5 rounded-xl transition">
+                        <button onclick="addAdmission()" class="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">
                             Galereyaga Qo'shish
                         </button>
                     </div>
 
                 </div>
 
-                <!-- Right: Customer Leads Table -->
+                <!-- Right Column: Leads Database -->
                 <div class="lg:col-span-7">
-                    <div class="bg-slate-800/90 rounded-2xl p-6 border border-slate-700/80 shadow-xl">
+                    <div class="glass-card rounded-2xl p-6">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-users"></i> Kelib Tushgan Arizalar
+                            <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-users"></i> Kelib Tushgan Arizalar Baza
                             </h3>
-                            <span id="leadCount" class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/30">
+                            <span id="leadCount" class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20">
                                 0 ta
                             </span>
                         </div>
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs text-slate-300">
-                                <thead class="bg-slate-900/80 text-slate-400 uppercase font-bold">
+                                <thead class="bg-slate-900/90 text-slate-400 uppercase font-bold">
                                     <tr>
                                         <th class="p-3">Sana</th>
                                         <th class="p-3">Ism</th>
                                         <th class="p-3">Telefon</th>
                                         <th class="p-3">Izoh</th>
-                                        <th class="p-3 text-right">Amallar</th>
+                                        <th class="p-3 text-right">O'chirish</th>
                                     </tr>
                                 </thead>
-                                <tbody id="leadsTableBody" class="divide-y divide-slate-700/50">
-                                    <!-- Dynamic Leads -->
+                                <tbody id="leadsTableBody" class="divide-y divide-slate-800/80">
+                                    <!-- Dynamic Rows -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
     <!-- FOOTER -->
-    <footer id="mainFooter" class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+    <footer id="mainFooter" class="border-t border-slate-800/80 bg-slate-950 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-                <p class="text-sm">&copy; 2026 Pilla Consulting. Barcha huquqlar himoyalangan.</p>
-                <p class="text-xs text-slate-600 mt-1">Xitoy oliygohlarining rasmiy vakili.</p>
+                <p class="text-xs text-slate-400">&copy; 2026 Pilla Consulting. Barcha huquqlar himoyalangan.</p>
+                <p class="text-[10px] text-slate-600 mt-1">Xitoy universitetlarining rasmiy vakili.</p>
             </div>
-            <div class="flex items-center gap-6 text-xl">
+            <div class="flex items-center gap-6 text-xl text-slate-400">
                 <a id="footTelegram" href="https://t.me/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-telegram"></i></a>
                 <a id="footInstagram" href="https://instagram.com/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-instagram"></i></a>
                 <a id="footWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
@@ -279,20 +323,21 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT APP LOGIC -->
+    <!-- SCRIPT LOGIC & GALAXY ANIMATION -->
     <script>
-        // TELEGRAM BOT CONFIGURATION
-        const TG_BOT_TOKEN = "7825283402:AAGM-eOvvvQy2jO2a4L5uS5sW8z_V4R9wvw"; // SIZNING BOT TOKEN
-        const TG_CHAT_ID = "7323184602"; // SIZNING TELEGRAM CHAT ID
+        // TELEGRAM BOT CREDENTIALS
+        const TG_BOT_TOKEN = "7825283402:AAGM-eOvvvQy2jO2a4L5uS5sW8z_V4R9wvw";
+        const TG_CHAT_ID = "7323184602";
 
-        // DATA STATE
+        // INITIAL STATE
         let leads = JSON.parse(localStorage.getItem('pilla_leads')) || [
             { id: 1, name: "Jasur Malikov", phone: "+998 91 555 44 33", message: "Zhejiang Full Grant so'ramoqchiman", date: "2026-09-26 18:30" }
         ];
 
         let admissions = JSON.parse(localStorage.getItem('pilla_admissions')) || [
             { id: 1, student: "Anvar Raimov", uni: "Tsinghua University", grant: "Full CSC Scholarship" },
-            { id: 2, student: "Madina Odilova", uni: "Zhejiang University", grant: "Presidential Scholarship" }
+            { id: 2, student: "Madina Odilova", uni: "Zhejiang University", grant: "Presidential Scholarship" },
+            { id: 3, student: "Suhrob Karimov", uni: "Peking University", grant: "Provincial Government Grant" }
         ];
 
         let settings = JSON.parse(localStorage.getItem('pilla_settings')) || {
@@ -303,15 +348,55 @@
             whatsapp: "https://wa.me/998901234567"
         };
 
-        // INIT APP
         document.addEventListener("DOMContentLoaded", () => {
+            initGalaxyAnimation();
             renderAdmissions();
             renderLeads();
             applySettings();
             checkAdminHash();
         });
 
-        // HANDLE LEAD SUBMISSION & TELEGRAM NOTIFICATION
+        // GALAKTIKA KOSMOS ANIMATSIYASI (CANVAS)
+        function initGalaxyAnimation() {
+            const canvas = document.getElementById('galaxyCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const stars = Array.from({ length: 140 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5 + 0.5,
+                alpha: Math.random(),
+                speed: Math.random() * 0.008 + 0.002
+            }));
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                stars.forEach(s => {
+                    s.alpha += s.speed;
+                    if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(52, 211, 153, ${Math.abs(s.alpha) * 0.7})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = "#10b981";
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // LEAD SUBMISSION & TELEGRAM BOT NOTIFICATION
         function handleLeadSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('leadName').value;
@@ -337,40 +422,41 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: TG_CHAT_ID, text: text, parse_mode: 'Markdown' })
-            }).catch(err => console.log('TG error:', err));
+            }).catch(err => console.log('TG Notification error:', err));
 
-            alert("Arizangiz qabul qilindi! Tez orada aloqaga chiqamiz.");
+            alert("Arizangiz qabul qilindi! Tez orada mutaxassisimiz siz bilan bog'lanadi.");
             document.getElementById('leadForm').reset();
         }
 
-        // RENDER ADMISSION LETTERS
+        // RENDER ADMISSIONS GALLERY
         function renderAdmissions() {
             const grid = document.getElementById('admissionsGrid');
             grid.innerHTML = admissions.map(item => `
-                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 font-bold text-xl mb-4">
+                <div class="glass-card rounded-2xl p-6 hover:border-emerald-500/40 transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-400 font-bold text-xl mb-4 border border-emerald-500/20">
                         <i class="fa-solid fa-graduation-cap"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900">${item.student}</h3>
-                    <p class="text-emerald-600 font-semibold text-sm mt-1">${item.uni}</p>
-                    <p class="text-xs text-slate-500 mt-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 inline-block font-mono">
-                        ${item.grant}
-                    </p>
+                    <h3 class="text-lg font-bold text-white">${item.student}</h3>
+                    <p class="text-emerald-400 font-semibold text-sm mt-1">${item.uni}</p>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-mono bg-slate-900 px-3 py-1 rounded-lg border border-slate-800">${item.grant}</span>
+                        <i class="fa-solid fa-check-circle text-emerald-400 text-sm"></i>
+                    </div>
                 </div>
             `).join('');
         }
 
-        // RENDER LEADS TABLE
+        // RENDER LEADS TABLE IN ADMIN
         function renderLeads() {
             const tbody = document.getElementById('leadsTableBody');
             document.getElementById('leadCount').innerText = `${leads.length} ta`;
             
             tbody.innerHTML = leads.map(l => `
-                <tr class="hover:bg-slate-800/50">
-                    <td class="p-3 text-slate-400">${l.date}</td>
+                <tr class="hover:bg-slate-900/60">
+                    <td class="p-3 text-slate-500">${l.date}</td>
                     <td class="p-3 font-semibold text-white">${l.name}</td>
                     <td class="p-3 text-emerald-400 font-mono">${l.phone}</td>
-                    <td class="p-3 max-w-xs truncate">${l.message || '-'}</td>
+                    <td class="p-3 text-slate-400 max-w-xs truncate">${l.message || '-'}</td>
                     <td class="p-3 text-right">
                         <button onclick="deleteLead(${l.id})" class="text-rose-400 hover:text-rose-300">
                             <i class="fa-solid fa-trash"></i>
@@ -386,7 +472,6 @@
             renderLeads();
         }
 
-        // ADD ADMISSION IN ADMIN
         function addAdmission() {
             const student = document.getElementById('admStudent').value;
             const uni = document.getElementById('admUni').value;
@@ -403,7 +488,6 @@
             document.getElementById('admGrant').value = '';
         }
 
-        // LOGO FILE UPLOAD HANDLER
         function handleLogoUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -416,7 +500,6 @@
             reader.readAsDataURL(file);
         }
 
-        // SAVE SETTINGS
         function saveSettings() {
             settings.phone = document.getElementById('settingPhone').value;
             settings.telegram = document.getElementById('settingTelegram').value;
@@ -428,10 +511,9 @@
             alert("Sozlamalar saqlandi!");
         }
 
-        // APPLY SETTINGS TO SITE UI
         function applySettings() {
             if(settings.logo) {
-                document.getElementById('siteLogoContainer').innerHTML = `<img src="${settings.logo}" class="w-full h-full object-cover">`;
+                document.getElementById('siteLogoContainer').innerHTML = `<img src="${settings.logo}" class="w-full h-full object-cover rounded-[14px]">`;
             }
             if(settings.telegram) {
                 document.getElementById('navTelegram').href = settings.telegram;
@@ -451,7 +533,7 @@
             document.getElementById('settingWhatsapp').value = settings.whatsapp || '';
         }
 
-        // SECRET ADMIN PANEL AUTHENTICATION
+        // SECRET ADMIN AUTHENTICATION
         function checkAdminHash() {
             if(window.location.hash === '#admin-login') {
                 promptAdminAuth();
@@ -460,7 +542,6 @@
 
         window.addEventListener('hashchange', checkAdminHash);
 
-        // SECRET SHORTCUT (CTRL + SHIFT + A)
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
                 promptAdminAuth();
@@ -486,11 +567,6 @@
             document.getElementById('mainApp').classList.remove('hidden');
             document.getElementById('mainFooter').classList.remove('hidden');
             window.location.hash = '';
-        }
-
-        function logoutAdmin() {
-            closeAdmin();
-            alert("Tizimdan chiqildi.");
         }
     </script>
 </body>
