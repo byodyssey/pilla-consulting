@@ -86,17 +86,28 @@
                 </div>
             </a>
 
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu & Lang Switcher -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
-                <a href="#admissions" class="hover:text-amber-400 transition">Admission Letters</a>
-                <a href="#contact" class="hover:text-amber-400 transition">Bog'lanish</a>
+                <a href="#admissions" data-i18n="nav_admissions" class="hover:text-amber-400 transition">Admission Letters</a>
+                <a href="#contact" data-i18n="nav_contact" class="hover:text-amber-400 transition">Bog'lanish</a>
             </nav>
 
-            <!-- Action Button -->
-            <div class="flex items-center gap-5">
-                <a href="#contact" class="gold-button font-bold text-sm px-6 py-3 rounded-xl shadow-lg shadow-amber-500/10 transition transform active:scale-95 flex items-center gap-2">
+            <!-- Language Switcher & Action Button -->
+            <div class="flex items-center gap-4">
+                <!-- LANGUAGE SELECTOR -->
+                <div class="relative inline-block text-left">
+                    <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-amber-500/30 text-amber-400 text-xs font-bold py-2.5 px-3 rounded-xl focus:outline-none cursor-pointer hover:border-amber-400 transition">
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="kk">🇰🇿 Қазақsha</option>
+                        <option value="ky">🇰🇬 Кыргызча</option>
+                        <option value="zh">🇨🇳 中文</option>
+                    </select>
+                </div>
+
+                <a href="#contact" class="gold-button font-bold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-amber-500/10 transition transform active:scale-95 flex items-center gap-2">
                     <i class="fa-solid fa-phone"></i>
-                    <span>Konsultatsiya Olish</span>
+                    <span data-i18n="btn_get_consult">Konsultatsiya Olish</span>
                 </a>
             </div>
         </div>
@@ -113,19 +124,19 @@
                     <!-- Left Hero Content -->
                     <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
                         <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card border-amber-500/30 text-amber-400 text-xs font-bold tracking-wide uppercase">
-                            <i class="fa-solid fa-crown text-amber-400"></i> Rasmiy Vakillik va Kafolatlangan Ta'lim
+                            <i class="fa-solid fa-crown text-amber-400"></i> <span data-i18n="hero_badge">Rasmiy Vakillik va Kafolatlangan Ta'lim</span>
                         </div>
                         <h1 class="text-4xl sm:text-6xl font-extrabold text-white leading-tight tracking-tight">
-                            Xitoyning <span class="gold-gradient-text">32 ta Nufuzli Universiteti</span> Bilan Rasmiy Shartnoma
+                            <span data-i18n="hero_title_1">Xitoyning</span> <span class="gold-gradient-text" data-i18n="hero_title_2">32 ta Nufuzli Universiteti</span> <span data-i18n="hero_title_3">Bilan Rasmiy Shartnoma</span>
                         </h1>
-                        <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl">
+                        <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl" data-i18n="hero_desc">
                             Pilla Consulting — Xitoy OTMlarining O'zbekistondagi ishonchli vakili. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatingizni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.
                         </p>
                         <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-2">
-                            <a href="#contact" class="w-full sm:w-auto text-center gold-button font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-amber-500/20 transition">
+                            <a href="#contact" class="w-full sm:w-auto text-center gold-button font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-amber-500/20 transition" data-i18n="btn_free_consult">
                                 Begaraz Konsultatsiya
                             </a>
-                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition border border-amber-500/20">
+                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition border border-amber-500/20" data-i18n="btn_view_admissions">
                                 Qabul Xatlarini Ko'rish
                             </a>
                         </div>
@@ -134,24 +145,24 @@
                     <!-- Right Application Form -->
                     <div class="lg:col-span-5">
                         <div class="glass-card rounded-3xl p-8 shadow-2xl relative border-amber-500/30">
-                            <h3 class="text-2xl font-bold text-white mb-2">Tezkor Ariza</h3>
-                            <p class="text-slate-400 text-xs mb-6">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
+                            <h3 class="text-2xl font-bold text-white mb-2" data-i18n="form_title">Tezkor Ariza</h3>
+                            <p class="text-slate-400 text-xs mb-6" data-i18n="form_subtitle">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
 
                             <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
                                 <div>
-                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5">Ism va Familiyangiz</label>
+                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5" data-i18n="label_fullname">Ism va Familiyangiz</label>
                                     <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5">Telefon Raqamingiz</label>
+                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5" data-i18n="label_phone">Telefon Raqamingiz</label>
                                     <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5">Qiziqtirgan Yo'nalish / Izoh</label>
-                                    <textarea id="leadMessage" rows="3" placeholder="Qaysi mutaxassislik bo'yicha o'qishni xohlaysiz?" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition"></textarea>
+                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5" data-i18n="label_message">Qiziqtirgan Yo'nalish / Izoh</label>
+                                    <textarea id="leadMessage" rows="3" placeholder="..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition"></textarea>
                                 </div>
                                 <button type="submit" class="w-full gold-button font-black py-4 rounded-xl shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
-                                    <span>Arizani Yuborish</span>
+                                    <span data-i18n="btn_submit">Arizani Yuborish</span>
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </form>
@@ -166,8 +177,8 @@
         <section id="admissions" class="py-20 border-t border-slate-800/80">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">Talabalarimizning <span class="gold-gradient-text">Admission Letter</span>'lari</h2>
-                    <p class="text-slate-400 text-sm sm:text-base">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-4"><span data-i18n="adm_title">Talabalarimizning</span> <span class="gold-gradient-text">Admission Letter</span>'lari</h2>
+                    <p class="text-slate-400 text-sm sm:text-base" data-i18n="adm_desc">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
                 </div>
 
                 <div id="admissionsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -176,50 +187,72 @@
             </div>
         </section>
 
-        <!-- HIGH-CONVERSION CONTACT SECTION -->
+        <!-- HIGH-CONVERSION CONTACT SECTION WITH ALL CHANNELS -->
         <section id="contact" class="py-24 bg-gradient-to-b from-transparent via-slate-950/80 to-slate-950">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Kechikmang, O'rinlar Cheklangan</span>
-                    <h2 class="text-3xl sm:text-5xl font-black text-white">Biz Bilan Darhol Bog'laning</h2>
-                    <p class="text-slate-400 text-sm mt-3">Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga tayyor.</p>
+                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block" data-i18n="contact_badge">Kechikmang, O'rinlar Cheklangan</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white" data-i18n="contact_title">Biz Bilan Darhol Bog'laning</h2>
+                    <p class="text-slate-400 text-sm mt-3" data-i18n="contact_desc">Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga tayyor.</p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
                     
-                    <!-- Direct Phone Call -->
-                    <a id="contactPhoneCard" href="tel:+998901234567" class="glass-card rounded-3xl p-8 hover:border-amber-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition">
+                    <!-- 1. Direct Phone Call -->
+                    <a id="contactPhoneCard" href="tel:+998901234567" class="glass-card rounded-3xl p-6 hover:border-amber-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-solid fa-phone-volume"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Telefon Orqali</h3>
-                        <p class="text-xs text-slate-400 mb-6">To'g'ridan-to'g'ri konsultantimiz bilan bog'laning</p>
-                        <span id="displayPhone" class="text-lg font-extrabold text-amber-400 font-mono mt-auto">+998 90 123 45 67</span>
+                        <h3 class="text-base font-bold text-white mb-1" data-i18n="c_phone">Telefon Orqali</h3>
+                        <p class="text-[11px] text-slate-400 mb-4" data-i18n="c_phone_sub">To'g'ridan-to'g mef konsultant</p>
+                        <span id="displayPhone" class="text-xs font-extrabold text-amber-400 font-mono mt-auto">+998 90 123 45 67</span>
                     </a>
 
-                    <!-- Personal Telegram Account -->
-                    <a id="contactTelegramAccount" href="https://t.me/" target="_blank" class="glass-card rounded-3xl p-8 hover:border-sky-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-2xl mb-6 group-hover:scale-110 transition">
+                    <!-- 2. Personal Telegram Account -->
+                    <a id="contactTelegramAccount" href="https://t.me/" target="_blank" class="glass-card rounded-3xl p-6 hover:border-sky-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-paper-plane"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Telegram Akaunt</h3>
-                        <p class="text-xs text-slate-400 mb-6">Savollaringizni shaxsiy chatda yozing</p>
-                        <span class="text-sm font-bold text-sky-400 mt-auto flex items-center gap-2">
-                            <span>Chatni Ochiq Yozish</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                        <h3 class="text-base font-bold text-white mb-1" data-i18n="c_tg_acc">Telegram Akaunt</h3>
+                        <p class="text-[11px] text-slate-400 mb-4" data-i18n="c_tg_acc_sub">Shaxsiy chatda yozing</p>
+                        <span class="text-xs font-bold text-sky-400 mt-auto flex items-center gap-1">
+                            <span data-i18n="btn_write">Yozish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </span>
                     </a>
 
-                    <!-- Official Telegram Channel -->
-                    <a id="contactTelegramChannel" href="https://t.me/" target="_blank" class="glass-card rounded-3xl p-8 hover:border-amber-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition">
+                    <!-- 3. Official Telegram Channel -->
+                    <a id="contactTelegramChannel" href="https://t.me/" target="_blank" class="glass-card rounded-3xl p-6 hover:border-amber-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-bullhorn"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Telegram Kanalimiz</h3>
-                        <p class="text-xs text-slate-400 mb-6">Eng so'nggi grantlar va yangiliklarni kuzating</p>
-                        <span class="text-sm font-bold text-amber-400 mt-auto flex items-center gap-2">
-                            <span>Kanalga A'zo Bo'lish</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                        <h3 class="text-base font-bold text-white mb-1" data-i18n="c_tg_chan">Telegram Kanal</h3>
+                        <p class="text-[11px] text-slate-400 mb-4" data-i18n="c_tg_chan_sub">Yangiliklarni kuzating</p>
+                        <span class="text-xs font-bold text-amber-400 mt-auto flex items-center gap-1">
+                            <span data-i18n="btn_join">A'zo bo'lish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </a>
+
+                    <!-- 4. Instagram Profile -->
+                    <a id="contactInstagram" href="https://instagram.com/" target="_blank" class="glass-card rounded-3xl p-6 hover:border-pink-500/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-500 text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">Instagram</h3>
+                        <p class="text-[11px] text-slate-400 mb-4" data-i18n="c_insta_sub">Foto va videolar</p>
+                        <span class="text-xs font-bold text-pink-400 mt-auto flex items-center gap-1">
+                            <span data-i18n="btn_follow">Kuzatish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </a>
+
+                    <!-- 5. WhatsApp Direct Chat -->
+                    <a id="contactWhatsapp" href="https://wa.me/" target="_blank" class="glass-card rounded-3xl p-6 hover:border-emerald-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">WhatsApp</h3>
+                        <p class="text-[11px] text-slate-400 mb-4" data-i18n="c_wa_sub">Tezkor aloqa</p>
+                        <span class="text-xs font-bold text-emerald-400 mt-auto flex items-center gap-1">
+                            <span data-i18n="btn_chat">Chatlashish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </span>
                     </a>
 
@@ -269,7 +302,7 @@
                     <!-- Settings Card -->
                     <div class="glass-card rounded-2xl p-6 space-y-4">
                         <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
-                            <i class="fa-solid fa-sliders"></i> Logo & Bog'lanish Links
+                            <i class="fa-solid fa-sliders"></i> Logo & Ijtimoiy Tarmoq Links
                         </h3>
                         
                         <div>
@@ -283,9 +316,11 @@
                         </div>
 
                         <div class="space-y-2 pt-2">
-                            <label class="block text-xs font-bold text-slate-400 uppercase">Telegram Havolalari</label>
-                            <input type="url" id="settingTelegramAccount" placeholder="Telegram Akaunt URL (https://t.me/username)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <label class="block text-xs font-bold text-slate-400 uppercase">Ijtimoiy Tarmoq Havolalari</label>
+                            <input type="url" id="settingTelegramAccount" placeholder="Telegram Akaunt URL (https://t.me/user)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                             <input type="url" id="settingTelegramChannel" placeholder="Telegram Kanal URL (https://t.me/channel)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="url" id="settingInstagram" placeholder="Instagram URL (https://instagram.com/user)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="url" id="settingWhatsapp" placeholder="WhatsApp URL (https://wa.me/998901234567)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
 
                         <button onclick="saveSettings()" class="w-full gold-button font-bold py-2.5 rounded-xl transition text-xs">
@@ -366,15 +401,197 @@
             <div class="flex items-center gap-6 text-xl text-slate-400">
                 <a id="footTelegramAccount" href="https://t.me/" target="_blank" class="hover:text-amber-400 transition"><i class="fa-paper-plane"></i></a>
                 <a id="footTelegramChannel" href="https://t.me/" target="_blank" class="hover:text-amber-400 transition"><i class="fa-bullhorn"></i></a>
+                <a id="footInstagram" href="https://instagram.com/" target="_blank" class="hover:text-pink-400 transition"><i class="fa-brands fa-instagram"></i></a>
+                <a id="footWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- SCRIPT LOGIC -->
+    <!-- SCRIPT & TRANSLATION SYSTEM -->
     <script>
         const TG_BOT_TOKEN = "7825283402:AAGM-eOvvvQy2jO2a4L5uS5sW8z_V4R9wvw";
         const TG_CHAT_ID = "7323184602";
 
+        // MULTI-LANGUAGE TRANSLATIONS DICTIONARY
+        const i18nData = {
+            uz: {
+                nav_admissions: "Admission Letters",
+                nav_contact: "Bog'lanish",
+                btn_get_consult: "Konsultatsiya Olish",
+                hero_badge: "Rasmiy Vakillik va Kafolatlangan Ta'lim",
+                hero_title_1: "Xitoyning",
+                hero_title_2: "32 ta Nufuzli Universiteti",
+                hero_title_3: "Bilan Rasmiy Shartnoma",
+                hero_desc: "Pilla Consulting — Xitoy OTMlarining O'zbekistondagi ishonchli vakili. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatingizni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.",
+                btn_free_consult: "Begaraz Konsultatsiya",
+                btn_view_admissions: "Qabul Xatlarini Ko'rish",
+                form_title: "Tezkor Ariza",
+                form_subtitle: "So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.",
+                label_fullname: "Ism va Familiyangiz",
+                label_phone: "Telefon Raqamingiz",
+                label_message: "Qiziqtirgan Yo'nalish / Izoh",
+                btn_submit: "Arizani Yuborish",
+                adm_title: "Talabalarimizning",
+                adm_desc: "Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.",
+                contact_badge: "Kechikmang, O'rinlar Cheklangan",
+                contact_title: "Biz Bilan Darhol Bog'laning",
+                contact_desc: "Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga tayyor.",
+                c_phone: "Telefon Orqali",
+                c_phone_sub: "To'g'ridan-to'g'ri konsultant",
+                c_tg_acc: "Telegram Akaunt",
+                c_tg_acc_sub: "Shaxsiy chatda yozing",
+                c_tg_chan: "Telegram Kanal",
+                c_tg_chan_sub: "Yangiliklarni kuzating",
+                c_insta_sub: "Foto va videolar",
+                c_wa_sub: "Tezkor aloqa",
+                btn_write: "Yozish",
+                btn_join: "A'zo bo'lish",
+                btn_follow: "Kuzatish",
+                btn_chat: "Chatlashish"
+            },
+            ru: {
+                nav_admissions: "Admission Letters",
+                nav_contact: "Контакты",
+                btn_get_consult: "Консультация",
+                hero_badge: "Официальное представительство",
+                hero_title_1: "Официальный договор с",
+                hero_title_2: "32 топовыми вузами",
+                hero_title_3: "Китая",
+                hero_desc: "Pilla Consulting — надежный представитель китайских университетов. С нами вы гарантированно получите полный или частичный грант и правильное оформление документов.",
+                btn_free_consult: "Бесплатная консультация",
+                btn_view_admissions: "Посмотреть приглашения",
+                form_title: "Быстрая заявка",
+                form_subtitle: "Оставьте заявку, мы свяжемся с вами за 15 минут.",
+                label_fullname: "Ваше имя и фамилия",
+                label_phone: "Номер телефона",
+                label_message: "Интересующее направление / Комментарий",
+                btn_submit: "Отправить заявку",
+                adm_title: "Приглашения наших",
+                adm_desc: "Нажмите на карточку, чтобы посмотреть официальное приглашение наших студентов.",
+                contact_badge: "Спешите, места ограничены",
+                contact_title: "Свяжитесь с нами прямо сейчас",
+                contact_desc: "Наши специалисты готовы ответить на все ваши вопросы.",
+                c_phone: "По телефону",
+                c_phone_sub: "Прямой звонок консультанту",
+                c_tg_acc: "Telegram Аккаунт",
+                c_tg_acc_sub: "Написать в личный чат",
+                c_tg_chan: "Telegram Канал",
+                c_tg_chan_sub: "Следите за новостями",
+                c_insta_sub: "Фото и видео",
+                c_wa_sub: "Быстрая связь",
+                btn_write: "Написать",
+                btn_join: "Подписаться",
+                btn_follow: "Следить",
+                btn_chat: "Чат"
+            },
+            kk: {
+                nav_admissions: "Admission Letters",
+                nav_contact: "Байланыс",
+                btn_get_consult: "Кеңес Алу",
+                hero_badge: "Ресми өкілдік және кепілді білім",
+                hero_title_1: "Қытайдың",
+                hero_title_2: "32 беделді университетімен",
+                hero_title_3: "Ресми келісімшарт",
+                hero_desc: "Pilla Consulting — Қытай жоғары оқу орындарының сенімді өкілі. Бізбен толық немесе ішінара гранттар, кепілді оқуға түсу мүмкіндігі бар.",
+                btn_free_consult: "Тегін Кеңес Алу",
+                btn_view_admissions: "Шақыру Хаттарын Көру",
+                form_title: "Жылдам өтінім",
+                form_subtitle: "Өтінім қалдырыңыз, маманымыз 15 минутта хабарласады.",
+                label_fullname: "Аты-жөніңіз",
+                label_phone: "Телефон нөміріңіз",
+                label_message: "Қызықтырған бағыт / Пікір",
+                btn_submit: "Өтінімді Жіберу",
+                adm_title: "Студенттеріміздің",
+                adm_desc: "Қабылдау хаттарын көру үшін карточканы басыңыз.",
+                contact_badge: "Үлгеріңіз, орындар шектеулі",
+                contact_title: "Бізбен Дереу Байланысыңыз",
+                contact_desc: "Мамандарымыз сұрақтарыңызға жауап беруге дайын.",
+                c_phone: "Телефон арқылы",
+                c_phone_sub: "Кеңесшіге тікелей қоңырау",
+                c_tg_acc: "Telegram Аккаунт",
+                c_tg_acc_sub: "Жеке чатқа жазу",
+                c_tg_chan: "Telegram Канал",
+                c_tg_chan_sub: "Жаңалықтарды бақылау",
+                c_insta_sub: "Фото және видео",
+                c_wa_sub: "Жылдам байланыс",
+                btn_write: "Жазу",
+                btn_join: "Тіркелу",
+                btn_follow: "Бақылау",
+                btn_chat: "Чаттасу"
+            },
+            ky: {
+                nav_admissions: "Admission Letters",
+                nav_contact: "Байланышуу",
+                btn_get_consult: "Консультация Алуу",
+                hero_badge: "Расмий өкүлчүлүк жана кепилденген билим",
+                hero_title_1: "Кытайдын",
+                hero_title_2: "32 атактуу университети",
+                hero_title_3: "Менин Расмий Келишим",
+                hero_desc: "Pilla Consulting — Кытай окуу жайларынын ишенимдүү өкүлү. Биз менен толук же жарым-жартылай гранттарды алуу мүмкүнчүлүгү бар.",
+                btn_free_consult: "Акысыз Консультация",
+                btn_view_admissions: "Чакыруу Каттарын Көрүү",
+                form_title: "Тез Ыкма Арыз",
+                form_subtitle: "Арыз калтырыңыз, адисибиз 15 мүнөттө байланышат.",
+                label_fullname: "Аты-жөнүңүз",
+                label_phone: "Телефон номериңиз",
+                label_message: "Багыт / Комментарий",
+                btn_submit: "Арызды Жиберүү",
+                adm_title: "Студенттерибиздин",
+                adm_desc: "Расмий чакыруу каттарын көрүү үчүн карточканы басыңыз.",
+                contact_badge: "Шашылыңыз, орундар чектелүү",
+                contact_title: "Биз Мене Дароо Байланышыңыз",
+                contact_desc: "Адистерибиз суроолоруңузга жооп берүүгө даяр.",
+                c_phone: "Телефон Аркылуу",
+                c_phone_sub: "Консультантка чалуу",
+                c_tg_acc: "Telegram Аккаунт",
+                c_tg_acc_sub: "Жеке чатка жазуу",
+                c_tg_chan: "Telegram Канал",
+                c_tg_chan_sub: "Жанылыктарды көрүү",
+                c_insta_sub: "Сүрөт жана видео",
+                c_wa_sub: "Тез байланыш",
+                btn_write: "Жазуу",
+                btn_join: "Катталуу",
+                btn_follow: "Көрүү",
+                btn_chat: "Сүйлөшүү"
+            },
+            zh: {
+                nav_admissions: "录取通知书",
+                nav_contact: "联系我们",
+                btn_get_consult: "获取咨询",
+                hero_badge: "官方授权与保障教育",
+                hero_title_1: "与中国",
+                hero_title_2: "32所名校",
+                hero_title_3: "签署官方合作协议",
+                hero_desc: "Pilla Consulting 是中国高校在乌兹别克斯坦的可靠代表。我们保障全额或部分奖学金以及100%正确的申请流程。",
+                btn_free_consult: "免费咨询",
+                btn_view_admissions: "查看录取通知书",
+                form_title: "快速申请",
+                form_subtitle: "留下您的信息，我们的专家将在15分钟内与您联系。",
+                label_fullname: "您的姓名",
+                label_phone: "电话号码",
+                label_message: "感兴趣的专业 / 留言",
+                btn_submit: "提交申请",
+                adm_title: "我们学生的",
+                adm_desc: "点击卡片查看我们学生的官方录取通知书。",
+                contact_badge: "名额有限，抓紧时间",
+                contact_title: "立即与我们联系",
+                contact_desc: "我们的专家随时准备回答您的所有问题。",
+                c_phone: "电话咨询",
+                c_phone_sub: "直接联系顾问",
+                c_tg_acc: "Telegram 账号",
+                c_tg_acc_sub: "发送私信",
+                c_tg_chan: "Telegram 频道",
+                c_tg_chan_sub: "关注最新动态",
+                c_insta_sub: "照片与视频",
+                c_wa_sub: "快速沟通",
+                btn_write: "发送",
+                btn_join: "关注",
+                btn_follow: "关注",
+                btn_chat: "交谈"
+            }
+        };
+
+        let currentLang = 'uz';
         let leads = JSON.parse(localStorage.getItem('pilla_leads')) || [];
 
         let admissions = JSON.parse(localStorage.getItem('pilla_admissions')) || [
@@ -386,7 +603,9 @@
             logo: null,
             phone: "+998 90 123 45 67",
             telegramAccount: "https://t.me/",
-            telegramChannel: "https://t.me/"
+            telegramChannel: "https://t.me/",
+            instagram: "https://instagram.com/",
+            whatsapp: "https://wa.me/998901234567"
         };
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -396,6 +615,18 @@
             applySettings();
             checkAdminHash();
         });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const dict = i18nData[lang] || i18nData['uz'];
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(dict[key]) {
+                    el.innerText = dict[key];
+                }
+            });
+        }
 
         function initGalaxyAnimation() {
             const canvas = document.getElementById('galaxyCanvas');
@@ -570,6 +801,8 @@
             settings.phone = document.getElementById('settingPhone').value;
             settings.telegramAccount = document.getElementById('settingTelegramAccount').value;
             settings.telegramChannel = document.getElementById('settingTelegramChannel').value;
+            settings.instagram = document.getElementById('settingInstagram').value;
+            settings.whatsapp = document.getElementById('settingWhatsapp').value;
 
             localStorage.setItem('pilla_settings', JSON.stringify(settings));
             applySettings();
@@ -592,10 +825,20 @@
                 document.getElementById('contactTelegramChannel').href = settings.telegramChannel;
                 document.getElementById('footTelegramChannel').href = settings.telegramChannel;
             }
+            if(settings.instagram) {
+                document.getElementById('contactInstagram').href = settings.instagram;
+                document.getElementById('footInstagram').href = settings.instagram;
+            }
+            if(settings.whatsapp) {
+                document.getElementById('contactWhatsapp').href = settings.whatsapp;
+                document.getElementById('footWhatsapp').href = settings.whatsapp;
+            }
             
             document.getElementById('settingPhone').value = settings.phone || '';
             document.getElementById('settingTelegramAccount').value = settings.telegramAccount || '';
             document.getElementById('settingTelegramChannel').value = settings.telegramChannel || '';
+            document.getElementById('settingInstagram').value = settings.instagram || '';
+            document.getElementById('settingWhatsapp').value = settings.whatsapp || '';
         }
 
         function checkAdminHash() {
