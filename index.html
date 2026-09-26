@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilla Consulting - Xitoy Ta'lim va Grant Dasturlari</title>
+    <title>Pilla Consulting - Create New World</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f1f5f9; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080c14; color: #f1f5f9; }
         
-        /* Galaxy Background Canvas */
         #galaxyCanvas {
             position: fixed;
             top: 0;
@@ -25,66 +40,63 @@
         }
 
         .glass-card {
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.15);
         }
         
         .glass-nav {
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(8, 12, 20, 0.85);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.1);
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #06b6d4 100%);
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        .gold-button {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            color: #080c14;
+        }
+
+        .gold-button:hover {
+            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+        }
+
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 10px; }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col custom-scrollbar overflow-x-hidden">
 
-    <!-- GALAKTIKA ANIMATSIYASI (CANVAS) -->
+    <!-- GALAKTIKA BACKGROUND -->
     <canvas id="galaxyCanvas"></canvas>
 
     <!-- HEADER / NAVIGATION -->
     <header class="sticky top-0 z-40 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
             <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3.5 group">
-                <div id="siteLogoContainer" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-0.5 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition transform">
-                    <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-black text-2xl text-emerald-400 overflow-hidden">
-                        P
-                    </div>
-                </div>
-                <div>
-                    <span class="text-2xl font-black tracking-tight text-white group-hover:text-emerald-400 transition">PILLA</span>
-                    <span class="block text-[10px] font-bold text-emerald-400 tracking-[0.25em] uppercase">Consulting</span>
+            <a href="#" class="flex items-center gap-4 group">
+                <div id="siteLogoContainer" class="h-16 w-auto flex items-center justify-center">
+                    <span class="text-2xl font-black gold-gradient-text">PILLA CONSULTING</span>
                 </div>
             </a>
 
             <!-- Navigation Menu -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
-                <a href="#about" class="hover:text-emerald-400 transition">Afzalliklar</a>
-                <a href="#universities" class="hover:text-emerald-400 transition">Universitetlar</a>
-                <a href="#admissions" class="hover:text-emerald-400 transition">Admission Letters</a>
-                <a href="#contact" class="hover:text-emerald-400 transition">Bog'lanish</a>
+                <a href="#admissions" class="hover:text-amber-400 transition">Admission Letters</a>
+                <a href="#contact" class="hover:text-amber-400 transition">Bog'lanish</a>
             </nav>
 
-            <!-- Social Links & Call Button -->
+            <!-- Action Button -->
             <div class="flex items-center gap-5">
-                <div class="hidden lg:flex items-center gap-3.5 border-r border-slate-800 pr-5 text-slate-400">
-                    <a id="navTelegram" href="https://t.me/" target="_blank" class="hover:text-emerald-400 transition text-lg"><i class="fa-brands fa-telegram"></i></a>
-                    <a id="navInstagram" href="https://instagram.com/" target="_blank" class="hover:text-emerald-400 transition text-lg"><i class="fa-brands fa-instagram"></i></a>
-                    <a id="navWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-400 transition text-lg"><i class="fa-brands fa-whatsapp"></i></a>
-                </div>
-                <a href="#contact" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-lg shadow-emerald-500/25 transition transform active:scale-95">
-                    Konsultatsiya Olish
+                <a href="#contact" class="gold-button font-bold text-sm px-6 py-3 rounded-xl shadow-lg shadow-amber-500/10 transition transform active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Konsultatsiya Olish</span>
                 </a>
             </div>
         </div>
@@ -94,54 +106,51 @@
     <main id="mainApp" class="flex-grow">
         
         <!-- HERO SECTION -->
-        <section class="relative py-20 lg:py-32">
+        <section class="relative py-16 lg:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-12 gap-12 items-center">
                     
                     <!-- Left Hero Content -->
                     <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-wide uppercase">
-                            <i class="fa-solid fa-certificate text-emerald-400"></i> Rasmiy Vakillik va Kafolatlangan Ta'lim
+                        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card border-amber-500/30 text-amber-400 text-xs font-bold tracking-wide uppercase">
+                            <i class="fa-solid fa-crown text-amber-400"></i> Rasmiy Vakillik va Kafolatlangan Ta'lim
                         </div>
                         <h1 class="text-4xl sm:text-6xl font-extrabold text-white leading-tight tracking-tight">
-                            Xitoyning <span class="gradient-text">32 ta Nufuzli Universiteti</span> Bilan Rasmiy Shartnoma
+                            Xitoyning <span class="gold-gradient-text">32 ta Nufuzli Universiteti</span> Bilan Rasmiy Shartnoma
                         </h1>
                         <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl">
                             Pilla Consulting — Xitoy OTMlarining O'zbekistondagi ishonchli vakili. Biz bilan to'liq yoki qisman grantlar, kafolatlangan qabul hamda hujjatingizni 100% to'g'ri rasmiylashtirish imkoniyatiga egasiz.
                         </p>
                         <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-2">
-                            <a href="#contact" class="w-full sm:w-auto text-center bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-emerald-500/20 transition">
+                            <a href="#contact" class="w-full sm:w-auto text-center gold-button font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-amber-500/20 transition">
                                 Begaraz Konsultatsiya
                             </a>
-                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition">
+                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition border border-amber-500/20">
                                 Qabul Xatlarini Ko'rish
                             </a>
                         </div>
                     </div>
 
                     <!-- Right Application Form -->
-                    <div class="lg:col-span-5" id="contact">
-                        <div class="glass-card rounded-3xl p-8 shadow-2xl relative border-emerald-500/20">
-                            <div class="absolute -top-3 -right-3 bg-emerald-500 text-slate-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
-                                Bepul
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Konsultatsiya Olish</h3>
+                    <div class="lg:col-span-5">
+                        <div class="glass-card rounded-3xl p-8 shadow-2xl relative border-amber-500/30">
+                            <h3 class="text-2xl font-bold text-white mb-2">Tezkor Ariza</h3>
                             <p class="text-slate-400 text-xs mb-6">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
 
                             <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Ism va Familiyangiz</label>
-                                    <input type="text" id="leadName" required placeholder="Masalan: Ali Valiyev" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-400 transition">
+                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5">Ism va Familiyangiz</label>
+                                    <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Telefon Raqamingiz</label>
-                                    <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-400 transition">
+                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5">Telefon Raqamingiz</label>
+                                    <input type="tel" id="leadPhone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Qiziqtirgan Yo'nalish / Izoh</label>
-                                    <textarea id="leadMessage" rows="3" placeholder="Qaysi mutaxassislik bo'yicha o'qishni xohlaysiz?" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-400 transition"></textarea>
+                                    <label class="block text-xs font-bold text-amber-400/90 uppercase tracking-wider mb-1.5">Qiziqtirgan Yo'nalish / Izoh</label>
+                                    <textarea id="leadMessage" rows="3" placeholder="Qaysi mutaxassislik bo'yicha o'qishni xohlaysiz?" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-amber-400 transition"></textarea>
                                 </div>
-                                <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black py-4 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2">
+                                <button type="submit" class="w-full gold-button font-black py-4 rounded-xl shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
                                     <span>Arizani Yuborish</span>
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
@@ -153,36 +162,12 @@
             </div>
         </section>
 
-        <!-- STATS SECTION -->
-        <section class="py-12 border-y border-slate-800/80 bg-slate-950/60">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    <div>
-                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">32+</div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Shartnomali OTMlar</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">100%</div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Viza Kafolati</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">500+</div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Muvaffaqiyatli Talabalar</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl sm:text-5xl font-black text-emerald-400 mb-1">100%</div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Grant Yutug'i</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- ADMISSIONS GALLERY SECTION -->
-        <section id="admissions" class="py-24">
+        <section id="admissions" class="py-20 border-t border-slate-800/80">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">Talabalarimizning Admission Letter'lari</h2>
-                    <p class="text-slate-400 text-sm sm:text-base">Biz orqali Xitoy va dunyo OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlari galereyasi.</p>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">Talabalarimizning <span class="gold-gradient-text">Admission Letter</span>'lari</h2>
+                    <p class="text-slate-400 text-sm sm:text-base">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
                 </div>
 
                 <div id="admissionsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -191,17 +176,78 @@
             </div>
         </section>
 
+        <!-- HIGH-CONVERSION CONTACT SECTION -->
+        <section id="contact" class="py-24 bg-gradient-to-b from-transparent via-slate-950/80 to-slate-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Kechikmang, O'rinlar Cheklangan</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white">Biz Bilan Darhol Bog'laning</h2>
+                    <p class="text-slate-400 text-sm mt-3">Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga tayyor.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <!-- Direct Phone Call -->
+                    <a id="contactPhoneCard" href="tel:+998901234567" class="glass-card rounded-3xl p-8 hover:border-amber-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Telefon Orqali</h3>
+                        <p class="text-xs text-slate-400 mb-6">To'g'ridan-to'g'ri konsultantimiz bilan bog'laning</p>
+                        <span id="displayPhone" class="text-lg font-extrabold text-amber-400 font-mono mt-auto">+998 90 123 45 67</span>
+                    </a>
+
+                    <!-- Personal Telegram Account -->
+                    <a id="contactTelegramAccount" href="https://t.me/" target="_blank" class="glass-card rounded-3xl p-8 hover:border-sky-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-2xl mb-6 group-hover:scale-110 transition">
+                            <i class="fa-paper-plane"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Telegram Akaunt</h3>
+                        <p class="text-xs text-slate-400 mb-6">Savollaringizni shaxsiy chatda yozing</p>
+                        <span class="text-sm font-bold text-sky-400 mt-auto flex items-center gap-2">
+                            <span>Chatni Ochiq Yozish</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <!-- Official Telegram Channel -->
+                    <a id="contactTelegramChannel" href="https://t.me/" target="_blank" class="glass-card rounded-3xl p-8 hover:border-amber-400/60 transition transform hover:-translate-y-2 group flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition">
+                            <i class="fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Telegram Kanalimiz</h3>
+                        <p class="text-xs text-slate-400 mb-6">Eng so'nggi grantlar va yangiliklarni kuzating</p>
+                        <span class="text-sm font-bold text-amber-400 mt-auto flex items-center gap-2">
+                            <span>Kanalga A'zo Bo'lish</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- LIGHTBOX MODAL FOR ADMISSION LETTER IMAGE -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+        <div class="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <button onclick="closeImageModal()" class="absolute -top-12 right-0 text-white text-2xl hover:text-amber-400 transition">
+                <i class="fa-solid fa-xmark"></i> Yopish
+            </button>
+            <img id="modalImage" src="" alt="Admission Letter" class="max-w-full max-h-[80vh] rounded-2xl object-contain shadow-2xl border border-amber-500/30">
+            <h4 id="modalCaption" class="text-white font-bold text-lg mt-4 text-center"></h4>
+        </div>
+    </div>
 
     <!-- SECRET ADMIN PANEL (HIDDEN DEFAULT) -->
     <div id="adminPanel" class="hidden min-h-screen bg-slate-950 text-slate-100 p-6 sm:p-10 z-50 relative">
         <div class="max-w-7xl mx-auto space-y-8">
             
-            <!-- Top Bar -->
             <div class="flex items-center justify-between pb-6 border-b border-slate-800">
                 <div>
                     <h1 class="text-2xl font-black text-white flex items-center gap-3">
-                        <i class="fa-solid fa-user-shield text-emerald-400"></i> Pilla Control Center
+                        <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center
                     </h1>
                     <p class="text-xs text-slate-400 mt-1">Boshqaruv paneli va mijozlar bazasi</p>
                 </div>
@@ -215,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- Grid Layout -->
             <div class="grid lg:grid-cols-12 gap-8">
                 
                 <!-- Left Column: Branding & CMS -->
@@ -223,35 +268,34 @@
                     
                     <!-- Settings Card -->
                     <div class="glass-card rounded-2xl p-6 space-y-4">
-                        <h3 class="text-base font-bold text-emerald-400 flex items-center gap-2">
-                            <i class="fa-solid fa-sliders"></i> Logo & Sozlamalar
+                        <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders"></i> Logo & Bog'lanish Links
                         </h3>
                         
                         <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Logo Rasm Fayli Yuklash</label>
-                            <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-500 file:text-slate-950 hover:file:bg-emerald-400 cursor-pointer">
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Logo PNG Fayli Yuklash</label>
+                            <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-400 cursor-pointer">
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Konsultant Telefon Raqami</label>
-                            <input type="text" id="settingPhone" placeholder="+998 90 123 45 67" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-400">
+                            <input type="text" id="settingPhone" placeholder="+998 90 123 45 67" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
                         </div>
 
                         <div class="space-y-2 pt-2">
-                            <label class="block text-xs font-bold text-slate-400 uppercase">Ijtimoiy Tarmoqlar</label>
-                            <input type="url" id="settingTelegram" placeholder="Telegram Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="url" id="settingInstagram" placeholder="Instagram Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="url" id="settingWhatsapp" placeholder="WhatsApp Link" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <label class="block text-xs font-bold text-slate-400 uppercase">Telegram Havolalari</label>
+                            <input type="url" id="settingTelegramAccount" placeholder="Telegram Akaunt URL (https://t.me/username)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="url" id="settingTelegramChannel" placeholder="Telegram Kanal URL (https://t.me/channel)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
 
-                        <button onclick="saveSettings()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">
+                        <button onclick="saveSettings()" class="w-full gold-button font-bold py-2.5 rounded-xl transition text-xs">
                             Sozlamalarni Saqlash
                         </button>
                     </div>
 
-                    <!-- Add Admission Letter -->
+                    <!-- Add Admission Letter Card -->
                     <div class="glass-card rounded-2xl p-6 space-y-4">
-                        <h3 class="text-base font-bold text-emerald-400 flex items-center gap-2">
+                        <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
                             <i class="fa-solid fa-plus-circle"></i> Admission Letter Qo'shish
                         </h3>
                         <div>
@@ -266,7 +310,11 @@
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Grant / Yo'nalish</label>
                             <input type="text" id="admGrant" placeholder="Full CSC Scholarship" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
                         </div>
-                        <button onclick="addAdmission()" class="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Admission Letter Rasm Fayli</label>
+                            <input type="file" id="admImageInput" accept="image/*" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-amber-400 cursor-pointer">
+                        </div>
+                        <button onclick="addAdmission()" class="w-full gold-button font-bold py-2.5 rounded-xl transition text-xs">
                             Galereyaga Qo'shish
                         </button>
                     </div>
@@ -278,9 +326,9 @@
                     <div class="glass-card rounded-2xl p-6">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-base font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-users"></i> Kelib Tushgan Arizalar Baza
+                                <i class="fa-solid fa-users"></i> Kelib Tushgan Arizalar
                             </h3>
-                            <span id="leadCount" class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20">
+                            <span id="leadCount" class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20">
                                 0 ta
                             </span>
                         </div>
@@ -313,39 +361,32 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
                 <p class="text-xs text-slate-400">&copy; 2026 Pilla Consulting. Barcha huquqlar himoyalangan.</p>
-                <p class="text-[10px] text-slate-600 mt-1">Xitoy universitetlarining rasmiy vakili.</p>
+                <p class="text-[10px] text-slate-600 mt-1">CREATE NEW WORLD</p>
             </div>
             <div class="flex items-center gap-6 text-xl text-slate-400">
-                <a id="footTelegram" href="https://t.me/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-telegram"></i></a>
-                <a id="footInstagram" href="https://instagram.com/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-instagram"></i></a>
-                <a id="footWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
+                <a id="footTelegramAccount" href="https://t.me/" target="_blank" class="hover:text-amber-400 transition"><i class="fa-paper-plane"></i></a>
+                <a id="footTelegramChannel" href="https://t.me/" target="_blank" class="hover:text-amber-400 transition"><i class="fa-bullhorn"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- SCRIPT LOGIC & GALAXY ANIMATION -->
+    <!-- SCRIPT LOGIC -->
     <script>
-        // TELEGRAM BOT CREDENTIALS
         const TG_BOT_TOKEN = "7825283402:AAGM-eOvvvQy2jO2a4L5uS5sW8z_V4R9wvw";
         const TG_CHAT_ID = "7323184602";
 
-        // INITIAL STATE
-        let leads = JSON.parse(localStorage.getItem('pilla_leads')) || [
-            { id: 1, name: "Jasur Malikov", phone: "+998 91 555 44 33", message: "Zhejiang Full Grant so'ramoqchiman", date: "2026-09-26 18:30" }
-        ];
+        let leads = JSON.parse(localStorage.getItem('pilla_leads')) || [];
 
         let admissions = JSON.parse(localStorage.getItem('pilla_admissions')) || [
-            { id: 1, student: "Anvar Raimov", uni: "Tsinghua University", grant: "Full CSC Scholarship" },
-            { id: 2, student: "Madina Odilova", uni: "Zhejiang University", grant: "Presidential Scholarship" },
-            { id: 3, student: "Suhrob Karimov", uni: "Peking University", grant: "Provincial Government Grant" }
+            { id: 1, student: "Anvar Raimov", uni: "Tsinghua University", grant: "Full CSC Scholarship", image: null },
+            { id: 2, student: "Madina Odilova", uni: "Zhejiang University", grant: "Presidential Scholarship", image: null }
         ];
 
         let settings = JSON.parse(localStorage.getItem('pilla_settings')) || {
             logo: null,
             phone: "+998 90 123 45 67",
-            telegram: "https://t.me/",
-            instagram: "https://instagram.com/",
-            whatsapp: "https://wa.me/998901234567"
+            telegramAccount: "https://t.me/",
+            telegramChannel: "https://t.me/"
         };
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -356,7 +397,6 @@
             checkAdminHash();
         });
 
-        // GALAKTIKA KOSMOS ANIMATSIYASI (CANVAS)
         function initGalaxyAnimation() {
             const canvas = document.getElementById('galaxyCanvas');
             const ctx = canvas.getContext('2d');
@@ -368,7 +408,7 @@
             resize();
             window.addEventListener('resize', resize);
 
-            const stars = Array.from({ length: 140 }, () => ({
+            const stars = Array.from({ length: 120 }, () => ({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 1.5 + 0.5,
@@ -385,9 +425,9 @@
 
                     ctx.beginPath();
                     ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(52, 211, 153, ${Math.abs(s.alpha) * 0.7})`;
+                    ctx.fillStyle = `rgba(234, 179, 8, ${Math.abs(s.alpha) * 0.7})`;
                     ctx.shadowBlur = 8;
-                    ctx.shadowColor = "#10b981";
+                    ctx.shadowColor = "#eab308";
                     ctx.fill();
                 });
 
@@ -396,7 +436,6 @@
             animate();
         }
 
-        // LEAD SUBMISSION & TELEGRAM BOT NOTIFICATION
         function handleLeadSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('leadName').value;
@@ -415,7 +454,6 @@
             localStorage.setItem('pilla_leads', JSON.stringify(leads));
             renderLeads();
 
-            // SEND TO TELEGRAM
             const text = `📥 *PILLA CONSULTING - YANGI ARIZA!*\n\n👤 *Ism:* ${name}\n📞 *Tel:* ${phone}\n💬 *Izoh:* ${message || 'Kiritilmagan'}\n📅 *Sana:* ${newLead.date}`;
             
             fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
@@ -428,25 +466,39 @@
             document.getElementById('leadForm').reset();
         }
 
-        // RENDER ADMISSIONS GALLERY
         function renderAdmissions() {
             const grid = document.getElementById('admissionsGrid');
             grid.innerHTML = admissions.map(item => `
-                <div class="glass-card rounded-2xl p-6 hover:border-emerald-500/40 transition transform hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-400 font-bold text-xl mb-4 border border-emerald-500/20">
-                        <i class="fa-solid fa-graduation-cap"></i>
+                <div onclick="openImageModal('${item.image || ''}', '${item.student} - ${item.uni}')" class="glass-card rounded-2xl p-6 hover:border-amber-400/60 transition transform hover:-translate-y-1 cursor-pointer group">
+                    <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-400 font-bold text-xl mb-4 border border-amber-500/20 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-file-invoice"></i>
                     </div>
                     <h3 class="text-lg font-bold text-white">${item.student}</h3>
-                    <p class="text-emerald-400 font-semibold text-sm mt-1">${item.uni}</p>
-                    <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+                    <p class="text-amber-400 font-semibold text-sm mt-1">${item.uni}</p>
+                    <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
                         <span class="text-xs text-slate-400 font-mono bg-slate-900 px-3 py-1 rounded-lg border border-slate-800">${item.grant}</span>
-                        <i class="fa-solid fa-check-circle text-emerald-400 text-sm"></i>
+                        <span class="text-xs text-amber-400 font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-expand"></i> Ko'rish
+                        </span>
                     </div>
                 </div>
             `).join('');
         }
 
-        // RENDER LEADS TABLE IN ADMIN
+        function openImageModal(imgUrl, caption) {
+            if(!imgUrl) {
+                alert("Ushbu talaba uchun Admission Letter rasmi yuklanmagan!");
+                return;
+            }
+            document.getElementById('modalImage').src = imgUrl;
+            document.getElementById('modalCaption').innerText = caption;
+            document.getElementById('imageModal').classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+        }
+
         function renderLeads() {
             const tbody = document.getElementById('leadsTableBody');
             document.getElementById('leadCount').innerText = `${leads.length} ta`;
@@ -455,7 +507,7 @@
                 <tr class="hover:bg-slate-900/60">
                     <td class="p-3 text-slate-500">${l.date}</td>
                     <td class="p-3 font-semibold text-white">${l.name}</td>
-                    <td class="p-3 text-emerald-400 font-mono">${l.phone}</td>
+                    <td class="p-3 text-amber-400 font-mono">${l.phone}</td>
                     <td class="p-3 text-slate-400 max-w-xs truncate">${l.message || '-'}</td>
                     <td class="p-3 text-right">
                         <button onclick="deleteLead(${l.id})" class="text-rose-400 hover:text-rose-300">
@@ -476,16 +528,30 @@
             const student = document.getElementById('admStudent').value;
             const uni = document.getElementById('admUni').value;
             const grant = document.getElementById('admGrant').value;
+            const fileInput = document.getElementById('admImageInput');
 
             if(!student || !uni) return alert("Talaba ismi va universitetini kiriting!");
 
-            admissions.unshift({ id: Date.now(), student, uni, grant });
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    saveAdmissionItem(student, uni, grant, e.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveAdmissionItem(student, uni, grant, null);
+            }
+        }
+
+        function saveAdmissionItem(student, uni, grant, image) {
+            admissions.unshift({ id: Date.now(), student, uni, grant, image });
             localStorage.setItem('pilla_admissions', JSON.stringify(admissions));
             renderAdmissions();
             alert("Admission Letter muvaffaqiyatli qo'shildi!");
             document.getElementById('admStudent').value = '';
             document.getElementById('admUni').value = '';
             document.getElementById('admGrant').value = '';
+            document.getElementById('admImageInput').value = '';
         }
 
         function handleLogoUpload(e) {
@@ -502,9 +568,8 @@
 
         function saveSettings() {
             settings.phone = document.getElementById('settingPhone').value;
-            settings.telegram = document.getElementById('settingTelegram').value;
-            settings.instagram = document.getElementById('settingInstagram').value;
-            settings.whatsapp = document.getElementById('settingWhatsapp').value;
+            settings.telegramAccount = document.getElementById('settingTelegramAccount').value;
+            settings.telegramChannel = document.getElementById('settingTelegramChannel').value;
 
             localStorage.setItem('pilla_settings', JSON.stringify(settings));
             applySettings();
@@ -513,27 +578,26 @@
 
         function applySettings() {
             if(settings.logo) {
-                document.getElementById('siteLogoContainer').innerHTML = `<img src="${settings.logo}" class="w-full h-full object-cover rounded-[14px]">`;
+                document.getElementById('siteLogoContainer').innerHTML = `<img src="${settings.logo}" class="h-full w-auto object-contain">`;
             }
-            if(settings.telegram) {
-                document.getElementById('navTelegram').href = settings.telegram;
-                document.getElementById('footTelegram').href = settings.telegram;
+            if(settings.phone) {
+                document.getElementById('displayPhone').innerText = settings.phone;
+                document.getElementById('contactPhoneCard').href = `tel:${settings.phone.replace(/\s+/g, '')}`;
             }
-            if(settings.instagram) {
-                document.getElementById('navInstagram').href = settings.instagram;
-                document.getElementById('footInstagram').href = settings.instagram;
+            if(settings.telegramAccount) {
+                document.getElementById('contactTelegramAccount').href = settings.telegramAccount;
+                document.getElementById('footTelegramAccount').href = settings.telegramAccount;
             }
-            if(settings.whatsapp) {
-                document.getElementById('navWhatsapp').href = settings.whatsapp;
-                document.getElementById('footWhatsapp').href = settings.whatsapp;
+            if(settings.telegramChannel) {
+                document.getElementById('contactTelegramChannel').href = settings.telegramChannel;
+                document.getElementById('footTelegramChannel').href = settings.telegramChannel;
             }
+            
             document.getElementById('settingPhone').value = settings.phone || '';
-            document.getElementById('settingTelegram').value = settings.telegram || '';
-            document.getElementById('settingInstagram').value = settings.instagram || '';
-            document.getElementById('settingWhatsapp').value = settings.whatsapp || '';
+            document.getElementById('settingTelegramAccount').value = settings.telegramAccount || '';
+            document.getElementById('settingTelegramChannel').value = settings.telegramChannel || '';
         }
 
-        // SECRET ADMIN AUTHENTICATION
         function checkAdminHash() {
             if(window.location.hash === '#admin-login') {
                 promptAdminAuth();
