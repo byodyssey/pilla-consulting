@@ -20,12 +20,8 @@
         
         #galaxyCanvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none;
         }
 
         .glass-card {
@@ -33,6 +29,11 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(234, 179, 8, 0.15);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(234, 179, 8, 0.4);
+            transform: translateY(-3px);
         }
         
         .glass-nav {
@@ -51,18 +52,37 @@
         .gold-button {
             background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
             color: #05080f;
+            transition: all 0.3s ease;
         }
-
         .gold-button:hover {
             background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+            transform: scale(1.02);
         }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(10, 15, 30, 0.6); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 10px; }
+
+        /* Notification Toast */
+        #toastContainer {
+            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            padding: 12px 20px; border-radius: 12px; font-size: 13px; font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            animation: slideIn 0.3s ease forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- NOTIFICATION TOAST CONTAINER -->
+    <div id="toastContainer"></div>
 
     <!-- GALAKTIKA BACKGROUND -->
     <canvas id="galaxyCanvas"></canvas>
@@ -77,16 +97,25 @@
             </a>
 
             <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-300">
-                <a href="#hero" class="hover:text-amber-400 transition">Bosh sahifa</a>
-                <a href="#universities" class="hover:text-amber-400 transition">Universitetlar</a>
-                <a href="#admissions" class="hover:text-amber-400 transition">Admission Letters</a>
-                <a href="#contact" class="hover:text-amber-400 transition">Bog'lanish</a>
+                <a href="#hero" data-i18n="nav_home" class="hover:text-amber-400 transition">Bosh sahifa</a>
+                <a href="#universities" data-i18n="nav_unis" class="hover:text-amber-400 transition">Universitetlar</a>
+                <a href="#admissions" data-i18n="nav_admissions" class="hover:text-amber-400 transition">Admission Letters</a>
+                <a href="#contact" data-i18n="nav_contact" class="hover:text-amber-400 transition">Bog'lanish</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="#contact" class="gold-button font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shadow-lg transition flex items-center gap-1.5 whitespace-nowrap">
+                <!-- LANGUAGE SELECTOR -->
+                <select id="langSelector" onchange="changeLanguage(this.value)" class="bg-slate-900/90 border border-amber-500/30 text-amber-400 text-xs font-bold rounded-xl px-2.5 py-2 focus:outline-none cursor-pointer">
+                    <option value="uz">UZ</option>
+                    <option value="ru">RU</option>
+                    <option value="en">EN</option>
+                    <option value="zh">ZH</option>
+                    <option value="tr">TR</option>
+                </select>
+
+                <a href="#contact" class="gold-button font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-1.5 whitespace-nowrap">
                     <i class="fa-solid fa-phone text-xs"></i>
-                    <span>Konsultatsiya</span>
+                    <span data-i18n="btn_consult">Konsultatsiya</span>
                 </a>
             </div>
         </div>
@@ -101,19 +130,19 @@
                 <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                     <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
-                            <i class="fa-solid fa-crown text-amber-400"></i> <span>Rasmiy Vakillik va Kafolatlangan Ta'lim</span>
+                            <i class="fa-solid fa-crown text-amber-400"></i> <span data-i18n="hero_badge">Rasmiy Vakillik va Kafolatlangan Ta'lim</span>
                         </div>
                         <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight tracking-tight">
-                            Xitoyning <span class="gold-gradient-text">32 ta Nufuzli Universiteti</span> Bilan Shartnoma
+                            <span data-i18n="hero_title_1">Xitoyning</span> <span class="gold-gradient-text" data-i18n="hero_title_2">32 ta Nufuzli Universiteti</span> <span data-i18n="hero_title_3">Bilan Shartnoma</span>
                         </h1>
-                        <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0" data-i18n="hero_desc">
                             Pilla Consulting — Xitoy OTMlarining ishonchli vakili. To'liq yoki qisman grantlar, kafolatlangan qabul va hujjatlarni 100% to'g'ri rasmiylashtirish.
                         </p>
                         <div class="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start pt-2">
-                            <a href="#contact" class="w-full sm:w-auto text-center gold-button font-extrabold px-6 py-3 rounded-xl shadow-lg transition text-sm">
+                            <a href="#contact" class="w-full sm:w-auto text-center gold-button font-extrabold px-6 py-3 rounded-xl shadow-lg text-sm" data-i18n="btn_free_consult">
                                 Bepul Konsultatsiya
                             </a>
-                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800/60 text-white font-bold px-6 py-3 rounded-xl transition border border-amber-500/30 text-sm">
+                            <a href="#admissions" class="w-full sm:w-auto text-center glass-card hover:bg-slate-800/60 text-white font-bold px-6 py-3 rounded-xl border border-amber-500/30 text-sm" data-i18n="btn_view_results">
                                 Qabul Xatlarini Ko'rish
                             </a>
                         </div>
@@ -121,24 +150,24 @@
 
                     <div class="lg:col-span-5">
                         <div class="glass-card rounded-3xl p-6 sm:p-7 shadow-2xl relative border-amber-500/40">
-                            <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Tezkor Ariza</h3>
-                            <p class="text-slate-400 text-xs mb-4">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mb-1" data-i18n="form_title">Tezkor Ariza</h3>
+                            <p class="text-slate-400 text-xs mb-4" data-i18n="form_desc">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
 
                             <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3.5">
                                 <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1">Ism va Familiyangiz</label>
+                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="form_name">Ism va Familiyangiz</label>
                                     <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1">Telefon Raqamingiz (Majburiy)</label>
+                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="form_phone">Telefon Raqamingiz (Majburiy)</label>
                                     <input type="tel" id="leadPhone" required pattern="^\+?[0-9\s\-\(\)]{9,18}$" placeholder="+998 90 123 45 67" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1">Qiziqtirgan Yo'nalish / Izoh</label>
+                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="form_msg">Qiziqtirgan Yo'nalish / Izoh</label>
                                     <textarea id="leadMessage" rows="2" placeholder="Masalan: Bakalavr, Grant asosida..." class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"></textarea>
                                 </div>
-                                <button type="submit" class="w-full gold-button font-black py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
-                                    <span>Arizani Yuborish</span>
+                                <button type="submit" class="w-full gold-button font-black py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm">
+                                    <span data-i18n="form_submit">Arizani Yuborish</span>
                                     <i class="fa-solid fa-paper-plane text-xs"></i>
                                 </button>
                             </form>
@@ -152,9 +181,9 @@
         <section id="universities" class="py-14 sm:py-20 border-t border-slate-800/60">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Hamkor OTMlar</span>
-                    <h2 class="text-2xl sm:text-4xl font-black text-white mb-3">Xitoyning <span class="gold-gradient-text">Nufuzli Universitetlari</span></h2>
-                    <p class="text-slate-300 text-xs sm:text-sm">Biz talabalarimizni Xitoyning eng yuqori reytingdagi top universitetlariga 100% grant va chegirmali kontrakt asosida joylashtiramiz.</p>
+                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block" data-i18n="uni_subtitle">Hamkor OTMlar</span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-white mb-3"><span data-i18n="uni_title_1">Xitoyning</span> <span class="gold-gradient-text" data-i18n="uni_title_2">Nufuzli Universitetlari</span></h2>
+                    <p class="text-slate-300 text-xs sm:text-sm" data-i18n="uni_desc">Biz talabalarimizni Xitoyning eng yuqori reytingdagi top universitetlariga 100% grant va chegirmali kontrakt asosida joylashtiramiz.</p>
                 </div>
                 <div id="universitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
@@ -164,9 +193,9 @@
         <section id="admissions" class="py-14 sm:py-20 border-t border-slate-800/60">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Natijalarimiz</span>
-                    <h2 class="text-2xl sm:text-4xl font-black text-white mb-3">Talabalarimizning <span class="gold-gradient-text">Admission Letter</span>'lari</h2>
-                    <p class="text-slate-300 text-xs sm:text-sm">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
+                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block" data-i18n="adm_subtitle">Natijalarimiz</span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-white mb-3"><span data-i18n="adm_title_1">Talabalarimizning</span> <span class="gold-gradient-text">Admission Letter</span> <span data-i18n="adm_title_2">'lari</span></h2>
+                    <p class="text-slate-300 text-xs sm:text-sm" data-i18n="adm_desc">Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.</p>
                 </div>
                 <div id="admissionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
@@ -176,38 +205,50 @@
         <section id="contact" class="py-14 sm:py-20 border-t border-slate-800/60">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Kechikmang, O'rinlar Cheklangan</span>
-                    <h2 class="text-2xl sm:text-4xl font-black text-white mb-3">Biz Bilan Bog'laning</h2>
-                    <p class="text-slate-300 text-xs sm:text-sm">Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga doim tayyor.</p>
+                    <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block" data-i18n="contact_subtitle">Kechikmang, O'rinlar Cheklangan</span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-white mb-3" data-i18n="contact_title">Biz Bilan Bog'laning</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm" data-i18n="contact_desc">Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga doim tayyor.</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <a id="contactPhoneCard" href="tel:+998901234567" class="glass-card rounded-2xl p-6 hover:border-amber-400 transition flex flex-col items-center text-center">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                    <!-- Phone -->
+                    <a id="contactPhoneCard" href="tel:+998901234567" class="glass-card rounded-2xl p-6 hover:border-amber-400 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg mb-3"><i class="fa-solid fa-phone-volume"></i></div>
-                        <h3 class="text-sm font-bold text-white mb-1">Telefon Orqali</h3>
-                        <p class="text-xs text-slate-400 mb-3">To'g'ridan-to'g'ri bog'lanish</p>
+                        <h3 class="text-sm font-bold text-white mb-1" data-i18n="c_phone_title">Telefon</h3>
+                        <p class="text-xs text-slate-400 mb-3" data-i18n="c_phone_sub">To'g'ridan-to'g'ri</p>
                         <span id="displayPhone" class="text-xs font-extrabold text-amber-400 font-mono mt-auto">+998 90 123 45 67</span>
                     </a>
 
-                    <a id="contactTelegramAccount" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-sky-400 transition flex flex-col items-center text-center">
+                    <!-- Telegram Account -->
+                    <a id="contactTelegramAccount" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-sky-400 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-lg mb-3"><i class="fa-solid fa-paper-plane"></i></div>
-                        <h3 class="text-sm font-bold text-white mb-1">Telegram Akaunt</h3>
-                        <p class="text-xs text-slate-400 mb-3">Shaxsiy chatda yozing</p>
-                        <span class="text-xs font-bold text-sky-400 mt-auto flex items-center gap-1"><span>Yozish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                        <h3 class="text-sm font-bold text-white mb-1" data-i18n="c_t_acc_title">Telegram Akaunt</h3>
+                        <p class="text-xs text-slate-400 mb-3" data-i18n="c_t_acc_sub">Shaxsiy chat</p>
+                        <span class="text-xs font-bold text-sky-400 mt-auto flex items-center gap-1"><span data-i18n="write">Yozish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
                     </a>
 
-                    <a id="contactTelegramChannel" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-amber-400 transition flex flex-col items-center text-center">
+                    <!-- Telegram Channel -->
+                    <a id="contactTelegramChannel" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-amber-400 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg mb-3"><i class="fa-solid fa-bullhorn"></i></div>
-                        <h3 class="text-sm font-bold text-white mb-1">Telegram Kanal</h3>
-                        <p class="text-xs text-slate-400 mb-3">Yangiliklarni kuzating</p>
-                        <span class="text-xs font-bold text-amber-400 mt-auto flex items-center gap-1"><span>A'zo bo'lish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                        <h3 class="text-sm font-bold text-white mb-1" data-i18n="c_t_chan_title">Telegram Kanal</h3>
+                        <p class="text-xs text-slate-400 mb-3" data-i18n="c_t_chan_sub">Yangiliklar</p>
+                        <span class="text-xs font-bold text-amber-400 mt-auto flex items-center gap-1"><span data-i18n="join">A'zo bo'lish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
                     </a>
 
-                    <a id="contactInstagram" href="https://instagram.com/is.odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-pink-500 transition flex flex-col items-center text-center">
+                    <!-- Instagram -->
+                    <a id="contactInstagram" href="https://instagram.com/is.odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-pink-500 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-500 text-lg mb-3"><i class="fa-brands fa-instagram"></i></div>
                         <h3 class="text-sm font-bold text-white mb-1">Instagram</h3>
-                        <p class="text-xs text-slate-400 mb-3">Foto va videolar</p>
-                        <span class="text-xs font-bold text-pink-400 mt-auto flex items-center gap-1"><span>Kuzatish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                        <p class="text-xs text-slate-400 mb-3" data-i18n="c_insta_sub">Foto va videolar</p>
+                        <span class="text-xs font-bold text-pink-400 mt-auto flex items-center gap-1"><span data-i18n="follow">Kuzatish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a id="contactWhatsapp" href="https://wa.me/" target="_blank" class="glass-card rounded-2xl p-6 hover:border-emerald-500 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg mb-3"><i class="fa-brands fa-whatsapp"></i></div>
+                        <h3 class="text-sm font-bold text-white mb-1">WhatsApp</h3>
+                        <p class="text-xs text-slate-400 mb-3" data-i18n="c_wa_sub">Tezkor chat</p>
+                        <span class="text-xs font-bold text-emerald-400 mt-auto flex items-center gap-1"><span data-i18n="write">Yozish</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
                     </a>
                 </div>
             </div>
@@ -219,7 +260,7 @@
     <div id="imageModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
         <div class="relative max-w-3xl w-full max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
             <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-sm hover:text-amber-400 font-bold">
-                <i class="fa-solid fa-xmark text-lg"></i> Yopish
+                <i class="fa-solid fa-xmark text-lg"></i> <span data-i18n="close">Yopish</span>
             </button>
             <img id="modalImage" src="" alt="Admission Letter" class="max-w-full max-h-[75vh] rounded-2xl object-contain shadow-2xl border border-amber-500/30">
             <h4 id="modalCaption" class="text-white font-bold text-base sm:text-lg mt-4 text-center"></h4>
@@ -231,7 +272,7 @@
         <div class="max-w-7xl mx-auto space-y-6">
             <div class="flex items-center justify-between pb-4 border-b border-slate-800">
                 <h1 class="text-lg sm:text-2xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center (Cloud Realtime)
                 </h1>
                 <button onclick="closeAdmin()" class="bg-red-500/20 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-500/30 transition">Chiqish (Logout)</button>
             </div>
@@ -247,7 +288,7 @@
             <div id="tabSettings" class="space-y-6">
                 <div class="grid lg:grid-cols-2 gap-6">
                     <div class="glass-card rounded-2xl p-6 space-y-4">
-                        <h3 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-gear mr-1"></i> Asosiy Ma'lumotlar va Aloqa</h3>
+                        <h3 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-gear mr-1"></i> Aloqa Ma'lumotlari va Linklar</h3>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Telefon Raqami</label>
                             <input type="text" id="settingPhone" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
@@ -264,24 +305,28 @@
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Instagram Linki</label>
                             <input type="url" id="settingInstagram" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
                         </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Linki (masalan: https://wa.me/998901234567)</label>
+                            <input type="url" id="settingWhatsapp" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                        </div>
                     </div>
 
                     <div class="glass-card rounded-2xl p-6 space-y-4">
                         <h3 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-image mr-1"></i> Logo va Telegram Bot</h3>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Sayt Logosi (Rasm yuklash)</label>
-                            <input type="file" id="settingLogoFile" accept="image/*" onchange="encodeLogoFile(this)" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-400 cursor-pointer">
+                            <input type="file" id="settingLogoFile" accept="image/*" onchange="encodeLogoFile(this)" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 cursor-pointer">
                             <input type="hidden" id="settingLogoUrl">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Telegram Bot Token</label>
-                            <input type="password" id="settingBotToken" placeholder="123456789:ABCdefGhI..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-amber-400 font-mono">
+                            <input type="password" id="settingBotToken" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-amber-400 font-mono">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-300 mb-1">Telegram Chat ID</label>
-                            <input type="text" id="settingChatId" placeholder="123456789" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-amber-400 font-mono">
+                            <input type="text" id="settingChatId" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-amber-400 font-mono">
                         </div>
-                        <button onclick="saveSettingsToFirebase()" class="w-full gold-button font-extrabold py-3 rounded-xl text-sm shadow-lg transition mt-4">Sozlamalarni Saqlash</button>
+                        <button onclick="saveSettingsToFirebase()" class="w-full gold-button font-extrabold py-3 rounded-xl text-sm shadow-lg transition mt-4">Sozlamalarni Bazaga Saqlash</button>
                     </div>
                 </div>
             </div>
@@ -293,10 +338,10 @@
                     <div class="grid sm:grid-cols-3 gap-4">
                         <input type="text" id="newAdmUni" placeholder="Universitet nomi" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
                         <input type="text" id="newAdmStudent" placeholder="Talaba F.I.O." class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="file" id="newAdmFile" accept="image/*" onchange="encodeAdmFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-950 font-semibold cursor-pointer">
+                        <input type="file" id="newAdmFile" accept="image/*" onchange="encodeAdmFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 cursor-pointer">
                         <input type="hidden" id="newAdmImgUrl">
                     </div>
-                    <button onclick="addAdmissionItem()" class="gold-button font-bold px-6 py-2.5 rounded-xl text-xs">Qo'shish</button>
+                    <button onclick="addAdmissionItem()" class="gold-button font-bold px-6 py-2.5 rounded-xl text-xs">Bazaga Qo'shish</button>
                 </div>
 
                 <div class="glass-card rounded-2xl p-6">
@@ -312,10 +357,10 @@
                     <div class="grid sm:grid-cols-3 gap-4">
                         <input type="text" id="newUniName" placeholder="Universitet nomi" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
                         <input type="text" id="newUniCity" placeholder="Shahar" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="file" id="newUniFile" accept="image/*" onchange="encodeUniFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-950 font-semibold cursor-pointer">
+                        <input type="file" id="newUniFile" accept="image/*" onchange="encodeUniFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 cursor-pointer">
                         <input type="hidden" id="newUniImgUrl">
                     </div>
-                    <button onclick="addUniversityItem()" class="gold-button font-bold px-6 py-2.5 rounded-xl text-xs">Universitet Qo'shish</button>
+                    <button onclick="addUniversityItem()" class="gold-button font-bold px-6 py-2.5 rounded-xl text-xs">Bazaga Qo'shish</button>
                 </div>
 
                 <div class="glass-card rounded-2xl p-6">
@@ -329,7 +374,6 @@
                 <div class="glass-card rounded-2xl p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-sm font-bold text-white">Kelib Tushgan Arizalar</h3>
-                        <button onclick="clearAllLeads()" class="bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-500/30">Barchasini Tozalash</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs text-slate-300">
@@ -359,6 +403,7 @@
                 <a id="footTelegramAccount" href="https://t.me/is_odyssey" target="_blank" class="hover:text-amber-400 transition"><i class="fa-solid fa-paper-plane"></i></a>
                 <a id="footTelegramChannel" href="https://t.me/is_odyssey" target="_blank" class="hover:text-amber-400 transition"><i class="fa-solid fa-bullhorn"></i></a>
                 <a id="footInstagram" href="https://instagram.com/is.odyssey" target="_blank" class="hover:text-pink-400 transition"><i class="fa-brands fa-instagram"></i></a>
+                <a id="footWhatsapp" href="https://wa.me/" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
     </footer>
@@ -379,32 +424,128 @@
         }
         const db = firebase.firestore();
 
-        let currentSettings = {
-            phone: "+998 90 123 45 67",
-            telegramAccount: "https://t.me/is_odyssey",
-            telegramChannel: "https://t.me/is_odyssey",
-            instagram: "https://instagram.com/is.odyssey",
-            logoUrl: "",
-            botToken: "",
-            chatId: ""
+        // Translations for 5 languages
+        const translations = {
+            uz: {
+                nav_home: "Bosh sahifa", nav_unis: "Universitetlar", nav_admissions: "Admission Letters", nav_contact: "Bog'lanish",
+                btn_consult: "Konsultatsiya", hero_badge: "Rasmiy Vakillik va Kafolatlangan Ta'lim",
+                hero_title_1: "Xitoyning", hero_title_2: "32 ta Nufuzli Universiteti", hero_title_3: "Bilan Shartnoma",
+                hero_desc: "Pilla Consulting — Xitoy OTMlarining ishonchli vakili. To'liq yoki qisman grantlar, kafolatlangan qabul va hujjatlarni 100% to'g'ri rasmiylashtirish.",
+                btn_free_consult: "Bepul Konsultatsiya", btn_view_results: "Qabul Xatlarini Ko'rish",
+                form_title: "Tezkor Ariza", form_desc: "So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.",
+                form_name: "Ism va Familiyangiz", form_phone: "Telefon Raqamingiz (Majburiy)", form_msg: "Qiziqtirgan Yo'nalish / Izoh",
+                form_submit: "Arizani Yuborish", uni_subtitle: "Hamkor OTMlar", uni_title_1: "Xitoyning", uni_title_2: "Nufuzli Universitetlari",
+                uni_desc: "Biz talabalarimizni Xitoyning eng yuqori reytingdagi top universitetlariga 100% grant va chegirmali kontrakt asosida joylashtiramiz.",
+                adm_subtitle: "Natijalarimiz", adm_title_1: "Talabalarimizning", adm_title_2: "'lari",
+                adm_desc: "Xitoy OTMlariga qabul qilingan talabalarimizning rasmiy qabul xatlarini ko'rish uchun kartochka ustiga bosing.",
+                contact_subtitle: "Kechikmang, O'rinlar Cheklangan", contact_title: "Biz Bilan Bog'laning",
+                contact_desc: "Mutaxassislarimiz savollaringizga javob berishga va hujjatlaringizni tayyorlashga doim tayyor.",
+                c_phone_title: "Telefon", c_phone_sub: "To'g'ridan-to'g'ri", c_t_acc_title: "Telegram Akaunt", c_t_acc_sub: "Shaxsiy chat",
+                c_t_chan_title: "Telegram Kanal", c_t_chan_sub: "Yangiliklar", c_insta_sub: "Foto va videolar", c_wa_sub: "Tezkor chat",
+                write: "Yozish", join: "A'zo bo'lish", follow: "Kuzatish", close: "Yopish"
+            },
+            ru: {
+                nav_home: "Главная", nav_unis: "Университеты", nav_admissions: "Письма о зачислении", nav_contact: "Контакты",
+                btn_consult: "Консультация", hero_badge: "Официальное представительство и гарантия образования",
+                hero_title_1: "Договор с", hero_title_2: "32 престижными университетами", hero_title_3: "Китая",
+                hero_desc: "Pilla Consulting — надежный представитель вузов Китая. Полные или частичные гранты, гарантированное поступление.",
+                btn_free_consult: "Бесплатная консультация", btn_view_results: "Смотреть результаты",
+                form_title: "Быстрая заявка", form_desc: "Оставьте заявку, наш специалист свяжется с вами через 15 минут.",
+                form_name: "Ваше Имя и Фамилия", form_phone: "Номер телефона (Обязательно)", form_msg: "Направление / Комментарий",
+                form_submit: "Отправить заявку", uni_subtitle: "Партнерские вузы", uni_title_1: "Престижные", uni_title_2: "университеты Китая",
+                uni_desc: "Мы помогаем поступить в топовые вузы Китая на гранты и контракт со скидкой.",
+                adm_subtitle: "Наши результаты", adm_title_1: "Письма о зачислении", adm_title_2: "",
+                adm_desc: "Нажмите на карточку, чтобы посмотреть официальные письма о зачислении наших студентов.",
+                contact_subtitle: "Спешите, места ограничены", contact_title: "Свяжитесь с нами",
+                contact_desc: "Наши специалисты всегда готовы ответить на ваши вопросы.",
+                c_phone_title: "Телефон", c_phone_sub: "Напрямую", c_t_acc_title: "Telegram Аккаунт", c_t_acc_sub: "Личный чат",
+                c_t_chan_title: "Telegram Канал", c_t_chan_sub: "Новости", c_insta_sub: "Фото и видео", c_wa_sub: "Быстрый чат",
+                write: "Написать", join: "Подписаться", follow: "Следить", close: "Закрыть"
+            },
+            en: {
+                nav_home: "Home", nav_unis: "Universities", nav_admissions: "Admission Letters", nav_contact: "Contact",
+                btn_consult: "Consultation", hero_badge: "Official Representation & Guaranteed Education",
+                hero_title_1: "Contract with", hero_title_2: "32 Prestigious Universities", hero_title_3: "in China",
+                hero_desc: "Pilla Consulting is your reliable partner for Chinese universities. Full or partial scholarships and guaranteed admission.",
+                btn_free_consult: "Free Consultation", btn_view_results: "View Admissions",
+                form_title: "Quick Application", form_desc: "Leave a request and our specialist will contact you in 15 minutes.",
+                form_name: "Full Name", form_phone: "Phone Number (Required)", form_msg: "Desired Major / Comment",
+                form_submit: "Submit Application", uni_subtitle: "Partner Universities", uni_title_1: "Prestigious", uni_title_2: "Universities of China",
+                uni_desc: "We place our students in top-ranked Chinese universities with 100% scholarships or discounted tuition.",
+                adm_subtitle: "Our Results", adm_title_1: "Student Admission", adm_title_2: "Letters",
+                adm_desc: "Click on a card to view official admission letters of our students.",
+                contact_subtitle: "Hurry up, places are limited", contact_title: "Contact Us",
+                contact_desc: "Our specialists are always ready to answer your questions and prepare your documents.",
+                c_phone_title: "Phone", c_phone_sub: "Direct call", c_t_acc_title: "Telegram Account", c_t_acc_sub: "Personal chat",
+                c_t_chan_title: "Telegram Channel", c_t_chan_sub: "News", c_insta_sub: "Photos & Videos", c_wa_sub: "Quick chat",
+                write: "Write", join: "Join", follow: "Follow", close: "Close"
+            },
+            zh: {
+                nav_home: "首页", nav_unis: "大学", nav_admissions: "录取通知书", nav_contact: "联系我们",
+                btn_consult: "咨询", hero_badge: "官方代表与有保障的教育",
+                hero_title_1: "与中国", hero_title_2: "32所名牌大学", hero_title_3: "签署合作",
+                hero_desc: "Pilla Consulting 是中国高校的可靠代表。提供全额或部分奖学金以及保录取服务。",
+                btn_free_consult: "免费咨询", btn_view_results: "查看录取信",
+                form_title: "快速申请", form_desc: "留下您的信息，我们的专家将在15分钟内与您联系。",
+                form_name: "姓名", form_phone: "电话号码 (必填)", form_msg: "专业 / 备注",
+                form_submit: "提交申请", uni_subtitle: "合作高校", uni_title_1: "中国", uni_title_2: "著名大学",
+                uni_desc: "我们帮助学生以100%奖学金或优惠学费进入中国顶尖大学。",
+                adm_subtitle: "我们的成果", adm_title_1: "学生录取", adm_title_2: "通知书",
+                adm_desc: "点击卡片查看我们学生的官方录取通知书。",
+                contact_subtitle: "名额有限，从速报名", contact_title: "联系我们",
+                contact_desc: "我们的专家随时准备回答您的所有问题。",
+                c_phone_title: "电话", c_phone_sub: "直接拨打", c_t_acc_title: "Telegram 账号", c_t_acc_sub: "私聊",
+                c_t_chan_title: "Telegram 频道", c_t_chan_sub: "新闻", c_insta_sub: "照片和视频", c_wa_sub: "快捷聊天",
+                write: "写信", join: "加入", follow: "关注", close: "关闭"
+            },
+            tr: {
+                nav_home: "Ana Sayfa", nav_unis: "Üniversiteler", nav_admissions: "Kabul Mektupları", nav_contact: "İletişim",
+                btn_consult: "Danışmanlık", hero_badge: "Resmi Temsilcilik ve Garantili Eğitim",
+                hero_title_1: "Çin'in", hero_title_2: "32 Prestijli Üniversitesi", hero_title_3: "İle Anlaşma",
+                hero_desc: "Pilla Consulting, Çin üniversitelerinin güvenilir temsilcisidir. Tam veya kısmi burslar ve garantili kabul.",
+                btn_free_consult: "Ücretsiz Danışmanlık", btn_view_results: "Kabul Mektuplarını Gör",
+                form_title: "Hızlı Başvuru", form_desc: "Talep bırakın, uzmanımız 15 dakikada sizinle iletişime geçsin.",
+                form_name: "Adınız Soyadınız", form_phone: "Telefon Numaranız (Zorunlu)", form_msg: "İstediğiniz Bölüm / Not",
+                form_submit: "Başvuruyu Gönder", uni_subtitle: "İşbirliği Yaptığımız Üniversiteler", uni_title_1: "Çin'in Prestijli", uni_title_2: "Üniversiteleri",
+                uni_desc: "Öğrencilerimizi Çin'in en yüksek puanlı en iyi üniversitelerine %100 burslu yerleştiriyoruz.",
+                adm_subtitle: "Sonuçlarımız", adm_title_1: "Öğrencilerimizin Kabul Mektupları", adm_title_2: "",
+                adm_desc: "Öğrencilerimizin resmi kabul mektuplarını görmek için karta tıklayın.",
+                contact_subtitle: "Acele Edin, Kontenjanlar Sınırlı", contact_title: "Bizimle İletişime Geçin",
+                contact_desc: "Uzmanlarımız sorularınızı yanıtlamaya ve belgelerinizi hazırlamaya her zaman hazırdır.",
+                c_phone_title: "Telefon", c_phone_sub: "Doğrudan", c_t_acc_title: "Telegram Hesap", c_t_acc_sub: "Özel sohbet",
+                c_t_chan_title: "Telegram Kanal", c_t_chan_sub: "Haberler", c_insta_sub: "Fotoğraf ve videolar", c_wa_sub: "Hızlı sohbet",
+                write: "Yaz", join: "Katıl", follow: "Takip Et", close: "Kapat"
+            }
         };
 
-        let admissions = [
-            { id: "1", university: "Zhejiang University", student: "A. Rustamov", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop" },
-            { id: "2", university: "Tsinghua University", student: "M. Karimov", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop" }
-        ];
+        let currentLang = 'uz';
 
-        let universities = [
-            { id: "1", name: "Zhejiang University", city: "Hangzhou", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop" },
-            { id: "2", name: "Tsinghua University", city: "Beijing", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop" }
-        ];
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations.uz;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(t[key]) el.innerText = t[key];
+            });
+        }
 
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'success' ? 'bg-emerald-500/90 text-white border border-emerald-400' : 'bg-red-500/90 text-white border border-red-400'}`;
+            toast.innerText = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        let currentSettings = {};
+        let admissions = [];
+        let universities = [];
         let leads = [];
 
         document.addEventListener("DOMContentLoaded", () => {
             initGalaxyAnimation();
-            loadFromLocalStorage();
-            fetchDataFromCloud();
+            fetchDataFromCloudRealtime();
             checkAdminHash();
             window.addEventListener("hashchange", checkAdminHash);
         });
@@ -433,69 +574,41 @@
             animate();
         }
 
-        function loadFromLocalStorage() {
-            try {
-                if(localStorage.getItem('pilla_settings')) currentSettings = JSON.parse(localStorage.getItem('pilla_settings'));
-                if(localStorage.getItem('pilla_admissions')) admissions = JSON.parse(localStorage.getItem('pilla_admissions'));
-                if(localStorage.getItem('pilla_universities')) universities = JSON.parse(localStorage.getItem('pilla_universities'));
-                if(localStorage.getItem('pilla_leads')) leads = JSON.parse(localStorage.getItem('pilla_leads'));
-            } catch(e) {}
-            applySettingsToUI();
-            renderAdmissions();
-            renderUniversities();
-            renderAdminAdmissions();
-            renderAdminUniversities();
-            renderLeads();
-        }
-
-        function saveToLocalStorage() {
-            localStorage.setItem('pilla_settings', JSON.stringify(currentSettings));
-            localStorage.setItem('pilla_admissions', JSON.stringify(admissions));
-            localStorage.setItem('pilla_universities', JSON.stringify(universities));
-            localStorage.setItem('pilla_leads', JSON.stringify(leads));
-        }
-
-        function fetchDataFromCloud() {
+        // Realtime Firestore Sync
+        function fetchDataFromCloudRealtime() {
+            // Settings
             db.collection("pilla_settings").doc("main").onSnapshot(doc => {
                 if(doc.exists) {
-                    currentSettings = { ...currentSettings, ...doc.data() };
-                    saveToLocalStorage();
+                    currentSettings = doc.data();
                     applySettingsToUI();
                 }
-            }, () => {});
+            }, err => {
+                showToast("Baza bilan ulanishda xatolik!", "error");
+            });
 
+            // Admissions
             db.collection("pilla_admissions").onSnapshot(snapshot => {
-                let cloudAdmissions = [];
-                snapshot.forEach(doc => { cloudAdmissions.push({ id: doc.id, ...doc.data() }); });
-                if(cloudAdmissions.length > 0) {
-                    admissions = cloudAdmissions;
-                    saveToLocalStorage();
-                    renderAdmissions();
-                    renderAdminAdmissions();
-                }
-            }, () => {});
+                admissions = [];
+                snapshot.forEach(doc => { admissions.push({ id: doc.id, ...doc.data() }); });
+                renderAdmissions();
+                renderAdminAdmissions();
+            }, err => {});
 
+            // Universities
             db.collection("pilla_universities").onSnapshot(snapshot => {
-                let cloudUnis = [];
-                snapshot.forEach(doc => { cloudUnis.push({ id: doc.id, ...doc.data() }); });
-                if(cloudUnis.length > 0) {
-                    universities = cloudUnis;
-                    saveToLocalStorage();
-                    renderUniversities();
-                    renderAdminUniversities();
-                }
-            }, () => {});
+                universities = [];
+                snapshot.forEach(doc => { universities.push({ id: doc.id, ...doc.data() }); });
+                renderUniversities();
+                renderAdminUniversities();
+            }, err => {});
 
+            // Leads
             db.collection("pilla_leads").orderBy("date", "desc").onSnapshot(snapshot => {
-                let cloudLeads = [];
-                snapshot.forEach(doc => { cloudLeads.push({ id: doc.id, ...doc.data() }); });
-                if(cloudLeads.length > 0) {
-                    leads = cloudLeads;
-                    saveToLocalStorage();
-                    document.getElementById('leadCountBadge').innerText = leads.length;
-                    renderLeads();
-                }
-            }, () => {});
+                leads = [];
+                snapshot.forEach(doc => { leads.push({ id: doc.id, ...doc.data() }); });
+                document.getElementById('leadCountBadge').innerText = leads.length;
+                renderLeads();
+            }, err => {});
         }
 
         function applySettingsToUI() {
@@ -516,6 +629,10 @@
                 document.getElementById('contactInstagram').href = s.instagram;
                 document.getElementById('footInstagram').href = s.instagram;
             }
+            if(s.whatsapp) {
+                document.getElementById('contactWhatsapp').href = s.whatsapp;
+                document.getElementById('footWhatsapp').href = s.whatsapp;
+            }
             
             const logoContainer = document.getElementById('siteLogoContainer');
             if(s.logoUrl) {
@@ -529,6 +646,7 @@
                 document.getElementById('settingTelegramAccount').value = s.telegramAccount || '';
                 document.getElementById('settingTelegramChannel').value = s.telegramChannel || '';
                 document.getElementById('settingInstagram').value = s.instagram || '';
+                document.getElementById('settingWhatsapp').value = s.whatsapp || '';
                 document.getElementById('settingBotToken').value = s.botToken || '';
                 document.getElementById('settingChatId').value = s.chatId || '';
                 document.getElementById('settingLogoUrl').value = s.logoUrl || '';
@@ -539,11 +657,11 @@
             const container = document.getElementById('admissionsGrid');
             if(!container) return;
             container.innerHTML = admissions.map(item => `
-                <div onclick="openImageModal('${item.image}', '${item.university} - ${item.student}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group hover:border-amber-400 transition">
+                <div onclick="openImageModal('${item.image}', '${item.university} - ${item.student}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group">
                     <div class="h-56 overflow-hidden relative">
                         <img src="${item.image}" alt="${item.university}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-transparent transition"></div>
-                        <div class="absolute bottom-3 right-3 bg-slate-950/80 px-2.5 py-1 rounded-lg text-xs text-amber-400 font-bold backdrop-blur-md"><i class="fa-solid fa-expand mr-1"></i> Kattalashtirish</div>
+                        <div class="absolute bottom-3 right-3 bg-slate-950/80 px-2.5 py-1 rounded-lg text-xs text-amber-400 font-bold backdrop-blur-md"><i class="fa-solid fa-expand mr-1"></i> <span data-i18n="close">Kattalashtirish</span></div>
                     </div>
                     <div class="p-5">
                         <h4 class="font-bold text-white text-base">${item.university}</h4>
@@ -557,7 +675,7 @@
             const container = document.getElementById('universitiesGrid');
             if(!container) return;
             container.innerHTML = universities.map(u => `
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-amber-400 transition">
+                <div class="glass-card rounded-2xl overflow-hidden group">
                     <div class="h-48 overflow-hidden relative">
                         <img src="${u.image}" alt="${u.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         <div class="absolute top-3 left-3 bg-slate-950/80 px-3 py-1 rounded-full text-xs text-amber-400 font-bold backdrop-blur-md"><i class="fa-solid fa-location-dot mr-1"></i> ${u.city}</div>
@@ -580,20 +698,20 @@
         }
 
         function saveSettingsToFirebase() {
-            currentSettings.phone = document.getElementById('settingPhone').value.trim();
-            currentSettings.telegramAccount = document.getElementById('settingTelegramAccount').value.trim();
-            currentSettings.telegramChannel = document.getElementById('settingTelegramChannel').value.trim();
-            currentSettings.instagram = document.getElementById('settingInstagram').value.trim();
-            currentSettings.botToken = document.getElementById('settingBotToken').value.trim();
-            currentSettings.chatId = document.getElementById('settingChatId').value.trim();
-            currentSettings.logoUrl = document.getElementById('settingLogoUrl').value.trim();
+            const data = {
+                phone: document.getElementById('settingPhone').value.trim(),
+                telegramAccount: document.getElementById('settingTelegramAccount').value.trim(),
+                telegramChannel: document.getElementById('settingTelegramChannel').value.trim(),
+                instagram: document.getElementById('settingInstagram').value.trim(),
+                whatsapp: document.getElementById('settingWhatsapp').value.trim(),
+                botToken: document.getElementById('settingBotToken').value.trim(),
+                chatId: document.getElementById('settingChatId').value.trim(),
+                logoUrl: document.getElementById('settingLogoUrl').value.trim()
+            };
 
-            saveToLocalStorage();
-            applySettingsToUI();
-
-            db.collection("pilla_settings").doc("main").set(currentSettings)
-                .then(() => alert("Sozlamalar bazaga muvaffaqiyatli saqlandi va barchaga yangilandi!"))
-                .catch(() => alert("Sozlamalar lokal va bazaga yozildi!"));
+            db.collection("pilla_settings").doc("main").set(data)
+                .then(() => showToast("Sozlamalar serverga muvaffaqiyatli saqlandi!", "success"))
+                .catch(err => showToast("Serverga yuklashda xatolik!", "error"));
         }
 
         function encodeLogoFile(input) {
@@ -622,31 +740,24 @@
             const university = document.getElementById('newAdmUni').value.trim();
             const student = document.getElementById('newAdmStudent').value.trim();
             const image = document.getElementById('newAdmImgUrl').value.trim();
-            if(!university || !image) { alert("Universitet nomi va rasm kiritilishi shart!"); return; }
-
-            const newItem = { id: Date.now().toString(), university, student, image };
-            admissions.unshift(newItem);
-            saveToLocalStorage();
-            renderAdmissions();
-            renderAdminAdmissions();
+            if(!university || !image) { showToast("Universitet nomi va rasm kiritilishi shart!", "error"); return; }
 
             db.collection("pilla_admissions").add({ university, student, image })
-                .then(() => alert("Admission letter muvaffaqiyatli qo'shildi!"))
-                .catch(() => alert("Qo'shildi!"));
-
-            document.getElementById('newAdmUni').value = '';
-            document.getElementById('newAdmStudent').value = '';
-            document.getElementById('newAdmImgUrl').value = '';
-            document.getElementById('newAdmFile').value = '';
+                .then(() => {
+                    showToast("Admission letter serverga muvaffaqiyatli yuklandi!", "success");
+                    document.getElementById('newAdmUni').value = '';
+                    document.getElementById('newAdmStudent').value = '';
+                    document.getElementById('newAdmImgUrl').value = '';
+                    document.getElementById('newAdmFile').value = '';
+                })
+                .catch(err => showToast("Serverga yuklashda xatolik!", "error"));
         }
 
         function deleteAdmissionItem(id) {
             if(confirm("O'chirishni tasdiqlaysizmi?")) {
-                admissions = admissions.filter(x => x.id !== id);
-                saveToLocalStorage();
-                renderAdmissions();
-                renderAdminAdmissions();
-                db.collection("pilla_admissions").doc(id).delete().catch(() => {});
+                db.collection("pilla_admissions").doc(id).delete()
+                    .then(() => showToast("Muvaffaqiyatli o'chirildi", "success"))
+                    .catch(err => showToast("O'chirishda xatolik", "error"));
             }
         }
 
@@ -669,31 +780,24 @@
             const name = document.getElementById('newUniName').value.trim();
             const city = document.getElementById('newUniCity').value.trim();
             const image = document.getElementById('newUniImgUrl').value.trim();
-            if(!name || !image) { alert("Nom va rasm kiritilishi shart!"); return; }
-
-            const newItem = { id: Date.now().toString(), name, city, image };
-            universities.unshift(newItem);
-            saveToLocalStorage();
-            renderUniversities();
-            renderAdminUniversities();
+            if(!name || !image) { showToast("Nom va rasm kiritilishi shart!", "error"); return; }
 
             db.collection("pilla_universities").add({ name, city, image })
-                .then(() => alert("Universitet muvaffaqiyatli qo'shildi!"))
-                .catch(() => alert("Qo'shildi!"));
-
-            document.getElementById('newUniName').value = '';
-            document.getElementById('newUniCity').value = '';
-            document.getElementById('newUniImgUrl').value = '';
-            document.getElementById('newUniFile').value = '';
+                .then(() => {
+                    showToast("Universitet serverga muvaffaqiyatli yuklandi!", "success");
+                    document.getElementById('newUniName').value = '';
+                    document.getElementById('newUniCity').value = '';
+                    document.getElementById('newUniImgUrl').value = '';
+                    document.getElementById('newUniFile').value = '';
+                })
+                .catch(err => showToast("Serverga yuklashda xatolik!", "error"));
         }
 
         function deleteUniversityItem(id) {
             if(confirm("O'chirishni tasdiqlaysizmi?")) {
-                universities = universities.filter(x => x.id !== id);
-                saveToLocalStorage();
-                renderUniversities();
-                renderAdminUniversities();
-                db.collection("pilla_universities").doc(id).delete().catch(() => {});
+                db.collection("pilla_universities").doc(id).delete()
+                    .then(() => showToast("Muvaffaqiyatli o'chirildi", "success"))
+                    .catch(err => showToast("O'chirishda xatolik", "error"));
             }
         }
 
@@ -717,19 +821,13 @@
             const name = document.getElementById('leadName').value.trim();
             const phone = document.getElementById('leadPhone').value.trim();
             const message = document.getElementById('leadMessage').value.trim();
-            const newLead = { id: Date.now().toString(), name, phone, message, date: new Date().toLocaleString() };
-
-            leads.unshift(newLead);
-            saveToLocalStorage();
-            document.getElementById('leadCountBadge').innerText = leads.length;
-            renderLeads();
+            const newLead = { name, phone, message, date: new Date().toLocaleString() };
 
             db.collection("pilla_leads").add(newLead).then(() => {
-                alert("Arizangiz muvaffaqiyatli yuborildi va bazaga saqlandi!");
+                showToast("Arizangiz muvaffaqiyatli yuborildi va bazaga saqlandi!", "success");
                 document.getElementById('leadForm').reset();
             }).catch(() => {
-                alert("Arizangiz qabul qilindi!");
-                document.getElementById('leadForm').reset();
+                showToast("Serverga yuborishda xatolik yuz berdi!", "error");
             });
 
             if(currentSettings.botToken && currentSettings.chatId) {
@@ -743,20 +841,9 @@
         }
 
         function deleteLead(id) {
-            leads = leads.filter(l => l.id !== id);
-            saveToLocalStorage();
-            document.getElementById('leadCountBadge').innerText = leads.length;
-            renderLeads();
-            db.collection("pilla_leads").doc(id).delete().catch(() => {});
-        }
-
-        function clearAllLeads() {
-            if(confirm("Barcha arizalarni o'chirishni xohlaysizmi?")) {
-                leads = [];
-                saveToLocalStorage();
-                document.getElementById('leadCountBadge').innerText = 0;
-                renderLeads();
-            }
+            db.collection("pilla_leads").doc(id).delete()
+                .then(() => showToast("Ariza o'chirildi", "success"))
+                .catch(() => {});
         }
 
         function renderLeads() {
