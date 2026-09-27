@@ -107,10 +107,6 @@
                     <option value="tr">TR</option>
                 </select>
 
-                <a href="images/logo.png" download="Pilla-Consulting-Logo.png" class="hidden sm:flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 text-xs font-bold whitespace-nowrap" title="Logoni yuklab olish">
-                    <i class="fa-solid fa-download"></i> Logo
-                </a>
-
                 <a href="#contact" class="gold-button font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-1.5 whitespace-nowrap">
                     <i class="fa-solid fa-phone text-xs"></i>
                     <span data-i18n="btn_consult">Konsultatsiya</span>
@@ -206,11 +202,11 @@
                         <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg mb-3"><i class="fa-solid fa-phone-volume"></i></div>
                         <h3 class="text-sm font-bold text-white mb-1" data-i18n="c_phone_title">Telefon</h3>
                         <p class="text-xs text-slate-400 mb-3" data-i18n="c_phone_sub">To'g'ridan-to'g'ri</p>
-                        <span id="displayPhone" class="text-xs font-extrabold text-amber-400 font-mono mt-auto">+998 90 123 45 67</span>
+                        <span id="displayPhone" class="text-xs font-extrabold text-amber-400 font-mono mt-auto">+998 91 396 10 90</span>
                     </a>
 
                     <!-- Telegram Account -->
-                    <a id="contactTelegramAccount" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-sky-400 flex flex-col items-center text-center">
+                    <a id="contactTelegramAccount" href="https://t.me/enmeiody" target="_blank" class="glass-card rounded-2xl p-6 hover:border-sky-400 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-lg mb-3"><i class="fa-solid fa-paper-plane"></i></div>
                         <h3 class="text-sm font-bold text-white mb-1" data-i18n="c_t_acc_title">Telegram Akaunt</h3>
                         <p class="text-xs text-slate-400 mb-3" data-i18n="c_t_acc_sub">Shaxsiy chat</p>
@@ -218,7 +214,7 @@
                     </a>
 
                     <!-- Telegram Channel -->
-                    <a id="contactTelegramChannel" href="https://t.me/is_odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-amber-400 flex flex-col items-center text-center">
+                    <a id="contactTelegramChannel" href="https://t.me/pilla_consulting" target="_blank" class="glass-card rounded-2xl p-6 hover:border-amber-400 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg mb-3"><i class="fa-solid fa-bullhorn"></i></div>
                         <h3 class="text-sm font-bold text-white mb-1" data-i18n="c_t_chan_title">Telegram Kanal</h3>
                         <p class="text-xs text-slate-400 mb-3" data-i18n="c_t_chan_sub">Yangiliklar</p>
@@ -226,7 +222,7 @@
                     </a>
 
                     <!-- Instagram -->
-                    <a id="contactInstagram" href="https://instagram.com/is.odyssey" target="_blank" class="glass-card rounded-2xl p-6 hover:border-pink-500 flex flex-col items-center text-center">
+                    <a id="contactInstagram" href="https://instagram.com/pilla_consulting" target="_blank" class="glass-card rounded-2xl p-6 hover:border-pink-500 flex flex-col items-center text-center">
                         <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-500 text-lg mb-3"><i class="fa-brands fa-instagram"></i></div>
                         <h3 class="text-sm font-bold text-white mb-1">Instagram</h3>
                         <p class="text-xs text-slate-400 mb-3" data-i18n="c_insta_sub">Foto va videolar</p>
@@ -234,7 +230,7 @@
                     </a>
 
                     <!-- WhatsApp -->
-                    <a id="contactWhatsapp" href="https://wa.me/" target="_blank" class="glass-card rounded-2xl p-6 hover:border-emerald-500 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
+                    <a id="contactWhatsapp" href="https://chat.whatsapp.com/KhQvCu9ClLqDRL0FQuWB8B" target="_blank" class="glass-card rounded-2xl p-6 hover:border-emerald-500 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
                         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg mb-3"><i class="fa-brands fa-whatsapp"></i></div>
                         <h3 class="text-sm font-bold text-white mb-1">WhatsApp</h3>
                         <p class="text-xs text-slate-400 mb-3" data-i18n="c_wa_sub">Tezkor chat</p>
@@ -379,8 +375,53 @@
 
         // Sayt to'liq statik ishlaydi: Firebase, login va admin panel talab qilinmaydi.
         // Universitet va admission ma'lumotlari keyinchalik shu massivlarga qo'shiladi.
-        const universities = [];
-        const admissions = [];
+        // ===== NAMUNA MA'LUMOTLAR =====
+        // Faqat image manzillarini (src) va admission talaba ism-familiyasini almashtiring.
+        const universities = [
+            {
+                name: "Zhejiang University",
+                city: "Hangzhou",
+                image: "images/university-1.jpg"
+            },
+            {
+                name: "Wuhan University",
+                city: "Wuhan",
+                image: "images/university-2.jpg"
+            },
+            {
+                name: "Xiamen University",
+                city: "Xiamen",
+                image: "images/university-3.jpg"
+            },
+            {
+                name: "Nanjing University",
+                city: "Nanjing",
+                image: "images/university-4.jpg"
+            }
+        ];
+
+        const admissions = [
+            {
+                university: "Zhejiang University",
+                student: "Ali Valiyev",
+                image: "images/admission-1.jpg"
+            },
+            {
+                university: "Wuhan University",
+                student: "Muhammadali Karimov",
+                image: "images/admission-2.jpg"
+            },
+            {
+                university: "Xiamen University",
+                student: "Abdulloh Rahimov",
+                image: "images/admission-3.jpg"
+            },
+            {
+                university: "Nanjing University",
+                student: "Sardorbek Ismoilov",
+                image: "images/admission-4.jpg"
+            }
+        ];
 
         function renderAdmissions() {
             const container = document.getElementById('admissionsGrid');
