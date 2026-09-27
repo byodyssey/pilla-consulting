@@ -11,12 +11,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
-
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #05080f; color: #f1f5f9; overflow-x: hidden; }
         
@@ -83,9 +77,6 @@
 </head>
 <body class="relative min-h-screen flex flex-col custom-scrollbar">
 
-    <!-- NOTIFICATION TOAST CONTAINER -->
-    <div id="toastContainer"></div>
-
     <!-- GALAKTIKA BACKGROUND -->
     <canvas id="galaxyCanvas"></canvas>
 
@@ -93,8 +84,9 @@
     <header class="sticky top-0 z-40 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
             <a href="#" class="flex items-center gap-2">
-                <div id="siteLogoContainer" class="h-10 sm:h-12 flex items-center">
-                    <span id="logoText" class="text-base sm:text-2xl font-black gold-gradient-text tracking-wider">PILLA CONSULTING</span>
+                <div id="siteLogoContainer" class="h-10 sm:h-12 flex items-center gap-3">
+                    <img id="siteLogo" src="images/logo.png" alt="Pilla Consulting logo" class="h-10 sm:h-12 w-auto max-w-[190px] object-contain" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='inline-block'">
+                    <span id="logoFallback" style="display:none" class="text-base sm:text-2xl font-black gold-gradient-text tracking-wider">PILLA CONSULTING</span>
                 </div>
             </a>
 
@@ -114,6 +106,10 @@
                     <option value="zh">ZH</option>
                     <option value="tr">TR</option>
                 </select>
+
+                <a href="images/logo.png" download="Pilla-Consulting-Logo.png" class="hidden sm:flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 text-xs font-bold whitespace-nowrap" title="Logoni yuklab olish">
+                    <i class="fa-solid fa-download"></i> Logo
+                </a>
 
                 <a href="#contact" class="gold-button font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-1.5 whitespace-nowrap">
                     <i class="fa-solid fa-phone text-xs"></i>
@@ -151,28 +147,20 @@
                     </div>
 
                     <div class="lg:col-span-5">
-                        <div class="glass-card rounded-3xl p-6 sm:p-7 shadow-2xl relative border-amber-500/40">
-                            <h3 class="text-lg sm:text-xl font-bold text-white mb-1" data-i18n="form_title">Tezkor Ariza</h3>
-                            <p class="text-slate-400 text-xs mb-4" data-i18n="form_desc">So'rov qoldiring, mutaxassisimiz 15 daqiqada bog'lanadi.</p>
-
-                            <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3.5">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="form_name">Ism va Familiyangiz</label>
-                                    <input type="text" id="leadName" required placeholder="Ali Valiyev" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="form_phone">Telefon Raqamingiz (Majburiy)</label>
-                                    <input type="tel" id="leadPhone" required pattern="^\+?[0-9\s\-\(\)]{9,18}$" placeholder="+998 90 123 45 67" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-amber-400 uppercase mb-1" data-i18n="form_msg">Qiziqtirgan Yo'nalish / Izoh</label>
-                                    <textarea id="leadMessage" rows="2" placeholder="Masalan: Bakalavr, Grant asosida..." class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"></textarea>
-                                </div>
-                                <button type="submit" class="w-full gold-button font-black py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm">
-                                    <span data-i18n="form_submit">Arizani Yuborish</span>
-                                    <i class="fa-solid fa-paper-plane text-xs"></i>
-                                </button>
-                            </form>
+                        <div class="glass-card rounded-3xl p-6 sm:p-7 shadow-2xl relative border-amber-500/40 h-full flex flex-col justify-center">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl mb-5">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-black text-white mb-3">Xitoyda ta'lim olish imkoniyati</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Universitetlar, qabul xatlari va ta'lim imkoniyatlari haqida kerakli ma'lumotlarni bir joydan oling.
+                            </p>
+                            <div class="space-y-3 text-sm text-slate-300">
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400"></i><span>32 ta nufuzli universitet</span></div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400"></i><span>Grant va chegirmali kontraktlar</span></div>
+                                <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400"></i><span>Qabul xatlari va natijalar</span></div>
+                            </div>
+                            <a href="#contact" class="gold-button font-extrabold px-5 py-3 rounded-xl shadow-lg text-sm text-center mt-7">Bog'lanish</a>
                         </div>
                     </div>
                 </div>
@@ -269,129 +257,6 @@
         </div>
     </div>
 
-    <!-- SECRET ADMIN PANEL -->
-    <div id="adminPanel" class="hidden min-h-screen bg-[#05080f] text-slate-100 p-4 sm:p-8 z-50 relative">
-        <div class="max-w-7xl mx-auto space-y-6">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-                <h1 class="text-lg sm:text-2xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield text-amber-400"></i> Pilla Admin Center (Cloud Realtime)
-                </h1>
-                <button onclick="closeAdmin()" class="bg-red-500/20 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-500/30 transition">Chiqish (Logout)</button>
-            </div>
-
-            <div class="flex gap-2 border-b border-slate-800 pb-3 overflow-x-auto">
-                <button onclick="switchTab('settings')" id="tabBtnSettings" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">Sozlamalar & Brand</button>
-                <button onclick="switchTab('admissions')" id="tabBtnAdmissions" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 transition">Admission Letters</button>
-                <button onclick="switchTab('universities')" id="tabBtnUniversities" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 transition">Universitetlar</button>
-                <button onclick="switchTab('leads')" id="tabBtnLeads" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 transition">Kelgan Arizalar (<span id="leadCountBadge">0</span>)</button>
-            </div>
-
-            <!-- TAB 1: SETTINGS -->
-            <div id="tabSettings" class="space-y-6">
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <div class="glass-card rounded-2xl p-6 space-y-4">
-                        <h3 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-gear mr-1"></i> Aloqa Ma'lumotlari va Linklar</h3>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Telefon Raqami</label>
-                            <input type="text" id="settingPhone" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Telegram Akaunt Linki</label>
-                            <input type="url" id="settingTelegramAccount" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Telegram Kanal Linki</label>
-                            <input type="url" id="settingTelegramChannel" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Instagram Linki</label>
-                            <input type="url" id="settingInstagram" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp Linki (masalan: https://wa.me/998901234567)</label>
-                            <input type="url" id="settingWhatsapp" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        </div>
-                    </div>
-
-                    <div class="glass-card rounded-2xl p-6 space-y-4">
-                        <h3 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-image mr-1"></i> Logo va xavfsizlik</h3>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Sayt Logosi (Rasm yuklash)</label>
-                            <input type="file" id="settingLogoFile" accept="image/*" onchange="encodeLogoFile(this)" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 cursor-pointer">
-                            <input type="hidden" id="settingLogoUrl">
-                        </div>
-                        <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-xs text-slate-300 leading-5">
-                            <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Telegram bot tokeni brauzerda saqlanmaydi. Yangi ariza tushganda xabarnoma serverdagi Cloud Function orqali yuboriladi.
-                        </div>
-                        <button onclick="saveSettingsToFirebase()" class="w-full gold-button font-extrabold py-3 rounded-xl text-sm shadow-lg transition mt-4">Sozlamalarni Bazaga Saqlash</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: ADMISSIONS -->
-            <div id="tabAdmissions" class="hidden space-y-6">
-                <div class="glass-card rounded-2xl p-6 space-y-4">
-                    <h3 class="text-sm font-bold text-amber-400">Yangi Admission Letter Qo'shish</h3>
-                    <div class="grid sm:grid-cols-3 gap-4">
-                        <input type="text" id="newAdmUni" placeholder="Universitet nomi" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="text" id="newAdmStudent" placeholder="Talaba F.I.O." class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="file" id="newAdmFile" accept="image/*" onchange="encodeAdmFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 cursor-pointer">
-                        <input type="hidden" id="newAdmImgUrl">
-                    </div>
-                    <button onclick="addAdmissionItem()" class="gold-button font-bold px-6 py-2.5 rounded-xl text-xs">Bazaga Qo'shish</button>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6">
-                    <h3 class="text-sm font-bold text-white mb-4">Mavjud Admission Letter'lar</h3>
-                    <div id="adminAdmissionsList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                </div>
-            </div>
-
-            <!-- TAB 3: UNIVERSITIES -->
-            <div id="tabUniversities" class="hidden space-y-6">
-                <div class="glass-card rounded-2xl p-6 space-y-4">
-                    <h3 class="text-sm font-bold text-amber-400">Yangi Universitet Qo'shish</h3>
-                    <div class="grid sm:grid-cols-3 gap-4">
-                        <input type="text" id="newUniName" placeholder="Universitet nomi" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="text" id="newUniCity" placeholder="Shahar" class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                        <input type="file" id="newUniFile" accept="image/*" onchange="encodeUniFile(this)" class="bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-300 cursor-pointer">
-                        <input type="hidden" id="newUniImgUrl">
-                    </div>
-                    <button onclick="addUniversityItem()" class="gold-button font-bold px-6 py-2.5 rounded-xl text-xs">Bazaga Qo'shish</button>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6">
-                    <h3 class="text-sm font-bold text-white mb-4">Mavjud Universitetlar</h3>
-                    <div id="adminUniversitiesList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                </div>
-            </div>
-
-            <!-- TAB 4: LEADS -->
-            <div id="tabLeads" class="hidden space-y-6">
-                <div class="glass-card rounded-2xl p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-sm font-bold text-white">Kelib Tushgan Arizalar</h3>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs text-slate-300">
-                            <thead class="bg-slate-900 text-slate-400 font-bold">
-                                <tr>
-                                    <th class="p-3">Sana</th>
-                                    <th class="p-3">Ism</th>
-                                    <th class="p-3">Telefon</th>
-                                    <th class="p-3">Izoh</th>
-                                    <th class="p-3 text-right">Amal</th>
-                                </tr>
-                            </thead>
-                            <tbody id="leadsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
     <!-- FOOTER -->
     <footer class="border-t border-slate-800/60 bg-slate-950 py-8">
         <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:text-left items-center">
@@ -405,28 +270,8 @@
         </div>
     </footer>
 
-    <!-- SCRIPT & DATABASE SYNC -->
+    <!-- STATIC FRONTEND SCRIPT -->
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDTV29xzg2T5J2F2yosQTeV1UqGgt4YL8gY",
-            authDomain: "pillaconsulting-2e901.firebaseapp.com",
-            projectId: "pillaconsulting-2e901",
-            storageBucket: "pillaconsulting-2e901.firebasestorage.app",
-            messagingSenderId: "771310384181",
-            appId: "1:771310384181:web:0487124481144d63642d7c",
-            measurementId: "G-BSRX9S8KR1"
-        };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-        const storage = firebase.storage();
-        let isAdmin = false;
-        let leadsUnsubscribe = null;
-
-        // Translations for 5 languages
         const translations = {
             uz: {
                 nav_home: "Bosh sahifa", nav_unis: "Universitetlar", nav_admissions: "Admission Letters", nav_contact: "Bog'lanish",
@@ -520,6 +365,7 @@
             }
         };
 
+
         let currentLang = 'uz';
 
         function changeLanguage(lang) {
@@ -527,487 +373,71 @@
             const t = translations[lang] || translations.uz;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if(t[key]) el.innerText = t[key];
+                if (t[key]) el.innerText = t[key];
             });
         }
 
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type === 'success' ? 'bg-emerald-500/90 text-white border border-emerald-400' : 'bg-red-500/90 text-white border border-red-400'}`;
-            toast.innerText = message;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
+        // Sayt to'liq statik ishlaydi: Firebase, login va admin panel talab qilinmaydi.
+        // Universitet va admission ma'lumotlari keyinchalik shu massivlarga qo'shiladi.
+        const universities = [];
+        const admissions = [];
+
+        function renderAdmissions() {
+            const container = document.getElementById('admissionsGrid');
+            if (!container) return;
+            if (!admissions.length) {
+                container.innerHTML = '<div class="sm:col-span-2 lg:col-span-3 text-center text-slate-500 py-8">Admission Letter ma'lumotlari tez orada joylanadi.</div>';
+                return;
+            }
+            container.innerHTML = admissions.map(item => `
+                <div onclick="openImageModal('\${item.image}', '\${item.university} - \${item.student}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group">
+                    <div class="h-56 overflow-hidden relative"><img src="\${item.image}" alt="\${item.university}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"></div>
+                    <div class="p-5"><h4 class="font-bold text-white text-base">\${item.university}</h4><p class="text-xs text-amber-400 font-semibold mt-1">\${item.student}</p></div>
+                </div>`).join('');
         }
 
-        let currentSettings = {};
-        let admissions = [];
-        let universities = [];
-        let leads = [];
-
-        document.addEventListener("DOMContentLoaded", () => {
-            initGalaxyAnimation();
-            fetchDataFromCloudRealtime();
-            checkAdminHash();
-            window.addEventListener("hashchange", checkAdminHash);
-            auth.onAuthStateChanged(handleAuthStateChange);
-        });
+        function renderUniversities() {
+            const container = document.getElementById('universitiesGrid');
+            if (!container) return;
+            if (!universities.length) {
+                container.innerHTML = '<div class="sm:col-span-2 lg:col-span-3 text-center text-slate-500 py-8">Universitetlar ro'yxati tez orada joylanadi.</div>';
+                return;
+            }
+            container.innerHTML = universities.map(u => `
+                <div class="glass-card rounded-2xl overflow-hidden group"><div class="h-48 overflow-hidden relative"><img src="\${u.image}" alt="\${u.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><div class="absolute top-3 left-3 bg-slate-950/80 px-3 py-1 rounded-full text-xs text-amber-400 font-bold backdrop-blur-md"><i class="fa-solid fa-location-dot mr-1"></i> \${u.city}</div></div><div class="p-5"><h4 class="font-bold text-white text-base mb-2">\${u.name}</h4><a href="#contact" class="text-xs font-bold text-amber-400 flex items-center gap-1 hover:underline">Bog'lanish <i class="fa-solid fa-arrow-right text-[10px]"></i></a></div></div>`).join('');
+        }
 
         function initGalaxyAnimation() {
             const canvas = document.getElementById('galaxyCanvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
             resize(); window.addEventListener('resize', resize);
-
-            const stars = Array.from({ length: 90 }, () => ({
-                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5 + 0.5, alpha: Math.random(), speed: Math.random() * 0.008 + 0.002
-            }));
-
+            const stars = Array.from({length:90}, () => ({x:Math.random()*canvas.width,y:Math.random()*canvas.height,radius:Math.random()*1.5+0.5,alpha:Math.random(),speed:Math.random()*0.008+0.002}));
             function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                stars.forEach(s => {
-                    s.alpha += s.speed;
-                    if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
-                    ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(234, 179, 8, ${Math.abs(s.alpha) * 0.7})`; ctx.fill();
-                });
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                stars.forEach(s => { s.alpha += s.speed; if(s.alpha>1 || s.alpha<0) s.speed=-s.speed; ctx.beginPath(); ctx.arc(s.x,s.y,s.radius,0,Math.PI*2); ctx.fillStyle=`rgba(234,179,8,\${Math.abs(s.alpha)*0.7})`; ctx.fill(); });
                 requestAnimationFrame(animate);
             }
             animate();
         }
 
-        // Public data sync. Leads are intentionally private.
-        function fetchDataFromCloudRealtime() {
-            db.collection("pilla_settings").doc("main").onSnapshot(doc => {
-                if (doc.exists) { currentSettings = doc.data(); applySettingsToUI(); }
-            }, () => showToast("Sozlamalarni yuklashda xatolik!", "error"));
-
-            db.collection("pilla_admissions").onSnapshot(snapshot => {
-                admissions = [];
-                snapshot.forEach(doc => admissions.push({ id: doc.id, ...doc.data() }));
-                renderAdmissions();
-                if (isAdmin) renderAdminAdmissions();
-            }, () => {});
-
-            db.collection("pilla_universities").onSnapshot(snapshot => {
-                universities = [];
-                snapshot.forEach(doc => universities.push({ id: doc.id, ...doc.data() }));
-                renderUniversities();
-                if (isAdmin) renderAdminUniversities();
-            }, () => {});
-        }
-
-        function applySettingsToUI() {
-            const s = currentSettings;
-            if(s.phone) {
-                document.getElementById('displayPhone').innerText = s.phone;
-                document.getElementById('contactPhoneCard').href = `tel:${s.phone.replace(/\s+/g, '')}`;
-            }
-            if(s.telegramAccount) {
-                document.getElementById('contactTelegramAccount').href = s.telegramAccount;
-                document.getElementById('footTelegramAccount').href = s.telegramAccount;
-            }
-            if(s.telegramChannel) {
-                document.getElementById('contactTelegramChannel').href = s.telegramChannel;
-                document.getElementById('footTelegramChannel').href = s.telegramChannel;
-            }
-            if(s.instagram) {
-                document.getElementById('contactInstagram').href = s.instagram;
-                document.getElementById('footInstagram').href = s.instagram;
-            }
-            if(s.whatsapp) {
-                document.getElementById('contactWhatsapp').href = s.whatsapp;
-                document.getElementById('footWhatsapp').href = s.whatsapp;
-            }
-            
-            const logoContainer = document.getElementById('siteLogoContainer');
-            if(s.logoUrl) {
-                logoContainer.innerHTML = `<img src="${s.logoUrl}" alt="Logo" class="h-10 sm:h-12 w-auto object-contain">`;
-            } else {
-                logoContainer.innerHTML = `<span class="text-base sm:text-2xl font-black gold-gradient-text tracking-wider">PILLA CONSULTING</span>`;
-            }
-
-            if(document.getElementById('settingPhone')) {
-                document.getElementById('settingPhone').value = s.phone || '';
-                document.getElementById('settingTelegramAccount').value = s.telegramAccount || '';
-                document.getElementById('settingTelegramChannel').value = s.telegramChannel || '';
-                document.getElementById('settingInstagram').value = s.instagram || '';
-                document.getElementById('settingWhatsapp').value = s.whatsapp || '';
-                document.getElementById('settingLogoUrl').value = s.logoUrl || '';
-            }
-        }
-
-        function renderAdmissions() {
-            const container = document.getElementById('admissionsGrid');
-            if(!container) return;
-            container.innerHTML = admissions.map(item => `
-                <div onclick="openImageModal('${item.image}', '${item.university} - ${item.student}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group">
-                    <div class="h-56 overflow-hidden relative">
-                        <img src="${item.image}" alt="${item.university}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-transparent transition"></div>
-                        <div class="absolute bottom-3 right-3 bg-slate-950/80 px-2.5 py-1 rounded-lg text-xs text-amber-400 font-bold backdrop-blur-md"><i class="fa-solid fa-expand mr-1"></i> <span data-i18n="close">Kattalashtirish</span></div>
-                    </div>
-                    <div class="p-5">
-                        <h4 class="font-bold text-white text-base">${item.university}</h4>
-                        <p class="text-xs text-amber-400 font-semibold mt-1">${item.student}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderUniversities() {
-            const container = document.getElementById('universitiesGrid');
-            if(!container) return;
-            container.innerHTML = universities.map(u => `
-                <div class="glass-card rounded-2xl overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="${u.image}" alt="${u.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute top-3 left-3 bg-slate-950/80 px-3 py-1 rounded-full text-xs text-amber-400 font-bold backdrop-blur-md"><i class="fa-solid fa-location-dot mr-1"></i> ${u.city}</div>
-                    </div>
-                    <div class="p-5">
-                        <h4 class="font-bold text-white text-base mb-2">${u.name}</h4>
-                        <a href="#contact" class="text-xs font-bold text-amber-400 flex items-center gap-1 hover:underline">Grantga hujjat topshirish <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function switchTab(tabName) {
-            ['settings', 'admissions', 'universities', 'leads'].forEach(t => {
-                document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.add('hidden');
-                document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 transition";
-            });
-            document.getElementById(`tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).classList.remove('hidden');
-            document.getElementById(`tabBtn${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition";
-        }
-
-        async function saveSettingsToFirebase() {
-            if (!isAdmin) return showToast("Admin huquqi talab qilinadi!", "error");
-            const data = {
-                phone: document.getElementById('settingPhone').value.trim(),
-                telegramAccount: document.getElementById('settingTelegramAccount').value.trim(),
-                telegramChannel: document.getElementById('settingTelegramChannel').value.trim(),
-                instagram: document.getElementById('settingInstagram').value.trim(),
-                whatsapp: document.getElementById('settingWhatsapp').value.trim(),
-                logoUrl: document.getElementById('settingLogoUrl').value.trim(),
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-            try {
-                await db.collection("pilla_settings").doc("main").set(data, { merge: true });
-                showToast("Sozlamalar muvaffaqiyatli saqlandi!", "success");
-            } catch (err) {
-                console.error(err);
-                showToast("Sozlamalarni saqlashda xatolik!", "error");
-            }
-        }
-
-        async function uploadImageToStorage(input, targetId, folder) {
-            if (!isAdmin) { showToast("Admin huquqi talab qilinadi!", "error"); input.value = ''; return; }
-            const file = input.files && input.files[0];
-            if (!file) return;
-            if (!file.type.startsWith('image/')) { showToast("Faqat rasm fayli yuklang!", "error"); input.value = ''; return; }
-            if (file.size > 10 * 1024 * 1024) { showToast("Rasm hajmi 10 MB dan oshmasin!", "error"); input.value = ''; return; }
-
-            try {
-                const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-                const ref = storage.ref(`pilla/${folder}/${Date.now()}-${safeName}`);
-                await ref.put(file);
-                const url = await ref.getDownloadURL();
-                document.getElementById(targetId).value = url;
-                showToast("Rasm muvaffaqiyatli yuklandi.", "success");
-            } catch (err) {
-                console.error(err);
-                showToast("Rasmni yuklashda xatolik!", "error");
-                input.value = '';
-            }
-        }
-
-        function encodeLogoFile(input) { uploadImageToStorage(input, 'settingLogoUrl', 'logos'); }
-        function encodeAdmFile(input) { uploadImageToStorage(input, 'newAdmImgUrl', 'admissions'); }
-        function encodeUniFile(input) { uploadImageToStorage(input, 'newUniImgUrl', 'universities'); }
-
-        async function addAdmissionItem() {
-            if (!isAdmin) return showToast("Admin huquqi talab qilinadi!", "error");
-            const university = document.getElementById('newAdmUni').value.trim();
-            const student = document.getElementById('newAdmStudent').value.trim();
-            const image = document.getElementById('newAdmImgUrl').value.trim();
-            if(!university || !image) { showToast("Universitet nomi va rasm kiritilishi shart!", "error"); return; }
-
-            db.collection("pilla_admissions").add({ university, student, image })
-                .then(() => {
-                    showToast("Admission letter serverga muvaffaqiyatli yuklandi!", "success");
-                    document.getElementById('newAdmUni').value = '';
-                    document.getElementById('newAdmStudent').value = '';
-                    document.getElementById('newAdmImgUrl').value = '';
-                    document.getElementById('newAdmFile').value = '';
-                })
-                .catch(err => showToast("Serverga yuklashda xatolik!", "error"));
-        }
-
-        async function deleteAdmissionItem(id) {
-            if (!isAdmin) return showToast("Admin huquqi talab qilinadi!", "error");
-            if(confirm("O'chirishni tasdiqlaysizmi?")) {
-                db.collection("pilla_admissions").doc(id).delete()
-                    .then(() => showToast("Muvaffaqiyatli o'chirildi", "success"))
-                    .catch(err => showToast("O'chirishda xatolik", "error"));
-            }
-        }
-
-        function renderAdminAdmissions() {
-            const container = document.getElementById('adminAdmissionsList');
-            if(!container) return;
-            container.innerHTML = admissions.map(item => `
-                <div class="glass-card rounded-xl p-3 flex items-center justify-between gap-3">
-                    <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg">
-                    <div class="flex-grow">
-                        <h5 class="text-xs font-bold text-white">${item.university}</h5>
-                        <p class="text-[10px] text-amber-400">${item.student}</p>
-                    </div>
-                    <button onclick="deleteAdmissionItem('${item.id}')" class="text-red-400 hover:text-red-300 p-2"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `).join('');
-        }
-
-        async function addUniversityItem() {
-            if (!isAdmin) return showToast("Admin huquqi talab qilinadi!", "error");
-            const name = document.getElementById('newUniName').value.trim();
-            const city = document.getElementById('newUniCity').value.trim();
-            const image = document.getElementById('newUniImgUrl').value.trim();
-            if(!name || !image) { showToast("Nom va rasm kiritilishi shart!", "error"); return; }
-
-            db.collection("pilla_universities").add({ name, city, image })
-                .then(() => {
-                    showToast("Universitet serverga muvaffaqiyatli yuklandi!", "success");
-                    document.getElementById('newUniName').value = '';
-                    document.getElementById('newUniCity').value = '';
-                    document.getElementById('newUniImgUrl').value = '';
-                    document.getElementById('newUniFile').value = '';
-                })
-                .catch(err => showToast("Serverga yuklashda xatolik!", "error"));
-        }
-
-        async function deleteUniversityItem(id) {
-            if (!isAdmin) return showToast("Admin huquqi talab qilinadi!", "error");
-            if(confirm("O'chirishni tasdiqlaysizmi?")) {
-                db.collection("pilla_universities").doc(id).delete()
-                    .then(() => showToast("Muvaffaqiyatli o'chirildi", "success"))
-                    .catch(err => showToast("O'chirishda xatolik", "error"));
-            }
-        }
-
-        function renderAdminUniversities() {
-            const container = document.getElementById('adminUniversitiesList');
-            if(!container) return;
-            container.innerHTML = universities.map(u => `
-                <div class="glass-card rounded-xl p-3 flex items-center justify-between gap-3">
-                    <img src="${u.image}" class="w-14 h-14 object-cover rounded-lg">
-                    <div class="flex-grow">
-                        <h5 class="text-xs font-bold text-white">${u.name}</h5>
-                        <p class="text-[10px] text-amber-400">${u.city}</p>
-                    </div>
-                    <button onclick="deleteUniversityItem('${u.id}')" class="text-red-400 hover:text-red-300 p-2"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `).join('');
-        }
-
-        async function handleLeadSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('leadName').value.trim();
-            const phone = document.getElementById('leadPhone').value.trim();
-            const message = document.getElementById('leadMessage').value.trim();
-
-            if (name.length < 2 || name.length > 100) return showToast("Ismni to'g'ri kiriting!", "error");
-            if (phone.length < 7 || phone.length > 30) return showToast("Telefon raqamini to'g'ri kiriting!", "error");
-            if (message.length > 1000) return showToast("Izoh juda uzun!", "error");
-
-            try {
-                await db.collection("pilla_leads").add({
-                    name, phone, message, status: "new",
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    userAgent: navigator.userAgent.slice(0, 250)
-                });
-                showToast("Arizangiz muvaffaqiyatli yuborildi!", "success");
-                document.getElementById('leadForm').reset();
-            } catch (err) {
-                console.error(err);
-                showToast("Arizani yuborishda xatolik yuz berdi!", "error");
-            }
-        }
-
-        async function deleteLead(id) {
-            if (!isAdmin) return showToast("Admin huquqi talab qilinadi!", "error");
-            db.collection("pilla_leads").doc(id).delete()
-                .then(() => showToast("Ariza o'chirildi", "success"))
-                .catch(() => {});
-        }
-
-        function renderLeads() {
-            const tbody = document.getElementById('leadsTableBody');
-            if(!tbody) return;
-            if(leads.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">Hozircha arizalar yo'q</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = leads.map(l => `
-                <tr class="border-b border-slate-800/80">
-                    <td class="p-3 text-slate-400">${formatLeadDate(l)}</td>
-                    <td class="p-3 font-semibold text-white">${l.name}</td>
-                    <td class="p-3 text-amber-400 font-mono">${l.phone}</td>
-                    <td class="p-3 text-slate-300">${l.message || '-'}</td>
-                    <td class="p-3 text-right"><button onclick="deleteLead('${l.id}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button></td>
-                </tr>
-            `).join('');
-        }
-
         function openImageModal(src, caption) {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('modalCaption').innerText = caption;
-            document.getElementById('imageModal').classList.remove('hidden');
+            const modal=document.getElementById('imageModal');
+            if(!modal) return;
+            document.getElementById('modalImage').src=src;
+            document.getElementById('modalCaption').innerText=caption;
+            modal.classList.remove('hidden');
         }
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-        }
+        function closeImageModal() { document.getElementById('imageModal')?.classList.add('hidden'); }
 
-        let adminLoginInProgress = false;
-
-        async function checkAdminHash() {
-            if (window.location.hash !== '#admin-login') return;
-
-            document.getElementById('mainApp').classList.add('hidden');
-            document.querySelector('header').classList.add('hidden');
-            document.querySelector('footer').classList.add('hidden');
-            document.getElementById('adminPanel').classList.remove('hidden');
-
-            if (auth.currentUser) {
-                await verifyAdminUser(auth.currentUser);
-                return;
-            }
-
-            if (adminLoginInProgress) return;
-            adminLoginInProgress = true;
-
-            try {
-                await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-                const provider = new firebase.auth.GoogleAuthProvider();
-                provider.setCustomParameters({
-                    prompt: 'select_account'
-                });
-
-                await auth.signInWithPopup(provider);
-
-            } catch (err) {
-                console.error("GOOGLE LOGIN ERROR:", err);
-    
-    alert(
-        "XATO KODI: " + err.code +
-        "\n\nXABAR: " + err.message
-    );
-
-    closeAdmin();
-
-            } finally {
-                adminLoginInProgress = false;
-            }
-        }
-
-        async function handleAuthStateChange(user) {
-            if (!user) {
-                isAdmin = false;
-
-                if (leadsUnsubscribe) {
-                    leadsUnsubscribe();
-                    leadsUnsubscribe = null;
-                }
-
-                return;
-            }
-
-            if (window.location.hash === '#admin-login') {
-                await verifyAdminUser(user);
-            }
-        }
-
-        async function verifyAdminUser(user) {
-            try {
-                const adminDoc = await db
-                    .collection('pilla_admins')
-                    .doc(user.uid)
-                    .get();
-
-                if (!adminDoc.exists || adminDoc.data().active !== true) {
-                    isAdmin = false;
-
-                    showToast(
-                        'Bu Google akkaunt admin sifatida ruxsat etilmagan!',
-                        'error'
-                    );
-
-                    await auth.signOut();
-                    closeAdmin();
-                    return;
-                }
-
-                isAdmin = true;
-
-                startAdminDataSync();
-                renderAdminAdmissions();
-                renderAdminUniversities();
-
-                showToast(
-                    'Google orqali admin panelga muvaffaqiyatli kirdingiz.',
-                    'success'
-                );
-
-            } catch (err) {
-                console.error('Admin verification error:', err);
-
-                isAdmin = false;
-
-                showToast(
-                    'Admin huquqini tekshirishda xatolik yuz berdi.',
-                    'error'
-                );
-
-                // Vaqtinchalik Firestore yoki internet xatosida
-                // foydalanuvchini majburiy logout qilmaymiz.
-            }
-        }
-
-        function startAdminDataSync() {
-            if (!isAdmin || leadsUnsubscribe) return;
-            leadsUnsubscribe = db.collection('pilla_leads').limit(200).onSnapshot(snapshot => {
-                leads = [];
-                snapshot.forEach(doc => leads.push({ id: doc.id, ...doc.data() }));
-                leads.sort((a, b) => {
-                    const ta = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
-                    const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
-                    return tb - ta;
-                });
-                document.getElementById('leadCountBadge').innerText = leads.length;
-                renderLeads();
-            }, err => {
-                console.error(err);
-                showToast("Arizalarni yuklashda xatolik!", "error");
-            });
-        }
-
-        function formatLeadDate(lead) {
-            if (lead.createdAt && lead.createdAt.toDate) return lead.createdAt.toDate().toLocaleString('uz-UZ');
-            return lead.date || '-';
-        }
-
-        async function closeAdmin() {
-            if (leadsUnsubscribe) { leadsUnsubscribe(); leadsUnsubscribe = null; }
-            isAdmin = false;
-            if (auth.currentUser) await auth.signOut();
-            document.getElementById('adminPanel').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-            document.querySelector('header').classList.remove('hidden');
-            document.querySelector('footer').classList.remove('hidden');
-            if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            initGalaxyAnimation();
+            renderUniversities();
+            renderAdmissions();
+            changeLanguage('uz');
+        });
     </script>
+
 </body>
 </html>
