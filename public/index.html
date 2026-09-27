@@ -898,17 +898,14 @@
                 await auth.signInWithPopup(provider);
 
             } catch (err) {
-                console.error('Google login error:', err);
+                console.error("GOOGLE LOGIN ERROR:", err);
+    
+    alert(
+        "XATO KODI: " + err.code +
+        "\n\nXABAR: " + err.message
+    );
 
-                if (err.code === 'auth/popup-closed-by-user') {
-                    showToast('Google orqali kirish bekor qilindi.', 'error');
-                } else if (err.code === 'auth/popup-blocked') {
-                    showToast('Brauzer Google oynasini blokladi.', 'error');
-                } else {
-                    showToast('Google orqali kirishda xatolik yuz berdi.', 'error');
-                }
-
-                closeAdmin();
+    closeAdmin();
 
             } finally {
                 adminLoginInProgress = false;
