@@ -869,56 +869,112 @@
             document.getElementById('imageModal').classList.add('hidden');
         }
 
+        let adminLoginInProgress = false;
+
         async function checkAdminHash() {
             if (window.location.hash !== '#admin-login') return;
+
             document.getElementById('mainApp').classList.add('hidden');
             document.querySelector('header').classList.add('hidden');
             document.querySelector('footer').classList.add('hidden');
             document.getElementById('adminPanel').classList.remove('hidden');
 
-            if (auth.currentUser) return verifyAdminUser(auth.currentUser);
+            if (auth.currentUser) {
+                await verifyAdminUser(auth.currentUser);
+                return;
+            }
 
-            const email = prompt("Admin email:");
-            if (!email) return closeAdmin();
-            const password = prompt("Admin parol:");
-            if (!password) return closeAdmin();
+            if (adminLoginInProgress) return;
+            adminLoginInProgress = true;
+
             try {
-                await auth.signInWithEmailAndPassword(email.trim(), password);
+                await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.setCustomParameters({
+                    prompt: 'select_account'
+                });
+
+                await auth.signInWithPopup(provider);
+
             } catch (err) {
-                console.error(err);
-                showToast("Email yoki parol noto'g'ri!", "error");
+                console.error('Google login error:', err);
+
+                if (err.code === 'auth/popup-closed-by-user') {
+                    showToast('Google orqali kirish bekor qilindi.', 'error');
+                } else if (err.code === 'auth/popup-blocked') {
+                    showToast('Brauzer Google oynasini blokladi.', 'error');
+                } else {
+                    showToast('Google orqali kirishda xatolik yuz berdi.', 'error');
+                }
+
                 closeAdmin();
+
+            } finally {
+                adminLoginInProgress = false;
             }
         }
 
         async function handleAuthStateChange(user) {
             if (!user) {
                 isAdmin = false;
-                if (leadsUnsubscribe) { leadsUnsubscribe(); leadsUnsubscribe = null; }
+
+                if (leadsUnsubscribe) {
+                    leadsUnsubscribe();
+                    leadsUnsubscribe = null;
+                }
+
                 return;
             }
-            if (window.location.hash === '#admin-login') await verifyAdminUser(user);
+
+            if (window.location.hash === '#admin-login') {
+                await verifyAdminUser(user);
+            }
         }
 
         async function verifyAdminUser(user) {
             try {
-                const adminDoc = await db.collection('pilla_admins').doc(user.uid).get();
+                const adminDoc = await db
+                    .collection('pilla_admins')
+                    .doc(user.uid)
+                    .get();
+
                 if (!adminDoc.exists || adminDoc.data().active !== true) {
                     isAdmin = false;
-                    showToast("Bu akkaunt admin sifatida ruxsat etilmagan!", "error");
+
+                    showToast(
+                        'Bu Google akkaunt admin sifatida ruxsat etilmagan!',
+                        'error'
+                    );
+
                     await auth.signOut();
-                    return closeAdmin();
+                    closeAdmin();
+                    return;
                 }
+
                 isAdmin = true;
+
                 startAdminDataSync();
                 renderAdminAdmissions();
                 renderAdminUniversities();
-                showToast("Admin panelga muvaffaqiyatli kirdingiz.", "success");
+
+                showToast(
+                    'Google orqali admin panelga muvaffaqiyatli kirdingiz.',
+                    'success'
+                );
+
             } catch (err) {
-                console.error(err);
-                showToast("Admin huquqini tekshirishda xatolik!", "error");
-                await auth.signOut();
-                closeAdmin();
+                console.error('Admin verification error:', err);
+
+                isAdmin = false;
+
+                showToast(
+                    'Admin huquqini tekshirishda xatolik yuz berdi.',
+                    'error'
+                );
+
+                // Vaqtinchalik Firestore yoki internet xatosida
+                // foydalanuvchini majburiy logout qilmaymiz.
             }
         }
 
